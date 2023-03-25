@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>index</title>
+      <title>main</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -617,7 +617,8 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>Memory order in C refers to the order in which memory operations occur in parallel programming.</p>
 <p>In parallel programming, multiple threads can access and modify the same memory location simultaneously, which can result in <strong>data races</strong> and other synchronization issues.</p>
-<blockquote><strong>Data races</strong> occur when threads access shared memory without proper synchronization. When multiple threads access and modify the same memory location without proper synchronization, the order in which these modifications occur is undefined. This can result in unpredictable behavior, such as incorrect results or program crashes.
+<blockquote>
+<p><strong>Data races</strong> occur when threads access shared memory without proper synchronization. When multiple threads access and modify the same memory location without proper synchronization, the order in which these modifications occur is undefined. This can result in unpredictable behavior, such as incorrect results or program crashes.</p>
 <p>For example, consider the following code fragment:</p>
 <pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h&gt;</span></span>
 <span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>

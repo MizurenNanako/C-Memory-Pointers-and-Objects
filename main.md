@@ -348,32 +348,31 @@ Memory order in C refers to the order in which memory operations occur in parall
 
 In parallel programming, multiple threads can access and modify the same memory location simultaneously, which can result in **data races** and other synchronization issues.
 
-<blockquote><strong>Data races</strong> occur when threads access shared memory without proper synchronization. When multiple threads access and modify the same memory location without proper synchronization, the order in which these modifications occur is undefined. This can result in unpredictable behavior, such as incorrect results or program crashes.
-
-For example, consider the following code fragment:
-
-```c
-#include <pthread.h>
-int x = 0;
-
-void* thread_func(void* arg) {
-    x++;
-    return NULL;
-}
-
-int main() {
-    pthread_t tid[2];
-    pthread_create(&tid[0], NULL, thread_func, NULL);
-    pthread_create(&tid[1], NULL, thread_func, NULL);
-    pthread_join(tid[0], NULL);
-    pthread_join(tid[1], NULL);
-    printf("x = %d\n", x);
-    return 0;
-}
-```
-
-In this code, two threads are created, and each thread increments the value of the shared variable `x`. The result of the program depends on the order in which the threads execute their increments, and therefore, the result is unpredictable and varies from run to run.
-</blockquote>
+> **Data races** occur when threads access shared memory without proper synchronization. When multiple threads access and modify the same memory location without proper synchronization, the order in which these modifications occur is undefined. This can result in unpredictable behavior, such as incorrect results or program crashes.
+>
+> For example, consider the following code fragment:
+>
+> ```c
+> #include <pthread.h>
+> int x = 0;
+> 
+> void* thread_func(void* arg) {
+>     x++;
+>     return NULL;
+> }
+> 
+> int main() {
+>     pthread_t tid[2];
+>     pthread_create(&tid[0], NULL, thread_func, NULL);
+>     pthread_create(&tid[1], NULL, thread_func, NULL);
+>     pthread_join(tid[0], NULL);
+>     pthread_join(tid[1], NULL);
+>     printf("x = %d\n", x);
+>     return 0;
+> }
+> ```
+>
+> In this code, two threads are created, and each thread increments the value of the shared variable `x`. The result of the program depends on the order in which the threads execute their increments, and therefore, the result is unpredictable and varies from run to run.
 
 To avoid such issues, C provides a set of memory order primitives that can be used to ensure that memory operations are performed in a predictable and synchronized manner. These primitives include memory barriers and atomic operations.
 
