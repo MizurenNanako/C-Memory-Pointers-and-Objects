@@ -61,6 +61,7 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
     - [Array and Pointer Arithmetics](#array-and-pointer-arithmetics)
       - [Array](#array)
       - [Pointer Arithmetics With Array Name](#pointer-arithmetics-with-array-name)
+      - [Operator `[]`](#operator)
     - [C-String](#c-string)
     - [Pointer as Function Parameters](#pointer-as-function-parameters)
     - [Dynamic Memory Allocation](#dynamic-memory-allocation)
@@ -614,6 +615,8 @@ Since addition is commutative, the expressions `arr + 1` and `1 + arr` are equiv
 While using `1[arr]` is technically valid and will produce the same result as `arr[1]`, it is generally considered poor coding style and **should be avoided** in favor of the more common `arr[1]` notation.
 
 ### C-String
+
+
 
 ### Pointer as Function Parameters
 
