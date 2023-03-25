@@ -213,7 +213,8 @@ void print_message(char* message) {
 }
 
 int main() {
-   print_message(); // error: too few arguments to function ‘print_message’
+   print_message(); 
+   // error: too few arguments to function ‘print_message’
    return 0;
 }
 ```

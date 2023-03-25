@@ -1,0 +1,748 @@
+<!DOCTYPE html><html><head>
+      <title>index</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/tci/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.8/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p,html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div{display:inline}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  300px/2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+.markdown-preview.markdown-preview .center {
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <style>.p{text-indent:2em;}@media print{.pagebreak{page-break-before:always;}}</style>
+<h1 class="mume-header" id="c-memory-pointers-and-objects">C: Memory, Pointers, and Objects</h1>
+
+<div style="display: flex; justify-content: flex-end;">
+    <blockquote>
+        <p>
+            A brief introduction to
+            C memory, pointer, and object-oriented programing
+            <s>for Physics students</s>.
+        </p>
+    </blockquote>
+</div>
+<p>This is an attempt to deliver a brief introduction of a few memory-related concepts for <em>C Language</em> beginners, with malformed grammar and ridiculous mistakes of spellings unavoidably included.</p>
+<p>&#x672C;&#x6587;&#x5C06;&#x5C1D;&#x8BD5;<s><small>&#x7B80;&#x77ED;&#x5730;</small></s>&#x4ECB;&#x7ECD; <em>C&#x8BED;&#x8A00;</em> &#x4E2D;&#x7684;&#x51E0;&#x4E2A;&#x5185;&#x5B58;&#x76F8;&#x5173;&#x6982;&#x5FF5;&#x3002;</p>
+<blockquote>
+<p>&#x5173;&#x4E8E;&#x300C;&#x7B80;&#x77ED;&#x300D;&#xFF1A;&#x5F53;&#x6211;&#x6CA1;&#x8BF4;&#x3002;</p>
+</blockquote>
+<hr>
+<h2 class="mume-header" id="contents">Contents</h2>
+
+<ul>
+<li><a href="#c-memory-pointers-and-objects">C: Memory, Pointers, and Objects</a>
+<ul>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#prologue-before-the-introduction">Prologue: Before the Introduction</a>
+<ul>
+<li><a href="#preprocessing-compile-time-linking-and-runtime">Preprocessing, Compile-time, Linking and Runtime</a>
+<ul>
+<li><a href="#pre-processing">Pre-processing:</a>
+<ul>
+<li><a href="#1-missing-include-files">1. Missing include files:</a></li>
+<li><a href="#2-incorrect-macro-usage">2. Incorrect macro usage:</a></li>
+<li><a href="#3-conditional-compilation-errors">3. Conditional compilation errors:</a></li>
+</ul>
+</li>
+<li><a href="#compile-time">Compile-time:</a>
+<ul>
+<li><a href="#1-syntax-errors">1. Syntax errors:</a></li>
+<li><a href="#2-type-errors">2. Type errors:</a></li>
+<li><a href="#3-undeclared-variables">3. Undeclared variables:</a></li>
+<li><a href="#4-incorrect-function-arguments">4. Incorrect function arguments:</a></li>
+</ul>
+</li>
+<li><a href="#linking">Linking:</a>
+<ul>
+<li><a href="#1-undefined-symbols">1. Undefined symbols:</a></li>
+<li><a href="#2-multiple-definitions">2. Multiple definitions:</a></li>
+</ul>
+</li>
+<li><a href="#runtime">Runtime:</a>
+<ul>
+<li><a href="#1-segmentation-fault">1. Segmentation fault:</a></li>
+<li><a href="#2-stack-overflow">2. Stack overflow:</a></li>
+<li><a href="#3-floating-point-exceptions">3. Floating point exceptions:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#the-static-memory-model-of-c">The Static Memory Model of C</a>
+<ul>
+<li><a href="#bytes-and-static-memory-model">Bytes and Static Memory Model</a></li>
+<li><a href="#memory-location">Memory Location</a>
+<ul>
+<li><a href="#memory-types">Memory Types</a></li>
+<li><a href="#the-stack">The Stack</a></li>
+<li><a href="#the-heap">The Heap</a></li>
+</ul>
+</li>
+<li><a href="#memory-addresses">Memory Addresses</a>
+<ul>
+<li><a href="#address-types">Address Types</a></li>
+</ul>
+</li>
+<li><a href="#smemory-orders">Memory Order</a></li>
+</ul>
+</li>
+<li><a href="#pointers-variables-supposed-to-store-addresses">Pointers: Variables Supposed to Store Addresses</a>
+<ul>
+<li><a href="#addressing-and-indirect-addressing">Addressing and Indirect Addressing</a>
+<ul>
+<li><a href="#pointer-as-function-parameters">Pointer as Function Parameters</a></li>
+</ul>
+</li>
+<li><a href="#the-true-mechanism-behind-scenes">The True Mechanism behind scenes</a></li>
+<li><a href="#array-and-pointer-arithmetics">Array and Pointer Arithmetics</a>
+<ul>
+<li><a href="#type-inconsistency">Type Inconsistency</a></li>
+<li><a href="#world-of-dangerous-freedom">World of Dangerous Freedom</a></li>
+</ul>
+</li>
+<li><a href="#c-string">C-String</a></li>
+<li><a href="#dynamic-memory-allocation">Dynamic Memory Allocation</a>
+<ul>
+<li><a href="#allocation">Allocation</a></li>
+<li><a href="#memory-leak">Memory Leak</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#data-structures-embedded-and-generalized">Data Structures (Embedded and Generalized)</a>
+<ul>
+<li><a href="#vector-array-with-dynamic-length">Vector: Array with Dynamic Length</a></li>
+<li><a href="#linking-list">Linking List</a>
+<ul>
+<li><a href="#forward-list">Forward List</a></li>
+<li><a href="#bidirectional-list">Bidirectional List</a></li>
+<li><a href="#cyclone-list">Cyclone List</a></li>
+<li><a href="#non-embedded-implantation">Non-Embedded Implantation</a></li>
+<li><a href="#linux-list-implantation-the-wizards-way">Linux List Implantation: The Wizard&apos;s Way</a></li>
+</ul>
+</li>
+<li><a href="#tree">Tree</a>
+<ul>
+<li><a href="#segment-tree">Segment Tree</a></li>
+<li><a href="#trie-tree-and-kmp-algorithm">Trie Tree and KMP Algorithm</a></li>
+</ul>
+</li>
+<li><a href="#a-glimpse-into-graph">A glimpse into Graph</a>
+<ul>
+<li><a href="#graph">Graph</a></li>
+<li><a href="#dijkstra-algorithm">Dijkstra Algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#function-pointer-and-higher-order-function">Function Pointer and Higher-Order Function</a>
+<ul>
+<li><a href="#function-pointer">Function Pointer</a></li>
+<li><a href="#closure">Closure</a></li>
+<li><a href="#higher-order-function">Higher-Order Function</a></li>
+</ul>
+</li>
+<li><a href="#object-oriented-programing-in-c">Object-Oriented Programing in C</a>
+<ul>
+<li><a href="#definition-for-an-object">Definition for an Object</a></li>
+<li><a href="#a-simple-object-implantation-in-c">A Simple Object Implantation in C</a>
+<ul>
+<li><a href="#attributes-member-variables-and-methods">Attributes: Member Variables and Methods</a></li>
+<li><a href="#this-parameter-or-you-can-name-it-self"><code>this</code> Parameter, or You Can Name It <code>Self</code></a></li>
+<li><a href="#static-or-dynamic-this-is-a-problem">Static or Dynamic? This is a Problem.</a></li>
+</ul>
+</li>
+<li><a href="#essence-polymorphism">Essence: Polymorphism</a>
+<ul>
+<li><a href="#examples-of-static-polymorphism-in-mathh">Examples of Static Polymorphism in <code>math.h</code></a></li>
+<li><a href="#the-generic-macro">The <code>_Generic</code> Macro</a></li>
+</ul>
+</li>
+<li><a href="#dynamic-polymorphism">Dynamic Polymorphism</a>
+<ul>
+<li><a href="#dynamic-polymorphism-implantation-with-silly-type-checking">Dynamic Polymorphism Implantation with Silly Type Checking</a></li>
+<li><a href="#implantation-the-variant">Implantation: The <code>Variant</code></a></li>
+<li><a href="#composition-a-trick-of-memory">Composition: A Trick of Memory</a></li>
+<li><a href="#inheritance-the-vtable-and-method-overriding">Inheritance: The <code>vtable</code> and Method Overriding</a></li>
+<li><a href="#virtual-inheritance-vtable-of-base-classes">Virtual Inheritance: <code>vtable</code> of Base Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#epilogue-the-story-of-cfront">Epilogue: The Story of CFront</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 class="mume-header" id="prologue-before-the-introduction">Prologue: Before the Introduction</h2>
+
+<h3 class="mume-header" id="preprocessing-compile-time-linking-and-runtime">Preprocessing, Compile-time, Linking and Runtime</h3>
+
+<p>Obliviously, the translation progress consists a serial of different stages, each of which may generate error(s). Thus, a clarification of their functionality is acquired.</p>
+<h4 class="mume-header" id="pre-processing">Pre-processing:</h4>
+
+<p>The pre-processing stage is the first phase of compilation in C programming. During this stage, a preprocessor reads the source code and processes it before actual compilation starts. The preprocessor performs various operations like macro substitution, file inclusion, and conditional compilation.</p>
+<p>For example, if you use the <code>#define</code> directive to define a macro, the preprocessor replaces all occurrences of the macro with its corresponding value. The preprocessor also processes any <code>#include</code> statements in the code, which instructs the preprocessor to include the contents of another file in the current file.</p>
+<p>There can be pre-processing errors that occur during the pre-processing stage of compiling a C program. These errors typically involve the use of preprocessor directives that are not properly formatted or do not have the intended effect. Here are some examples of pre-processing errors:</p>
+<h5 class="mume-header" id="1-missing-include-files">1. Missing include files:</h5>
+
+<p>If a source file includes a header file that cannot be found, the preprocessor will produce an error. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;missing.h&gt;</span> </span>
+<span class="token comment">// error: missing.h: No such file or directory</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="2-incorrect-macro-usage">2. Incorrect macro usage:</h5>
+
+<p>If a macro is not defined correctly or is used incorrectly, the preprocessor will produce an error. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">MAX</span><span class="token expression"><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">:</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span></span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;The max of two and three is %f\n&quot;</span><span class="token punctuation">,</span> <span class="token function">MAX</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+   <span class="token comment">// error: macro &quot;MAX&quot; passed 3 arguments, but takes just 2</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="3-conditional-compilation-errors">3. Conditional compilation errors:</h5>
+
+<p>If a preprocessor conditional is not properly formed or is missing a required symbol definition, the preprocessor will produce an error. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">undef</span> <span class="token expression">DEBUG</span></span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Debugging disabled\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+<span class="token comment">// error: #endif without #if</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h4 class="mume-header" id="compile-time">Compile-time:</h4>
+
+<p>The compilation stage takes place after the pre-processing stage. During this stage, the compiler reads the pre-processed source code and generates object code. The object code contains machine code that the CPU can understand. The compiler checks the syntax of the code and generates errors and warnings if it encounters any issues. The output of the compilation stage is an object file(<code>*.o</code>), which contains machine code but is not yet executable.</p>
+<p>Examples of compile-time errors:</p>
+<blockquote>
+<p>In all of these cases, the errors occur during the compilation stage and prevent the program from being compiled into an object file.</p>
+</blockquote>
+<h5 class="mume-header" id="1-syntax-errors">1. Syntax errors:</h5>
+
+<p>These occur when the code violates the syntax rules of the C language. For example, forgetting to close a parenthesis or a curly brace, or using an undeclared variable:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Hello World!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token comment">// Error: Missing closing brace</span>
+</pre><h5 class="mume-header" id="2-type-errors">2. Type errors:</h5>
+
+<p>These occur when the type of a variable or expression is incompatible with the operation being performed on it. For example, trying to add an integer and a string:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword keyword-int">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+   <span class="token keyword keyword-char">char</span> b<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello&quot;</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d%s&quot;</span><span class="token punctuation">,</span> a<span class="token operator">+</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// Error: Incompatible types in printf</span>
+</pre><h5 class="mume-header" id="3-undeclared-variables">3. Undeclared variables:</h5>
+
+<p>These occur when a variable is used in the code without being declared first. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token comment">// error: &#x2018;x&#x2019; undeclared (first use in this function)</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="4-incorrect-function-arguments">4. Incorrect function arguments:</h5>
+
+<p>These occur when the number or type of arguments passed to a function does not match its definition. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword keyword-void">void</span> <span class="token function">print_message</span><span class="token punctuation">(</span><span class="token keyword keyword-char">char</span><span class="token operator">*</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%s&quot;</span><span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">print_message</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+   <span class="token comment">// error: too few arguments to function &#x2018;print_message&#x2019;</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h4 class="mume-header" id="linking">Linking:</h4>
+
+<p>The linker is a program that takes one or more object files and combines them into a single executable program or shared library. During Linking, the linker resolves external references and relocations, merges duplicate code and data sections and creates the final executable file. The output of this stage is an executable file that is ready to be run on the target platform.</p>
+<p>Of cause, there are linking errors, the errors occur during the linking stage prevent the program from being linking and thus stop executable generating.</p>
+<h5 class="mume-header" id="1-undefined-symbols">1. Undefined symbols:</h5>
+
+<p>These occur when the linker cannot find the definition of a symbol (function or variable) that is referenced by the code. For example, forgetting to include the library that contains a function that is used in the code:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Hello World!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// undefined reference to `foo`</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="2-multiple-definitions">2. Multiple definitions:</h5>
+
+<p>These occur when the linker finds multiple definitions of the same symbol in different object files. For example, defining a global variable in a header file that is included in multiple source files:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token comment">// file.h</span>
+<span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+<span class="token comment">// file1.c</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&quot;file.h&quot;</span></span>
+
+<span class="token comment">// file2.c</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&quot;file.h&quot;</span></span>
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// Error: Multiple definition of `x`</span>
+</pre><h4 class="mume-header" id="runtime">Runtime:</h4>
+
+<p>The runtime stage is the stage at which the compiled program is executed. During this stage, the operating system loads the executable program into memory and starts executing it. The program&apos;s instructions are executed one by one, and any data used by the program is stored in memory. The runtime stage also involves interacting with input and output devices, such as keyboard and display, and performing any necessary operations on the data.</p>
+<p>Though runtime errors won&apos;t be record in Windows, when a C program crashes due to a runtime error on Linux, it may produce a message like &quot;Core dumped&quot; or &quot;Segmentation fault (core dumped)&quot;. This means that the program has attempted to access memory that it is not allowed to access, and the operating system has terminated the program and produced a core dump file, which can be analyzed to determine the cause of the error.</p>
+<p>Here are some examples of runtime errors that can cause a core dump:</p>
+<h5 class="mume-header" id="1-segmentation-fault">1. Segmentation fault:</h5>
+
+<p>This occurs when a program tries to access a memory location that it is not allowed to access, usually because it is outside the program&apos;s memory space. This can happen when a program dereferences a null pointer, accesses an uninitialized pointer, or overflows a buffer. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword keyword-int">int</span><span class="token operator">*</span> ptr <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+   <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token comment">// segmentation fault</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="2-stack-overflow">2. Stack overflow:</h5>
+
+<p>This occurs when a program uses more stack space than is available, usually because of a function call chain that is too deep or an excessively large array allocation on the stack. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword keyword-int">int</span> arr<span class="token punctuation">[</span><span class="token number">1000000</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// allocate a large array on the stack</span>
+   <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// call itself recursively</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// stack overflow</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="3-floating-point-exceptions">3. Floating point exceptions:</h5>
+
+<p>This occurs when a program attempts to perform an illegal floating-point operation, such as dividing by zero, taking the square root of a negative number, or producing a result that is too large or too small to represent. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;math.h&gt;</span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword keyword-double">double</span> x <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">;</span>
+   <span class="token keyword keyword-double">double</span> y <span class="token operator">=</span> <span class="token function">sqrt</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// domain error: square root of negative number</span>
+   <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h2 class="mume-header" id="the-static-memory-model-of-c">The Static Memory Model of C</h2>
+
+<h3 class="mume-header" id="bytes-and-static-memory-model">Bytes and Static Memory Model</h3>
+
+<p>In C programming, memory refers to the space in the computer&apos;s memory system that is allocated for storing data during program execution. Memory is essential to store variables, data structures, and other program-related information.</p>
+<p>Memory in C is organized into individual bytes, and each byte is assigned a unique memory address. These addresses can be used to access and manipulate data stored in memory.</p>
+<blockquote>
+<p>Beaware, a <code>byte</code> can be <code>9 bit</code> or <code>16 bit</code>. <code>1 byte == 8 bits</code> is not written in Standard.</p>
+</blockquote>
+<h3 class="mume-header" id="memory-location">Memory Location</h3>
+
+<h4 class="mume-header" id="memory-types">Memory Types</h4>
+
+<p>Memory in C is divided into two types: <strong>stack memory</strong> and <strong>heap memory</strong>. Stack memory is used for storing variables declared inside functions, while heap memory is used for dynamically allocated memory.</p>
+<h4 class="mume-header" id="the-stack">The Stack</h4>
+
+<p>Stack memory is allocated automatically by the program at compile time and is managed by the program&apos;s runtime environment. It is a limited resource and is typically much smaller than heap memory. Stack memory is used for storing variables that have a limited scope and lifetime, such as function arguments and local variables.</p>
+<h4 class="mume-header" id="the-heap">The Heap</h4>
+
+<p>Heap memory, on the other hand, is dynamically allocated during program execution using functions like malloc() and calloc(). Heap memory is not automatically managed by the program&apos;s runtime environment and must be explicitly allocated and released by the programmer. Heap memory is used for storing data structures and variables with a larger scope and lifetime, such as arrays and structures.</p>
+<h3 class="mume-header" id="memory-addresses">Memory Addresses</h3>
+
+<h4 class="mume-header" id="address-types">Address Types</h4>
+
+<p>In computer systems, a memory address is a unique identifier that specifies the location of a specific byte in memory. Every byte of memory has its own unique address, and these addresses are used to access and manipulate data stored in memory.</p>
+<p>While <strong>physical addresses</strong> represent the actual location of data in physical memory, <strong>virtual addresses</strong> are generated by the <em>operating system</em> and used by programs to access memory. The use of virtual memory provides several benefits, including memory protection, efficient memory usage, and the ability to run multiple programs simultaneously.</p>
+<blockquote>
+<p>The actual addresses we deal with in C are virtual addresses.</p>
+</blockquote>
+<h3 class="mume-header" id="smemory-orders"><s>Memory Order</s></h3>
+
+<p>Memory order in C refers to the order in which memory operations occur in parallel programming.</p>
+<p>In parallel programming, multiple threads can access and modify the same memory location simultaneously, which can result in <strong>data races</strong> and other synchronization issues.</p>
+<blockquote><strong>Data races</strong> occur when threads access shared memory without proper synchronization. When multiple threads access and modify the same memory location without proper synchronization, the order in which these modifications occur is undefined. This can result in unpredictable behavior, such as incorrect results or program crashes.
+<p>For example, consider the following code fragment:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h&gt;</span></span>
+<span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-void">void</span><span class="token operator">*</span> <span class="token function">thread_func</span><span class="token punctuation">(</span><span class="token keyword keyword-void">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    x<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">pthread_t</span> tid<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread_func<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread_func<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;x = %d\n&quot;</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>In this code, two threads are created, and each thread increments the value of the shared variable <code>x</code>. The result of the program depends on the order in which the threads execute their increments, and therefore, the result is unpredictable and varies from run to run.</p>
+</blockquote>
+<p>To avoid such issues, C provides a set of memory order primitives that can be used to ensure that memory operations are performed in a predictable and synchronized manner. These primitives include memory barriers and atomic operations.</p>
+<p>Memory barriers are instructions that prevent reordering of memory operations by the compiler and the hardware. They ensure that memory operations are performed in the order specified by the program and prevent data races and other synchronization issues. In C, memory barriers can be specified using functions like <code>__sync_synchronize()</code> or <code>atomic_thread_fence()</code>.</p>
+<p>Atomic operations, on the other hand, are operations that are guaranteed to be performed atomically, without interference from other threads. Atomic operations can be used to modify shared variables in a synchronized and predictable manner, without the need for locks or other synchronization mechanisms. In C, atomic operations can be specified using functions like <code>atomic_fetch_add()</code> or <code>atomic_fetch_sub()</code>.</p>
+<p>Memory order is an important concept in parallel programming because it allows programs to safely and efficiently perform operations on shared memory. By ensuring that memory operations are performed in a synchronized and predictable manner, memory order primitives help to avoid data races and other synchronization issues, making it easier to write correct and efficient parallel programs.</p>
+<h2 class="mume-header" id="pointers-variables-supposed-to-store-addresses">Pointers: Variables Supposed to Store Addresses</h2>
+
+<h3 class="mume-header" id="addressing-and-indirect-addressing">Addressing and Indirect Addressing</h3>
+
+<h4 class="mume-header" id="pointer-as-function-parameters">Pointer as Function Parameters</h4>
+
+<h3 class="mume-header" id="the-true-mechanism-behind-scenes">The True Mechanism behind scenes</h3>
+
+<h3 class="mume-header" id="array-and-pointer-arithmetics">Array and Pointer Arithmetics</h3>
+
+<h4 class="mume-header" id="type-inconsistency">Type Inconsistency</h4>
+
+<h4 class="mume-header" id="world-of-dangerous-freedom">World of Dangerous Freedom</h4>
+
+<h3 class="mume-header" id="c-string">C-String</h3>
+
+<h3 class="mume-header" id="dynamic-memory-allocation">Dynamic Memory Allocation</h3>
+
+<h4 class="mume-header" id="allocation">Allocation</h4>
+
+<h4 class="mume-header" id="memory-leak">Memory Leak</h4>
+
+<h2 class="mume-header" id="data-structures-embedded-and-generalized">Data Structures (Embedded and Generalized)</h2>
+
+<h3 class="mume-header" id="vector-array-with-dynamic-length">Vector: Array with Dynamic Length</h3>
+
+<h3 class="mume-header" id="linking-list">Linking List</h3>
+
+<h4 class="mume-header" id="forward-list">Forward List</h4>
+
+<h4 class="mume-header" id="bidirectional-list">Bidirectional List</h4>
+
+<h4 class="mume-header" id="cyclone-list">Cyclone List</h4>
+
+<h4 class="mume-header" id="non-embedded-implantation">Non-Embedded Implantation</h4>
+
+<h4 class="mume-header" id="linux-list-implantation-the-wizards-way">Linux List Implantation: The Wizard&apos;s Way</h4>
+
+<h3 class="mume-header" id="tree">Tree</h3>
+
+<h4 class="mume-header" id="segment-tree">Segment Tree</h4>
+
+<h4 class="mume-header" id="trie-tree-and-kmp-algorithm">Trie Tree and KMP Algorithm</h4>
+
+<h3 class="mume-header" id="a-glimpse-into-graph">A glimpse into Graph</h3>
+
+<h4 class="mume-header" id="graph">Graph</h4>
+
+<h4 class="mume-header" id="dijkstra-algorithm">Dijkstra Algorithm</h4>
+
+<h2 class="mume-header" id="function-pointer-and-higher-order-function">Function Pointer and Higher-Order Function</h2>
+
+<h3 class="mume-header" id="function-pointer">Function Pointer</h3>
+
+<h3 class="mume-header" id="closure">Closure</h3>
+
+<h3 class="mume-header" id="higher-order-function">Higher-Order Function</h3>
+
+<h2 class="mume-header" id="object-oriented-programing-in-c">Object-Oriented Programing in C</h2>
+
+<h3 class="mume-header" id="definition-for-an-object">Definition for an Object</h3>
+
+<h3 class="mume-header" id="a-simple-object-implantation-in-c">A Simple Object Implantation in C</h3>
+
+<h4 class="mume-header" id="attributes-member-variables-and-methods">Attributes: Member Variables and Methods</h4>
+
+<h4 class="mume-header" id="this-parameter-or-you-can-name-it-self"><code>this</code> Parameter, or You Can Name It <code>Self</code></h4>
+
+<h4 class="mume-header" id="static-or-dynamic-this-is-a-problem">Static or Dynamic? This is a Problem.</h4>
+
+<h3 class="mume-header" id="essence-polymorphism">Essence: Polymorphism</h3>
+
+<h4 class="mume-header" id="examples-of-static-polymorphism-in-mathh">Examples of Static Polymorphism in <code>math.h</code></h4>
+
+<h4 class="mume-header" id="the-_generic-macro">The <code>_Generic</code> Macro</h4>
+
+<h3 class="mume-header" id="dynamic-polymorphism">Dynamic Polymorphism</h3>
+
+<h4 class="mume-header" id="dynamic-polymorphism-implantation-with-silly-type-checking">Dynamic Polymorphism Implantation with Silly Type Checking</h4>
+
+<h4 class="mume-header" id="implantation-the-variant">Implantation: The <code>Variant</code></h4>
+
+<h4 class="mume-header" id="composition-a-trick-of-memory">Composition: A Trick of Memory</h4>
+
+<h4 class="mume-header" id="inheritance-the-vtable-and-method-overriding">Inheritance: The <code>vtable</code> and Method Overriding</h4>
+
+<h4 class="mume-header" id="virtual-inheritance-vtable-of-base-classes">Virtual Inheritance: <code>vtable</code> of Base Classes</h4>
+
+<h2 class="mume-header" id="epilogue-the-story-of-cfront">Epilogue: The Story of CFront</h2>
+
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
