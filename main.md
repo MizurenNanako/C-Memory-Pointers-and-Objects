@@ -799,7 +799,7 @@ In this example, the `sizeof(name)` argument tells `scanf_s()` the length of the
 
 ##### (3). Output using `printf()`
 
-The `printf()` function can be used to output text to the console, including text that is stored in a C-styled string. You can use the `%s` format specifier to output a string to the console. 
+The `printf()` function can be used to output text to the console, including text that is stored in a C-styled string. You can use the `%s` format specifier to output a string to the console.
 
 Here is an example:
 
@@ -812,7 +812,7 @@ In this example, the `%s` format specifier tells `printf()` to output the entire
 
 ##### (4). Output using `printf_s()`
 
-The `printf_s()` function is a safer version of `printf()` that includes additional checks to help prevent buffer overflows and other security issues. It takes the same arguments as `printf()`, but also requires the length of the output buffer to be specified. 
+The `printf_s()` function is a safer version of `printf()` that includes additional checks to help prevent buffer overflows and other security issues. It takes the same arguments as `printf()`, but also requires the length of the output buffer to be specified.
 
 Here is an example:
 
