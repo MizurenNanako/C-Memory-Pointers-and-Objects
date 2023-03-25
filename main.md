@@ -50,7 +50,7 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
       - [The Heap](#the-heap)
     - [Memory Addresses](#memory-addresses)
       - [Address Types](#address-types)
-    - [Memory Order](#smemory-orders)
+    - [Memory Order](#memory-order)
   - [Pointers: Variables Supposed to Store Addresses](#pointers-variables-supposed-to-store-addresses)
     - [Addressing and Indirect Addressing](#addressing-and-indirect-addressing)
       - [Pointer Declaration](#pointer-declaration)
@@ -61,11 +61,16 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
     - [Array and Pointer Arithmetics](#array-and-pointer-arithmetics)
       - [Array](#array)
       - [Pointer Arithmetics With Array Name](#pointer-arithmetics-with-array-name)
-      - [Operator `[]`](#operator)
+      - [Operator `[]`](#operator [])
     - [Pointer as Function Parameters](#pointer-as-function-parameters)
     - [Dynamic Memory Allocation](#dynamic-memory-allocation)
       - [Allocation](#allocation)
+        - [`malloc()`](#malloc)
+        - [`calloc()`](#calloc)
+        - [`realloc()`](#realloc)
+      - [Deallocation](#deallocation)
       - [Memory Leak](#memory-leak)
+      - [A Further Example on Struct](#a-further-example-on-struct)
     - [C-String](#c-string)
       - [C-Styled String](#c-styled-string)
     - [String Operation with Standard Library](#string-operation-with-standard-library)
@@ -76,9 +81,9 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
       - [5. Substring search (`strstr()` and `strnstr()`)](#5-substring-search-strstr-and-strnstr)
       - [6. The Most Important: IO](#6-the-most-important-io)
         - [(1). Input using `scanf()`](#1-input-using-scanf)
-        - [(2). Input using `scanf_s()`](#2-input-using-scanfs)
+        - [(2). Input using `scanf_s()`](#2-input-using-scanf_s)
         - [(3). Output using `printf()`](#3-output-using-printf)
-        - [(4). Output using `printf_s()`](#4-output-using-printfs)
+        - [(4). Output using `printf_s()`](#4-output-using-printf_s)
   - [Data Structures (Embedded and Generalized)](#data-structures-embedded-and-generalized)
     - [Vector: Array with Dynamic Length](#vector-array-with-dynamic-length)
     - [Linking List](#linking-list)
@@ -105,7 +110,7 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
       - [Static or Dynamic? This is a Problem.](#static-or-dynamic-this-is-a-problem)
     - [Essence: Polymorphism](#essence-polymorphism)
       - [Examples of Static Polymorphism in `math.h`](#examples-of-static-polymorphism-in-mathh)
-      - [The `_Generic` Macro](#the-generic-macro)
+      - [The `_Generic` Macro](#the-_generic-macro)
     - [Dynamic Polymorphism](#dynamic-polymorphism)
       - [Dynamic Polymorphism Implantation with Silly Type Checking](#dynamic-polymorphism-implantation-with-silly-type-checking)
       - [Implantation: The `Variant`](#implantation-the-variant)
@@ -628,19 +633,250 @@ While using `1[arr]` is technically valid and will produce the same result as `a
 
 ### Pointer as Function Parameters
 
-> Yet to be written.
+With pointers as function parameters, we can pass a memory address instead of passing the actual value of a variable. Thus we can access the variable itself and not the copy.
+
+This can be especially useful when working with large data structures or when we want to modify the value of a variable inside a function and have those modifications reflected in the calling code.
+
+For example, if we want to pass a pointer to an integer to a function, we can declare the function like this:
+
+```c
+void myFunction(int* ptr);
+```
+
+In this declaration, the parameter `ptr` is a pointer to an integer.
+
+When we call the function, we can pass a pointer to an integer variable like this:
+
+```c
+int myInt = 42;
+myFunction(&myInt);
+```
+
+Here, we're passing the memory address of `myInt` using the `&` (address-of) operator.
+
+Inside the function, we can use the pointer to access and modify the value of the integer variable that it points to.
+
+For example, we could increment the value of the integer variable by one like this:
+
+```c
+void myFunction(int* ptr) {
+    (*ptr)++;  
+    // increment the value that the pointer points to
+}
+```
+
+The parentheses are necessary because the dereference operator (`*`) has lower precedence than the increment operator (`++`).
+
+For the example of passing large data structures, consider passing arrays as function parameters which is also commonly done using pointers. Here's an example:
+
+```c
+void printArray(int* arr, int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = { 1, 2, 3, 4, 5 };
+    int size = sizeof(arr) / sizeof(arr[0]);
+    printArray(arr, size);
+    return 0;
+}
+```
+
+It should be mentioned that when we pass an array to a function, the name of the array **decays** to a pointer to the first element of the array. This means that the function receives a pointer to the first element of the array, **not the entire array itself**. So when we call `printArray(arr, size)`, we're actually passing a pointer to the first element of the `arr` array. Inside the `printArray` function, we can access the elements of the array using pointer arithmetic (`arr[i]`).
 
 ### Dynamic Memory Allocation
 
-> Yet to be written.
+Dynamic memory allocation is a useful feature in the C programming language that allows the programmer to allocate and deallocate memory during the **runtime** of a program. The two most commonly used functions for dynamic memory allocation in C are `malloc()` and `calloc()`.
 
 #### Allocation
 
-> Yet to be written.
+##### `malloc()`
+
+`malloc()` is used to allocate memory dynamically during runtime. The function returns a pointer to the allocated memory block of the requested size. The syntax for `malloc()` is as follows:
+
+```c
+void *malloc(size_t size);
+```
+
+Here, `size_t` is an unsigned integer type that represents the size of the memory block in bytes. The `malloc()` function allocates a memory block of the specified size and returns a pointer to the first byte of the block. If the function fails to allocate memory, it returns a `NULL` pointer.
+
+For example, the following code snippet allocates an array of integers dynamically using `malloc()`:
+
+```c
+int *ptr;
+int n = 10;
+ptr = (int*)malloc(n * sizeof(int));
+if (ptr == NULL) {
+   printf("Memory allocation failed.\n");
+} else {
+   // use the allocated memory
+   for (int i = 0; i < n; i++) {
+      ptr[i] = i;
+   }
+   // deallocate the memory when done using it
+   free(ptr);
+}
+```
+
+##### `calloc()`
+
+`calloc()` is similar to `malloc()`, but it also initializes the allocated memory block to zero. The syntax for `calloc()` is as follows:
+
+```c
+void *calloc(size_t nmemb, size_t size);
+```
+
+Here, `nmemb` is the number of elements to be allocated, and `size` is the size of each element in bytes. The function allocates a memory block of size `nmemb * size`, initializes it to zero, and returns a pointer to the first byte of the block. If the function fails to allocate memory, it returns a `NULL` pointer.
+
+For example, the following code snippet allocates an array of integers and initializes it to zero using `calloc()`:
+
+```c
+int *ptr;
+int n = 10;
+ptr = (int*)calloc(n, sizeof(int));
+if (ptr == NULL) {
+   printf("Memory allocation failed.\n");
+} else {
+   // use the allocated memory
+   for (int i = 0; i < n; i++) {
+      printf("%d ", ptr[i]);
+   }
+   // deallocate the memory when done using it
+   free(ptr);
+}
+```
+
+##### `realloc()`
+
+`realloc()` is another important function for dynamic memory allocation in C. It is used to resize the previously allocated memory block. The syntax for `realloc()` is as follows:
+
+```c
+void *realloc(void *ptr, size_t size);
+```
+
+Here, `ptr` is a pointer to the memory block previously allocated with `malloc()`, `calloc()` or `realloc()`, and `size` is the new size of the block in bytes. The function returns a pointer to the new memory block of the requested size. If the function fails to allocate memory, it returns a `NULL` pointer and leaves the original memory block intact.
+
+For example, the following code snippet allocates an array of integers using `malloc()`, and then resizes the block using `realloc()`:
+
+```c
+int *ptr;
+int n = 10;
+ptr = (int*)malloc(n * sizeof(int));
+if (ptr == NULL) {
+   printf("Memory allocation failed.\n");
+} else {
+   // use the allocated memory
+   for (int i = 0; i < n; i++) {
+      ptr[i] = i;
+   }
+   // resize the memory block
+   n = 20;
+   ptr = (int*)realloc(ptr, n * sizeof(int));
+   if (ptr == NULL) {
+      printf("Memory reallocation failed.\n");
+   } else {
+      // use the resized memory
+      for (int i = 10; i < n; i++) {
+         ptr[i] = i;
+      }
+      // deallocate the memory when done using it
+      free(ptr);
+   }
+}
+```
+
+In this example, the initial memory block is allocated using `malloc()` and filled with the integers from 0 to 9. Then, the block is resized using `realloc()` to a size of 20 integers. Finally, the resized block is filled with the integers from 10 to 19. It's important to note that `realloc()` **may move the memory block to a new location** if there isn't enough space to resize the block in place. While it's important to handle the case where `realloc()` returns a `NULL` pointer, indicating that the memory allocation failed.
+
+#### Deallocation
+
+Deallocate of memory resources are done with the `free()` function when it is no longer needed to avoid memory leaks.
 
 #### Memory Leak
 
-> Yet to be written.
+Memory leak is a common problem in program development where memory that is allocated during the runtime of a program is not properly released after it is no longer needed. This can lead to a gradual depletion of available memory and ultimately cause the program to crash or become unresponsive.
+
+Memory leak can occur due to various reasons, including:
+
+1. **Forgetting to deallocate memory**: When a program allocates memory using functions like `malloc()` or `calloc()`, it is responsible for deallocating the memory using the `free()` function when it is no longer needed. Forgetting to deallocate memory can cause a memory leak.
+2. **Losing track of memory addresses**: If a program loses track of the address of a block of allocated memory, it cannot deallocate that memory, leading to a memory leak.
+3. Inefficient memory management: Poorly optimized memory management can cause memory leaks. For example, a program that frequently allocates and deallocates memory in a loop can create **memory fragmentation**, making it harder for the program to allocate contiguous blocks of memory.
+4. **Multithreading** issues: In multithreaded programs, memory leaks can occur due to race conditions and synchronization issues. For example, if two threads access the same memory block, one may deallocate it while the other still needs it, causing a memory leak.
+
+To avoid memory leaks, it's important to allocate memory only when necessary and deallocate it as soon as it is no longer needed, though, a perfect solution towards memory leak is Turing Incomputable.
+
+#### A Further Example on Struct
+
+Allocating memory for a struct using `malloc()` in one function and deallocating it using `free()` in another function can be useful in more complicated scenarios, where the struct contains dynamically allocated memory or is used across multiple functions or files.
+
+Here's an example for `Array` struct:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int size;
+    int *data;
+} Array;
+
+Array *create_array(int size) {
+    Array *arr = (Array*)malloc(sizeof(Array));
+    if (arr == NULL) {
+        printf("Memory allocation failed.\n");
+        return NULL;
+    }
+    arr->size = size;
+    arr->data = (int*)malloc(size * sizeof(int));
+    if (arr->data == NULL) {
+        printf("Memory allocation failed.\n");
+        free(arr);
+        return NULL;
+    }
+    return arr;
+}
+
+void write_array(Array *arr) {
+    for (int i = 0; i < arr->size; i++) {
+        arr->data[i] = i;
+    }
+}
+
+void print_array(Array *arr) {
+    printf("Array size: %d\n", arr->size);
+    printf("Array data: ");
+    for (int i = 0; i < arr->size; i++) {
+        printf("%d ", arr->data[i]);
+    }
+    printf("\n");
+}
+
+void free_array(Array *arr) {
+    free(arr->data);
+    free(arr);
+}
+
+int main() {
+    Array *arr = create_array(5);
+    if (arr == NULL) {
+        return 1;
+    }
+    write_array(arr);
+    print_array(arr);
+    free_array(arr);
+    return 0;
+}
+```
+
+In this example, we define a `struct` called `Array`, which contains a size and a pointer to an integer array. The `create_array()` function allocates memory for the `Array` struct using `malloc()`, as well as for the integer array using `malloc()`. If either allocation fails, the function returns `NULL`. Otherwise, it initializes the `size` field and returns a pointer to the `Array` struct.
+
+The `write_array()` function fills the integer array with the numbers from 0 to `size-1`, and the `print_array()` function prints the size and contents of the array to the console.
+
+Finally, the `free_array()` function deallocates the memory for the integer array using `free()`, followed by the memory for the `Array` struct itself using `free()`.
+
+In fact, The example demonstrates how to implant **constructor** and **destructor** for allocating and deallocating resources for an object, and how to use the object across multiple functions. This programing pattern will be useful in the implantation of `List`.
 
 ### C-String
 

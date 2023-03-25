@@ -342,7 +342,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#address-types">Address Types</a></li>
 </ul>
 </li>
-<li><a href="#smemory-orders">Memory Order</a></li>
+<li><a href="#memory-order">Memory Order</a></li>
 </ul>
 </li>
 <li><a href="#pointers-variables-supposed-to-store-addresses">Pointers: Variables Supposed to Store Addresses</a>
@@ -363,14 +363,22 @@ pre[data-line] .line-highlight[data-end]:after {
 <ul>
 <li><a href="#array">Array</a></li>
 <li><a href="#pointer-arithmetics-with-array-name">Pointer Arithmetics With Array Name</a></li>
-<li><a href="#operator">Operator <code>[]</code></a></li>
+<li><a href="#operator-">operator <code>[]</code></li>
 </ul>
 </li>
 <li><a href="#pointer-as-function-parameters">Pointer as Function Parameters</a></li>
 <li><a href="#dynamic-memory-allocation">Dynamic Memory Allocation</a>
 <ul>
-<li><a href="#allocation">Allocation</a></li>
+<li><a href="#allocation">Allocation</a>
+<ul>
+<li><a href="#malloc"><code>malloc()</code></a></li>
+<li><a href="#calloc"><code>calloc()</code></a></li>
+<li><a href="#realloc"><code>realloc()</code></a></li>
+</ul>
+</li>
+<li><a href="#deallocation">Deallocation</a></li>
 <li><a href="#memory-leak">Memory Leak</a></li>
+<li><a href="#a-further-example-on-struct">A Further Example on Struct</a></li>
 </ul>
 </li>
 <li><a href="#c-string">C-String</a>
@@ -388,9 +396,9 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#6-the-most-important-io">6. The Most Important: IO</a>
 <ul>
 <li><a href="#1-input-using-scanf">(1). Input using <code>scanf()</code></a></li>
-<li><a href="#2-input-using-scanfs">(2). Input using <code>scanf_s()</code></a></li>
+<li><a href="#2-input-using-scanf_s">(2). Input using <code>scanf_s()</code></a></li>
 <li><a href="#3-output-using-printf">(3). Output using <code>printf()</code></a></li>
-<li><a href="#4-output-using-printfs">(4). Output using <code>printf_s()</code></a></li>
+<li><a href="#4-output-using-printf_s">(4). Output using <code>printf_s()</code></a></li>
 </ul>
 </li>
 </ul>
@@ -443,7 +451,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#essence-polymorphism">Essence: Polymorphism</a>
 <ul>
 <li><a href="#examples-of-static-polymorphism-in-mathh">Examples of Static Polymorphism in <code>math.h</code></a></li>
-<li><a href="#the-generic-macro">The <code>_Generic</code> Macro</a></li>
+<li><a href="#the-_generic-macro">The <code>_Generic</code> Macro</a></li>
 </ul>
 </li>
 <li><a href="#dynamic-polymorphism">Dynamic Polymorphism</a>
@@ -804,24 +812,187 @@ For example, consider the following code:</p>
 <p>While using <code>1[arr]</code> is technically valid and will produce the same result as <code>arr[1]</code>, it is generally considered poor coding style and <strong>should be avoided</strong> in favor of the more common <code>arr[1]</code> notation.</p>
 <h3 class="mume-header" id="pointer-as-function-parameters">Pointer as Function Parameters</h3>
 
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
+<p>With pointers as function parameters, we can pass a memory address instead of passing the actual value of a variable. Thus we can access the variable itself and not the copy.</p>
+<p>This can be especially useful when working with large data structures or when we want to modify the value of a variable inside a function and have those modifications reflected in the calling code.</p>
+<p>For example, if we want to pass a pointer to an integer to a function, we can declare the function like this:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span> ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>In this declaration, the parameter <code>ptr</code> is a pointer to an integer.</p>
+<p>When we call the function, we can pass a pointer to an integer variable like this:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> myInt <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">;</span>
+<span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>myInt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>Here, we&apos;re passing the memory address of <code>myInt</code> using the <code>&amp;</code> (address-of) operator.</p>
+<p>Inside the function, we can use the pointer to access and modify the value of the integer variable that it points to.</p>
+<p>For example, we could increment the value of the integer variable by one like this:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span> ptr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token operator">++</span><span class="token punctuation">;</span>  
+    <span class="token comment">// increment the value that the pointer points to</span>
+<span class="token punctuation">}</span>
+</pre><p>The parentheses are necessary because the dereference operator (<code>*</code>) has lower precedence than the increment operator (<code>++</code>).</p>
+<p>For the example of passing large data structures, consider passing arrays as function parameters which is also commonly done using pointers. Here&apos;s an example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token function">printArray</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span> arr<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d &quot;</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> arr<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-int">int</span> size <span class="token operator">=</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printArray</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>It should be mentioned that when we pass an array to a function, the name of the array <strong>decays</strong> to a pointer to the first element of the array. This means that the function receives a pointer to the first element of the array, <strong>not the entire array itself</strong>. So when we call <code>printArray(arr, size)</code>, we&apos;re actually passing a pointer to the first element of the <code>arr</code> array. Inside the <code>printArray</code> function, we can access the elements of the array using pointer arithmetic (<code>arr[i]</code>).</p>
 <h3 class="mume-header" id="dynamic-memory-allocation">Dynamic Memory Allocation</h3>
 
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
+<p>Dynamic memory allocation is a useful feature in the C programming language that allows the programmer to allocate and deallocate memory during the <strong>runtime</strong> of a program. The two most commonly used functions for dynamic memory allocation in C are <code>malloc()</code> and <code>calloc()</code>.</p>
 <h4 class="mume-header" id="allocation">Allocation</h4>
 
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
+<h5 class="mume-header" id="malloc"><code>malloc()</code></h5>
+
+<p><code>malloc()</code> is used to allocate memory dynamically during runtime. The function returns a pointer to the allocated memory block of the requested size. The syntax for <code>malloc()</code> is as follows:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token operator">*</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>Here, <code>size_t</code> is an unsigned integer type that represents the size of the memory block in bytes. The <code>malloc()</code> function allocates a memory block of the specified size and returns a pointer to the first byte of the block. If the function fails to allocate memory, it returns a <code>NULL</code> pointer.</p>
+<p>For example, the following code snippet allocates an array of integers dynamically using <code>malloc()</code>:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> n <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span>n <span class="token operator">*</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>ptr <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Memory allocation failed.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+   <span class="token comment">// use the allocated memory</span>
+   <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token comment">// deallocate the memory when done using it</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="calloc"><code>calloc()</code></h5>
+
+<p><code>calloc()</code> is similar to <code>malloc()</code>, but it also initializes the allocated memory block to zero. The syntax for <code>calloc()</code> is as follows:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token operator">*</span><span class="token function">calloc</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> nmemb<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>Here, <code>nmemb</code> is the number of elements to be allocated, and <code>size</code> is the size of each element in bytes. The function allocates a memory block of size <code>nmemb * size</code>, initializes it to zero, and returns a pointer to the first byte of the block. If the function fails to allocate memory, it returns a <code>NULL</code> pointer.</p>
+<p>For example, the following code snippet allocates an array of integers and initializes it to zero using <code>calloc()</code>:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> n <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">calloc</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>ptr <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Memory allocation failed.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+   <span class="token comment">// use the allocated memory</span>
+   <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d &quot;</span><span class="token punctuation">,</span> ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token comment">// deallocate the memory when done using it</span>
+   <span class="token function">free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="realloc"><code>realloc()</code></h5>
+
+<p><code>realloc()</code> is another important function for dynamic memory allocation in C. It is used to resize the previously allocated memory block. The syntax for <code>realloc()</code> is as follows:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token operator">*</span><span class="token function">realloc</span><span class="token punctuation">(</span><span class="token keyword keyword-void">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>Here, <code>ptr</code> is a pointer to the memory block previously allocated with <code>malloc()</code>, <code>calloc()</code> or <code>realloc()</code>, and <code>size</code> is the new size of the block in bytes. The function returns a pointer to the new memory block of the requested size. If the function fails to allocate memory, it returns a <code>NULL</code> pointer and leaves the original memory block intact.</p>
+<p>For example, the following code snippet allocates an array of integers using <code>malloc()</code>, and then resizes the block using <code>realloc()</code>:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> n <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span>n <span class="token operator">*</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>ptr <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Memory allocation failed.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+   <span class="token comment">// use the allocated memory</span>
+   <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token comment">// resize the memory block</span>
+   n <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+   ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>ptr<span class="token punctuation">,</span> n <span class="token operator">*</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>ptr <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Memory reallocation failed.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span> <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// use the resized memory</span>
+      <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment">// deallocate the memory when done using it</span>
+      <span class="token function">free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>In this example, the initial memory block is allocated using <code>malloc()</code> and filled with the integers from 0 to 9. Then, the block is resized using <code>realloc()</code> to a size of 20 integers. Finally, the resized block is filled with the integers from 10 to 19. It&apos;s important to note that <code>realloc()</code> <strong>may move the memory block to a new location</strong> if there isn&apos;t enough space to resize the block in place. While it&apos;s important to handle the case where <code>realloc()</code> returns a <code>NULL</code> pointer, indicating that the memory allocation failed.</p>
+<h4 class="mume-header" id="deallocation">Deallocation</h4>
+
+<p>Deallocate of memory resources are done with the <code>free()</code> function when it is no longer needed to avoid memory leaks.</p>
 <h4 class="mume-header" id="memory-leak">Memory Leak</h4>
 
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
+<p>Memory leak is a common problem in program development where memory that is allocated during the runtime of a program is not properly released after it is no longer needed. This can lead to a gradual depletion of available memory and ultimately cause the program to crash or become unresponsive.</p>
+<p>Memory leak can occur due to various reasons, including:</p>
+<ol>
+<li><strong>Forgetting to deallocate memory</strong>: When a program allocates memory using functions like <code>malloc()</code> or <code>calloc()</code>, it is responsible for deallocating the memory using the <code>free()</code> function when it is no longer needed. Forgetting to deallocate memory can cause a memory leak.</li>
+<li><strong>Losing track of memory addresses</strong>: If a program loses track of the address of a block of allocated memory, it cannot deallocate that memory, leading to a memory leak.</li>
+<li>Inefficient memory management: Poorly optimized memory management can cause memory leaks. For example, a program that frequently allocates and deallocates memory in a loop can create <strong>memory fragmentation</strong>, making it harder for the program to allocate contiguous blocks of memory.</li>
+<li><strong>Multithreading</strong> issues: In multithreaded programs, memory leaks can occur due to race conditions and synchronization issues. For example, if two threads access the same memory block, one may deallocate it while the other still needs it, causing a memory leak.</li>
+</ol>
+<p>To avoid memory leaks, it&apos;s important to allocate memory only when necessary and deallocate it as soon as it is no longer needed, though, a perfect solution towards memory leak is Turing Incomputable.</p>
+<h4 class="mume-header" id="a-further-example-on-struct">A Further Example on Struct</h4>
+
+<p>Allocating memory for a struct using <code>malloc()</code> in one function and deallocating it using <code>free()</code> in another function can be useful in more complicated scenarios, where the struct contains dynamically allocated memory or is used across multiple functions or files.</p>
+<p>Here&apos;s an example for <code>Array</code> struct:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+
+<span class="token keyword keyword-typedef">typedef</span> <span class="token keyword keyword-struct">struct</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> size<span class="token punctuation">;</span>
+    <span class="token keyword keyword-int">int</span> <span class="token operator">*</span>data<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> Array<span class="token punctuation">;</span>
+
+Array <span class="token operator">*</span><span class="token function">create_array</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Array <span class="token operator">*</span>arr <span class="token operator">=</span> <span class="token punctuation">(</span>Array<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>Array<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>arr <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Memory allocation failed.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-return">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    arr<span class="token operator">-&gt;</span>size <span class="token operator">=</span> size<span class="token punctuation">;</span>
+    arr<span class="token operator">-&gt;</span>data <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span>size <span class="token operator">*</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>arr<span class="token operator">-&gt;</span>data <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Memory allocation failed.\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">free</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword keyword-return">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-return">return</span> arr<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-void">void</span> <span class="token function">write_array</span><span class="token punctuation">(</span>Array <span class="token operator">*</span>arr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token operator">-&gt;</span>size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        arr<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-void">void</span> <span class="token function">print_array</span><span class="token punctuation">(</span>Array <span class="token operator">*</span>arr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Array size: %d\n&quot;</span><span class="token punctuation">,</span> arr<span class="token operator">-&gt;</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Array data: &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token operator">-&gt;</span>size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d &quot;</span><span class="token punctuation">,</span> arr<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-void">void</span> <span class="token function">free_array</span><span class="token punctuation">(</span>Array <span class="token operator">*</span>arr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>arr<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Array <span class="token operator">*</span>arr <span class="token operator">=</span> <span class="token function">create_array</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>arr <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">write_array</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print_array</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free_array</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>In this example, we define a <code>struct</code> called <code>Array</code>, which contains a size and a pointer to an integer array. The <code>create_array()</code> function allocates memory for the <code>Array</code> struct using <code>malloc()</code>, as well as for the integer array using <code>malloc()</code>. If either allocation fails, the function returns <code>NULL</code>. Otherwise, it initializes the <code>size</code> field and returns a pointer to the <code>Array</code> struct.</p>
+<p>The <code>write_array()</code> function fills the integer array with the numbers from 0 to <code>size-1</code>, and the <code>print_array()</code> function prints the size and contents of the array to the console.</p>
+<p>Finally, the <code>free_array()</code> function deallocates the memory for the integer array using <code>free()</code>, followed by the memory for the <code>Array</code> struct itself using <code>free()</code>.</p>
+<p>In fact, The example demonstrates how to implant <strong>constructor</strong> and <strong>destructor</strong> for allocating and deallocating resources for an object, and how to use the object across multiple functions. This programing pattern will be useful in the implantation of <code>List</code>.</p>
 <h3 class="mume-header" id="c-string">C-String</h3>
 
 <h4 class="mume-header" id="c-styled-string">C-Styled String</h4>
