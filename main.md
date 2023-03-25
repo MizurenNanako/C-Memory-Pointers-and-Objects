@@ -62,11 +62,23 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
       - [Array](#array)
       - [Pointer Arithmetics With Array Name](#pointer-arithmetics-with-array-name)
       - [Operator `[]`](#operator)
-    - [C-String](#c-string)
     - [Pointer as Function Parameters](#pointer-as-function-parameters)
     - [Dynamic Memory Allocation](#dynamic-memory-allocation)
       - [Allocation](#allocation)
       - [Memory Leak](#memory-leak)
+    - [C-String](#c-string)
+      - [C-Styled String](#c-styled-string)
+    - [String Operation with Standard Library](#string-operation-with-standard-library)
+      - [1. String length (`strlen()` and `strnlen()`)](#1-string-length-strlen-and-strnlen)
+      - [2. String copy (`strcpy()` and `strncpy()`)](#2-string-copy-strcpy-and-strncpy)
+      - [3. String concatenation (`strcat()` and `strncat()`)](#3-string-concatenation-strcat-and-strncat)
+      - [4. String comparison (`strcmp()` and `strncmp()`)](#4-string-comparison-strcmp-and-strncmp)
+      - [5. Substring search (`strstr()` and `strnstr()`)](#5-substring-search-strstr-and-strnstr)
+      - [6. The Most Important: IO](#6-the-most-important-io)
+        - [(1). Input using `scanf()`](#1-input-using-scanf)
+        - [(2). Input using `scanf_s()`](#2-input-using-scanfs)
+        - [(3). Output using `printf()`](#3-output-using-printf)
+        - [(4). Output using `printf_s()`](#4-output-using-printfs)
   - [Data Structures (Embedded and Generalized)](#data-structures-embedded-and-generalized)
     - [Vector: Array with Dynamic Length](#vector-array-with-dynamic-length)
     - [Linking List](#linking-list)
@@ -608,88 +620,324 @@ Here, we are using pointer arithmetics to compute the memory address of the thir
 
 The equivalency also reveals that, the `[]` operator is commutative, which means the order of the operands does not matter, that `arr[1]` is equivalent to `1[arr]`.
 
-To understand why this is the case, it's important to remember that the `[]` operator is implemented using pointer arithmetics. Specifically, `arr[1]` is equivalent to `*(arr + 1)`, which means "dereference the memory location that is one element after the address of the first element of the array". Similarly, `1[arr]` is equivalent to `*(1 + arr)`, which means "dereference the memory location that is one element after the address of the memory location pointed to by the variable `arr`". 
+To understand why this is the case, it's important to remember that the `[]` operator is implemented using pointer arithmetics. Specifically, `arr[1]` is equivalent to `*(arr + 1)`, which means "dereference the memory location that is one element after the address of the first element of the array". Similarly, `1[arr]` is equivalent to `*(1 + arr)`, which means "dereference the memory location that is one element after the address of the memory location pointed to by the variable `arr`".
 
 Since addition is commutative, the expressions `arr + 1` and `1 + arr` are equivalent, and so `arr[1]` and `1[arr]` both refer to the same memory location and will yield the same result.
 
 While using `1[arr]` is technically valid and will produce the same result as `arr[1]`, it is generally considered poor coding style and **should be avoided** in favor of the more common `arr[1]` notation.
 
-### C-String
-
-
-
 ### Pointer as Function Parameters
+
+> Yet to be written.
 
 ### Dynamic Memory Allocation
 
+> Yet to be written.
+
 #### Allocation
 
+> Yet to be written.
+
 #### Memory Leak
+
+> Yet to be written.
+
+### C-String
+
+#### C-Styled String
+
+In C programming, **a C-styled string is a sequence of characters that is terminated by a null character ('\0')**. It is also known as a null-terminated string or a C string. C-styled strings are commonly used in C programming to represent text or character data, with implantation using character arrays, also known as char arrays.
+
+**Thus, we can say that all C-styled strings are char arrays, but not every char array a C-styled string**, for C-styled strings are always terminated by a null character ('\0'). This null character is used to indicate the end of the string. Char arrays, on the other hand, do not have this null character by default. This means that char arrays can contain arbitrary data and may not represent a valid string.
+
+In fact, when passing char array to functions, there should be another parameter which accepts the array's length. It is generally a good practice,since char arrays do not have a built-in way to determine their own length.
+
+> Without passing the length of the array as a separate parameter, it can be difficult to correctly process the contents of the array. For example, if you are trying to copy the contents of one char array to another, and you do not know the length of the source array, you may end up copying too much data or not enough data.
+>
+> To avoid such issues, it is common to pass the length of the char array as a separate parameter when passing it to a function. For example, you might have a function like this:
+>
+> ```c
+> void my_function(char my_array[], int length) {
+>     // Do something with my_array and length
+> }
+> ```
+>
+> In this function, the `my_array` parameter is the char array being passed to the function, and the `length` parameter is the length of the array. By passing both of these parameters to the function, it is possible to correctly process the contents of the array without encountering any issues related to array length.
+
+However, while C-Styled String has a null terminator, so their length can be acquired from themselves.
+
+In fact, C-styled strings are often passed to functions as a pointer to the first character of the string, without the need to pass the length of the string as a separate parameter. This is because the null terminator at the end of the string serves as a sentinel value, indicating the end of the string.
+
+> For example, the `strlen()` function in the standard C library is used to determine the length of a C-styled string. This function takes a C-styled string as its parameter and returns the length of the string, not including the null terminator. Here is an example of using `strlen()` to determine the length of a C-styled string:
+>
+> ```c
+> char my_string[] = "Hello, world!";
+> int length = strlen(my_string);
+> ```
+>
+> In this example, the `my_string` array is a C-styled string, and the `strlen()` function is used to determine its length. The resulting value of `length` will be 13, which is the length of the string "Hello, world!".
+
+### String Operation with Standard Library
+
+Of course, there are both with-length and just-string versions of functions in standard library. So examples will be provided in both versions. By specifying the maximum length of the strings being manipulated, you can ensure that your code is safe from buffer overflows and other potential security vulnerabilities.
+
+#### 1. String length (`strlen()` and `strnlen()`)
+
+The `strlen()` function returns the length of a C-styled string, not including the terminating null character.
+
+The `strnlen()` function does the same, but up to a maximum length specified by the caller.
+
+```c
+char str[] = "Hello, world!";
+int len = strlen(str);  
+// len = 13
+int len = strnlen(str, sizeof(str));  
+// len = 13
+```
+
+#### 2. String copy (`strcpy()` and `strncpy()`)
+
+The `strcpy()` function copies a C-styled string from one location to another.
+
+The `strncpy()` function does the same, but up to a maximum length specified by the caller.
+
+Example:
+
+```c
+char src[] = "Hello, world!";
+char dest[20];
+strcpy(dest, src);  
+// dest now contains "Hello, world!"
+strncpy(dest, src, sizeof(dest));  
+// dest now contains "Hello, world!"
+```
+
+#### 3. String concatenation (`strcat()` and `strncat()`)
+
+The `strcat()` function appends one C-styled string to another.
+
+The `strncat()` function does the same, but up to a maximum length specified by the caller.
+
+Example:
+
+```c
+char str1[20] = "Hello, ";
+char str2[] = "world!";
+strcat(str1, str2);  
+// str1 now contains "Hello, world!"
+strncat(str1, str2, sizeof(str1) - strlen(str1) - 1);  
+// str1 now contains "Hello, world!"
+```
+
+Note that we subtract `strlen(str1) + 1` from the maximum length to ensure that the null terminator is always included.
+
+#### 4. String comparison (`strcmp()` and `strncmp()`)
+
+The `strcmp()` function compares two C-styled strings and returns an integer value that indicates their relative order.
+
+The `strncmp()` function compares two C-styled strings up to a maximum length specified by the caller and returns an integer value that indicates their relative order.
+
+Example:
+
+```c
+char str1[] = "Hello, world!";
+char str2[] = "hello, world!";
+int result = strcmp(str1, str2);  
+// result = 1 (because 'H' comes after 'h' in the ASCII 
+int result = strncmp(str1, str2, sizeof(str1));  
+// result = 1 (because 'H' comes after 'h' in the ASCII table)table)
+```
+
+#### 5. Substring search (`strstr()` and `strnstr()`)
+
+The `strstr()` function searches for a substring within a C-styled string and returns a pointer to the first occurrence of the substring.
+
+The `strnstr()` function searches for a substring within a C-styled string up to a maximum length specified by the caller and returns a pointer to the first occurrence of the substring.
+
+Example:
+
+```c
+char str[] = "The quick brown fox jumps over the lazy dog.";
+char sub[] = "brown";
+char* result = strstr(str, sub);  
+// result points to the substring "brown"
+char* result = strnstr(str, sub, sizeof(str));  
+// result points to the substring "brown"
+```
+
+#### 6. The Most Important: IO
+
+##### (1). Input using `scanf()`
+
+The `scanf()` function can be used to read input from the user, including input that is stored in a C-styled string. You can specify a format string that describes the expected format of the input, and use the `%s` format specifier to read a string from the user.
+
+Here is an example:
+
+```c
+char name[20];
+printf("Enter your name: ");
+scanf("%19s", name);  // read at most 19 characters into name
+printf("Hello, %s!\n", name);
+```
+
+In this example, the `%19s` format specifier tells `scanf()` to read at most 19 characters into the `name` string, to avoid a buffer overflow.
+
+##### (2). Input using `scanf_s()`
+
+The `scanf_s()` function is a safer version of `scanf()` that includes additional checks to help prevent buffer overflows and other security issues. It takes the same arguments as `scanf()`, but also requires the length of the input buffer to be specified.
+
+Here is an example:
+
+```c
+char name[20];
+printf("Enter your name: ");
+scanf_s("%19s", name, sizeof(name));  // read at most 19 characters into name
+printf("Hello, %s!\n", name);
+```
+
+In this example, the `sizeof(name)` argument tells `scanf_s()` the length of the `name` buffer, so that it can ensure that no more than 19 characters are read into the buffer.
+
+##### (3). Output using `printf()`
+
+The `printf()` function can be used to output text to the console, including text that is stored in a C-styled string. You can use the `%s` format specifier to output a string to the console. 
+
+Here is an example:
+
+```c
+char message[] = "Hello, world!";
+printf("%s\n", message);
+```
+
+In this example, the `%s` format specifier tells `printf()` to output the entire `message` string to the console.
+
+##### (4). Output using `printf_s()`
+
+The `printf_s()` function is a safer version of `printf()` that includes additional checks to help prevent buffer overflows and other security issues. It takes the same arguments as `printf()`, but also requires the length of the output buffer to be specified. 
+
+Here is an example:
+
+```c
+char message[] = "Hello, world!";
+printf_s("%s\n", message);
+```
+
+In this example, the length of the output buffer is determined automatically based on the length of the `message` string.
+These are just a few examples of the input and output functions that can be used with C-styled strings. By using the safer versions of these functions, you can help ensure that your code is free from potential security vulnerabilities.
 
 ## Data Structures (Embedded and Generalized)
 
 ### Vector: Array with Dynamic Length
 
+> Yet to be written.
+
 ### Linking List
 
 #### Forward List
 
+> Yet to be written.
+
 #### Bidirectional List
+
+> Yet to be written.
 
 #### Cyclone List
 
+> Yet to be written.
+
 #### Non-Embedded Implantation
 
+> Yet to be written.
+
 #### Linux List Implantation: The Wizard's Way
+
+> Yet to be written.
 
 ### Tree
 
 #### Segment Tree
 
+> Yet to be written.
+
 #### Trie Tree and KMP Algorithm
+
+> Yet to be written.
 
 ### A glimpse into Graph
 
 #### Graph
 
+> Yet to be written.
+
 #### Dijkstra Algorithm
+
+> Yet to be written.
 
 ## Function Pointer and Higher-Order Function
 
 ### Function Pointer
 
+> Yet to be written.
+
 ### Closure
 
+> Yet to be written.
+
 ### Higher-Order Function
+
+> Yet to be written.
 
 ## Object-Oriented Programing in C
 
 ### Definition for an Object
 
+> Yet to be written.
+
 ### A Simple Object Implantation in C
 
 #### Attributes: Member Variables and Methods
 
+> Yet to be written.
+
 #### `this` Parameter, or You Can Name It `Self`
 
+> Yet to be written.
+
 #### Static or Dynamic? This is a Problem.
+
+> Yet to be written.
 
 ### Essence: Polymorphism
 
 #### Examples of Static Polymorphism in `math.h`
 
+> Yet to be written.
+
 #### The `_Generic` Macro
+
+> Yet to be written.
 
 ### Dynamic Polymorphism
 
 #### Dynamic Polymorphism Implantation with Silly Type Checking
 
+> Yet to be written.
+
 #### Implantation: The `Variant`
+
+> Yet to be written.
 
 #### Composition: A Trick of Memory
 
+> Yet to be written.
+
 #### Inheritance: The `vtable` and Method Overriding
+
+> Yet to be written.
 
 #### Virtual Inheritance: `vtable` of Base Classes
 
+> Yet to be written.
+
 ## Epilogue: The Story of CFront
+
+> Yet to be written.

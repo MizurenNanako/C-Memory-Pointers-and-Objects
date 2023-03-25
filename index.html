@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>main</title>
+      <title>C: Memory, Pointers, and Objects</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -366,12 +366,33 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#operator">Operator <code>[]</code></a></li>
 </ul>
 </li>
-<li><a href="#c-string">C-String</a></li>
 <li><a href="#pointer-as-function-parameters">Pointer as Function Parameters</a></li>
 <li><a href="#dynamic-memory-allocation">Dynamic Memory Allocation</a>
 <ul>
 <li><a href="#allocation">Allocation</a></li>
 <li><a href="#memory-leak">Memory Leak</a></li>
+</ul>
+</li>
+<li><a href="#c-string">C-String</a>
+<ul>
+<li><a href="#c-styled-string">C-Styled String</a></li>
+</ul>
+</li>
+<li><a href="#string-operation-with-standard-library">String Operation with Standard Library</a>
+<ul>
+<li><a href="#1-string-length-strlen-and-strnlen">1. String length (<code>strlen()</code> and <code>strnlen()</code>)</a></li>
+<li><a href="#2-string-copy-strcpy-and-strncpy">2. String copy (<code>strcpy()</code> and <code>strncpy()</code>)</a></li>
+<li><a href="#3-string-concatenation-strcat-and-strncat">3. String concatenation (<code>strcat()</code> and <code>strncat()</code>)</a></li>
+<li><a href="#4-string-comparison-strcmp-and-strncmp">4. String comparison (<code>strcmp()</code> and <code>strncmp()</code>)</a></li>
+<li><a href="#5-substring-search-strstr-and-strnstr">5. Substring search (<code>strstr()</code> and <code>strnstr()</code>)</a></li>
+<li><a href="#6-the-most-important-io">6. The Most Important: IO</a>
+<ul>
+<li><a href="#1-input-using-scanf">(1). Input using <code>scanf()</code></a></li>
+<li><a href="#2-input-using-scanfs">(2). Input using <code>scanf_s()</code></a></li>
+<li><a href="#3-output-using-printf">(3). Output using <code>printf()</code></a></li>
+<li><a href="#4-output-using-printfs">(4). Output using <code>printf_s()</code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -781,84 +802,284 @@ For example, consider the following code:</p>
 <p>To understand why this is the case, it&apos;s important to remember that the <code>[]</code> operator is implemented using pointer arithmetics. Specifically, <code>arr[1]</code> is equivalent to <code>*(arr + 1)</code>, which means &quot;dereference the memory location that is one element after the address of the first element of the array&quot;. Similarly, <code>1[arr]</code> is equivalent to <code>*(1 + arr)</code>, which means &quot;dereference the memory location that is one element after the address of the memory location pointed to by the variable <code>arr</code>&quot;.</p>
 <p>Since addition is commutative, the expressions <code>arr + 1</code> and <code>1 + arr</code> are equivalent, and so <code>arr[1]</code> and <code>1[arr]</code> both refer to the same memory location and will yield the same result.</p>
 <p>While using <code>1[arr]</code> is technically valid and will produce the same result as <code>arr[1]</code>, it is generally considered poor coding style and <strong>should be avoided</strong> in favor of the more common <code>arr[1]</code> notation.</p>
-<h3 class="mume-header" id="c-string">C-String</h3>
-
 <h3 class="mume-header" id="pointer-as-function-parameters">Pointer as Function Parameters</h3>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="dynamic-memory-allocation">Dynamic Memory Allocation</h3>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="allocation">Allocation</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="memory-leak">Memory Leak</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
+<h3 class="mume-header" id="c-string">C-String</h3>
+
+<h4 class="mume-header" id="c-styled-string">C-Styled String</h4>
+
+<p>In C programming, <strong>a C-styled string is a sequence of characters that is terminated by a null character (&apos;\0&apos;)</strong>. It is also known as a null-terminated string or a C string. C-styled strings are commonly used in C programming to represent text or character data, with implantation using character arrays, also known as char arrays.</p>
+<p><strong>Thus, we can say that all C-styled strings are char arrays, but not every char array a C-styled string</strong>, for C-styled strings are always terminated by a null character (&apos;\0&apos;). This null character is used to indicate the end of the string. Char arrays, on the other hand, do not have this null character by default. This means that char arrays can contain arbitrary data and may not represent a valid string.</p>
+<p>In fact, when passing char array to functions, there should be another parameter which accepts the array&apos;s length. It is generally a good practice,since char arrays do not have a built-in way to determine their own length.</p>
+<blockquote>
+<p>Without passing the length of the array as a separate parameter, it can be difficult to correctly process the contents of the array. For example, if you are trying to copy the contents of one char array to another, and you do not know the length of the source array, you may end up copying too much data or not enough data.</p>
+<p>To avoid such issues, it is common to pass the length of the char array as a separate parameter when passing it to a function. For example, you might have a function like this:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token function">my_function</span><span class="token punctuation">(</span><span class="token keyword keyword-char">char</span> my_array<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Do something with my_array and length</span>
+<span class="token punctuation">}</span>
+</pre><p>In this function, the <code>my_array</code> parameter is the char array being passed to the function, and the <code>length</code> parameter is the length of the array. By passing both of these parameters to the function, it is possible to correctly process the contents of the array without encountering any issues related to array length.</p>
+</blockquote>
+<p>However, while C-Styled String has a null terminator, so their length can be acquired from themselves.</p>
+<p>In fact, C-styled strings are often passed to functions as a pointer to the first character of the string, without the need to pass the length of the string as a separate parameter. This is because the null terminator at the end of the string serves as a sentinel value, indicating the end of the string.</p>
+<blockquote>
+<p>For example, the <code>strlen()</code> function in the standard C library is used to determine the length of a C-styled string. This function takes a C-styled string as its parameter and returns the length of the string, not including the null terminator. Here is an example of using <code>strlen()</code> to determine the length of a C-styled string:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> my_string<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> length <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>my_string<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>In this example, the <code>my_string</code> array is a C-styled string, and the <code>strlen()</code> function is used to determine its length. The resulting value of <code>length</code> will be 13, which is the length of the string &quot;Hello, world!&quot;.</p>
+</blockquote>
+<h3 class="mume-header" id="string-operation-with-standard-library">String Operation with Standard Library</h3>
+
+<p>Of course, there are both with-length and just-string versions of functions in standard library. So examples will be provided in both versions. By specifying the maximum length of the strings being manipulated, you can ensure that your code is safe from buffer overflows and other potential security vulnerabilities.</p>
+<h4 class="mume-header" id="1-string-length-strlen-and-strnlen">1. String length (<code>strlen()</code> and <code>strnlen()</code>)</h4>
+
+<p>The <code>strlen()</code> function returns the length of a C-styled string, not including the terminating null character.</p>
+<p>The <code>strnlen()</code> function does the same, but up to a maximum length specified by the caller.</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> str<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// len = 13</span>
+<span class="token keyword keyword-int">int</span> len <span class="token operator">=</span> <span class="token function">strnlen</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// len = 13</span>
+</pre><h4 class="mume-header" id="2-string-copy-strcpy-and-strncpy">2. String copy (<code>strcpy()</code> and <code>strncpy()</code>)</h4>
+
+<p>The <code>strcpy()</code> function copies a C-styled string from one location to another.</p>
+<p>The <code>strncpy()</code> function does the same, but up to a maximum length specified by the caller.</p>
+<p>Example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> src<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-char">char</span> dest<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">strcpy</span><span class="token punctuation">(</span>dest<span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// dest now contains &quot;Hello, world!&quot;</span>
+<span class="token function">strncpy</span><span class="token punctuation">(</span>dest<span class="token punctuation">,</span> src<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>dest<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// dest now contains &quot;Hello, world!&quot;</span>
+</pre><h4 class="mume-header" id="3-string-concatenation-strcat-and-strncat">3. String concatenation (<code>strcat()</code> and <code>strncat()</code>)</h4>
+
+<p>The <code>strcat()</code> function appends one C-styled string to another.</p>
+<p>The <code>strncat()</code> function does the same, but up to a maximum length specified by the caller.</p>
+<p>Example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> str1<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, &quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-char">char</span> str2<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;world!&quot;</span><span class="token punctuation">;</span>
+<span class="token function">strcat</span><span class="token punctuation">(</span>str1<span class="token punctuation">,</span> str2<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// str1 now contains &quot;Hello, world!&quot;</span>
+<span class="token function">strncat</span><span class="token punctuation">(</span>str1<span class="token punctuation">,</span> str2<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// str1 now contains &quot;Hello, world!&quot;</span>
+</pre><p>Note that we subtract <code>strlen(str1) + 1</code> from the maximum length to ensure that the null terminator is always included.</p>
+<h4 class="mume-header" id="4-string-comparison-strcmp-and-strncmp">4. String comparison (<code>strcmp()</code> and <code>strncmp()</code>)</h4>
+
+<p>The <code>strcmp()</code> function compares two C-styled strings and returns an integer value that indicates their relative order.</p>
+<p>The <code>strncmp()</code> function compares two C-styled strings up to a maximum length specified by the caller and returns an integer value that indicates their relative order.</p>
+<p>Example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> str1<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-char">char</span> str2<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;hello, world!&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> result <span class="token operator">=</span> <span class="token function">strcmp</span><span class="token punctuation">(</span>str1<span class="token punctuation">,</span> str2<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// result = 1 (because &apos;H&apos; comes after &apos;h&apos; in the ASCII </span>
+<span class="token keyword keyword-int">int</span> result <span class="token operator">=</span> <span class="token function">strncmp</span><span class="token punctuation">(</span>str1<span class="token punctuation">,</span> str2<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// result = 1 (because &apos;H&apos; comes after &apos;h&apos; in the ASCII table)table)</span>
+</pre><h4 class="mume-header" id="5-substring-search-strstr-and-strnstr">5. Substring search (<code>strstr()</code> and <code>strnstr()</code>)</h4>
+
+<p>The <code>strstr()</code> function searches for a substring within a C-styled string and returns a pointer to the first occurrence of the substring.</p>
+<p>The <code>strnstr()</code> function searches for a substring within a C-styled string up to a maximum length specified by the caller and returns a pointer to the first occurrence of the substring.</p>
+<p>Example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> str<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;The quick brown fox jumps over the lazy dog.&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-char">char</span> sub<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;brown&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-char">char</span><span class="token operator">*</span> result <span class="token operator">=</span> <span class="token function">strstr</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> sub<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// result points to the substring &quot;brown&quot;</span>
+<span class="token keyword keyword-char">char</span><span class="token operator">*</span> result <span class="token operator">=</span> <span class="token function">strnstr</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> sub<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token comment">// result points to the substring &quot;brown&quot;</span>
+</pre><h4 class="mume-header" id="6-the-most-important-io">6. The Most Important: IO</h4>
+
+<h5 class="mume-header" id="1-input-using-scanf">(1). Input using <code>scanf()</code></h5>
+
+<p>The <code>scanf()</code> function can be used to read input from the user, including input that is stored in a C-styled string. You can specify a format string that describes the expected format of the input, and use the <code>%s</code> format specifier to read a string from the user.</p>
+<p>Here is an example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> name<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Enter your name: &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">&quot;%19s&quot;</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// read at most 19 characters into name</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Hello, %s!\n&quot;</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>In this example, the <code>%19s</code> format specifier tells <code>scanf()</code> to read at most 19 characters into the <code>name</code> string, to avoid a buffer overflow.</p>
+<h5 class="mume-header" id="2-input-using-scanf_s">(2). Input using <code>scanf_s()</code></h5>
+
+<p>The <code>scanf_s()</code> function is a safer version of <code>scanf()</code> that includes additional checks to help prevent buffer overflows and other security issues. It takes the same arguments as <code>scanf()</code>, but also requires the length of the input buffer to be specified.</p>
+<p>Here is an example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> name<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Enter your name: &quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">scanf_s</span><span class="token punctuation">(</span><span class="token string">&quot;%19s&quot;</span><span class="token punctuation">,</span> name<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// read at most 19 characters into name</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Hello, %s!\n&quot;</span><span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>In this example, the <code>sizeof(name)</code> argument tells <code>scanf_s()</code> the length of the <code>name</code> buffer, so that it can ensure that no more than 19 characters are read into the buffer.</p>
+<h5 class="mume-header" id="3-output-using-printf">(3). Output using <code>printf()</code></h5>
+
+<p>The <code>printf()</code> function can be used to output text to the console, including text that is stored in a C-styled string. You can use the <code>%s</code> format specifier to output a string to the console.</p>
+<p>Here is an example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> message<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%s\n&quot;</span><span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>In this example, the <code>%s</code> format specifier tells <code>printf()</code> to output the entire <code>message</code> string to the console.</p>
+<h5 class="mume-header" id="4-output-using-printf_s">(4). Output using <code>printf_s()</code></h5>
+
+<p>The <code>printf_s()</code> function is a safer version of <code>printf()</code> that includes additional checks to help prevent buffer overflows and other security issues. It takes the same arguments as <code>printf()</code>, but also requires the length of the output buffer to be specified.</p>
+<p>Here is an example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> message<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">;</span>
+<span class="token function">printf_s</span><span class="token punctuation">(</span><span class="token string">&quot;%s\n&quot;</span><span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>In this example, the length of the output buffer is determined automatically based on the length of the <code>message</code> string.<br>
+These are just a few examples of the input and output functions that can be used with C-styled strings. By using the safer versions of these functions, you can help ensure that your code is free from potential security vulnerabilities.</p>
 <h2 class="mume-header" id="data-structures-embedded-and-generalized">Data Structures (Embedded and Generalized)</h2>
 
 <h3 class="mume-header" id="vector-array-with-dynamic-length">Vector: Array with Dynamic Length</h3>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="linking-list">Linking List</h3>
 
 <h4 class="mume-header" id="forward-list">Forward List</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="bidirectional-list">Bidirectional List</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="cyclone-list">Cyclone List</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="non-embedded-implantation">Non-Embedded Implantation</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="linux-list-implantation-the-wizards-way">Linux List Implantation: The Wizard&apos;s Way</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="tree">Tree</h3>
 
 <h4 class="mume-header" id="segment-tree">Segment Tree</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="trie-tree-and-kmp-algorithm">Trie Tree and KMP Algorithm</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="a-glimpse-into-graph">A glimpse into Graph</h3>
 
 <h4 class="mume-header" id="graph">Graph</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="dijkstra-algorithm">Dijkstra Algorithm</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h2 class="mume-header" id="function-pointer-and-higher-order-function">Function Pointer and Higher-Order Function</h2>
 
 <h3 class="mume-header" id="function-pointer">Function Pointer</h3>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="closure">Closure</h3>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="higher-order-function">Higher-Order Function</h3>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h2 class="mume-header" id="object-oriented-programing-in-c">Object-Oriented Programing in C</h2>
 
 <h3 class="mume-header" id="definition-for-an-object">Definition for an Object</h3>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="a-simple-object-implantation-in-c">A Simple Object Implantation in C</h3>
 
 <h4 class="mume-header" id="attributes-member-variables-and-methods">Attributes: Member Variables and Methods</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="this-parameter-or-you-can-name-it-self"><code>this</code> Parameter, or You Can Name It <code>Self</code></h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="static-or-dynamic-this-is-a-problem">Static or Dynamic? This is a Problem.</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="essence-polymorphism">Essence: Polymorphism</h3>
 
 <h4 class="mume-header" id="examples-of-static-polymorphism-in-mathh">Examples of Static Polymorphism in <code>math.h</code></h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="the-_generic-macro">The <code>_Generic</code> Macro</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h3 class="mume-header" id="dynamic-polymorphism">Dynamic Polymorphism</h3>
 
 <h4 class="mume-header" id="dynamic-polymorphism-implantation-with-silly-type-checking">Dynamic Polymorphism Implantation with Silly Type Checking</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="implantation-the-variant">Implantation: The <code>Variant</code></h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="composition-a-trick-of-memory">Composition: A Trick of Memory</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="inheritance-the-vtable-and-method-overriding">Inheritance: The <code>vtable</code> and Method Overriding</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h4 class="mume-header" id="virtual-inheritance-vtable-of-base-classes">Virtual Inheritance: <code>vtable</code> of Base Classes</h4>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 <h2 class="mume-header" id="epilogue-the-story-of-cfront">Epilogue: The Story of CFront</h2>
 
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
 
       </div>
       
