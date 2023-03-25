@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-      <title>main</title>
+      <title>C: Memory, Pointers, and Objects</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
@@ -349,17 +349,24 @@ pre[data-line] .line-highlight[data-end]:after {
 <ul>
 <li><a href="#addressing-and-indirect-addressing">Addressing and Indirect Addressing</a>
 <ul>
-<li><a href="#pointer-as-function-parameters">Pointer as Function Parameters</a></li>
+<li><a href="#pointer-declaration">Pointer Declaration</a></li>
+<li><a href="#indirect-addressing">Indirect Addressing</a></li>
+<li><a href="#direct-addressing">Direct Addressing</a></li>
 </ul>
 </li>
-<li><a href="#the-true-mechanism-behind-scenes">The True Mechanism behind scenes</a></li>
+<li><a href="#typing">Typing</a>
+<ul>
+<li><a href="#type-of-the-pointer-and-the-pointed-to">Type of The Pointer And The Pointed-To</a></li>
+</ul>
+</li>
 <li><a href="#array-and-pointer-arithmetics">Array and Pointer Arithmetics</a>
 <ul>
-<li><a href="#type-inconsistency">Type Inconsistency</a></li>
-<li><a href="#world-of-dangerous-freedom">World of Dangerous Freedom</a></li>
+<li><a href="#array">Array</a></li>
+<li><a href="#pointer-arithmetics-with-array-name">Pointer Arithmetics With Array Name</a></li>
 </ul>
 </li>
 <li><a href="#c-string">C-String</a></li>
+<li><a href="#pointer-as-function-parameters">Pointer as Function Parameters</a></li>
 <li><a href="#dynamic-memory-allocation">Dynamic Memory Allocation</a>
 <ul>
 <li><a href="#allocation">Allocation</a></li>
@@ -645,19 +652,137 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Memory order is an important concept in parallel programming because it allows programs to safely and efficiently perform operations on shared memory. By ensuring that memory operations are performed in a synchronized and predictable manner, memory order primitives help to avoid data races and other synchronization issues, making it easier to write correct and efficient parallel programs.</p>
 <h2 class="mume-header" id="pointers-variables-supposed-to-store-addresses">Pointers: Variables Supposed to Store Addresses</h2>
 
+<p>In C programming language, a pointer is a variable that stores the memory address of another variable. The pointer is used to access the value of the variable at the memory address it points to.</p>
 <h3 class="mume-header" id="addressing-and-indirect-addressing">Addressing and Indirect Addressing</h3>
 
-<h4 class="mume-header" id="pointer-as-function-parameters">Pointer as Function Parameters</h4>
+<h4 class="mume-header" id="pointer-declaration">Pointer Declaration</h4>
 
-<h3 class="mume-header" id="the-true-mechanism-behind-scenes">The True Mechanism behind scenes</h3>
+<p>A pointer is declared by using the asterisk (*) symbol before the variable name. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+</pre><p>This declares a pointer named <code>ptr</code> that can store the memory address of an integer variable.</p>
+<p>To assign a memory address to a pointer, we use the address-of operator (&amp;) with the variable whose address we want to store. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span>
+</pre><p>This assigns the memory address of the integer variable <code>num</code> to the pointer <code>ptr</code>.<br>
+To access the value of the variable at the memory address pointed to by the pointer, we use the <strong>dereference operator (*)</strong> with the pointer variable. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span>
 
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;The value of num is %d\n&quot;</span><span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>This prints the value of the integer variable <code>num</code>, which is 10.<br>
+Pointers are useful in C programming because they allow us to manipulate memory directly. We can use pointers to pass arguments to functions, to allocate memory dynamically, and to work with arrays and structures. However, pointers can also be a source of errors if not used carefully, such as when attempting to access memory that has not been properly allocated or has already been deallocated.</p>
+<blockquote>
+<p>The use of the <code>*</code> and <code>&amp;</code> symbols for pointer operations in C can be traced back to the language&apos;s origins in the early 1970s.</p>
+<p>C was developed by Dennis Ritchie at Bell Labs as a language for systems programming. It was intended to be a simpler, more efficient alternative to the more complex languages of the time, such as Fortran and Algol. One of the key design principles of C was to provide direct access to the underlying hardware, including memory and other system resources.</p>
+<p>To achieve this goal, C included a powerful feature called pointers, which allowed programmers to manipulate memory addresses directly. To distinguish pointers from regular variables, Ritchie decided to use the <code>*</code> symbol to indicate that a variable was a pointer. This symbol was chosen because it was not used for any other purpose in C or in other languages at the time.</p>
+<p>The <code>&amp;</code> symbol was chosen to represent the address-of operator, which is used to obtain the memory address of a variable. This symbol was also not used for any other purpose in C or in other languages at the time.</p>
+<p>Together, the <code>*</code> and <code>&amp;</code> symbols form a simple, yet powerful syntax for working with pointers in C. Despite the fact that C has been around for over 50 years, this syntax has remained largely unchanged, and is still widely used today in many programming languages that have been influenced by C, including C++, Java, and Python.</p>
+</blockquote>
+<h4 class="mume-header" id="indirect-addressing">Indirect Addressing</h4>
+
+<p>We just mentioned <strong>Dereferencing</strong> of a pointer. In C, if a pointer variable stores the memory address of another variable. The dereference operator (<code>*</code>) can be used to access the value stored at the memory address pointed to by the pointer variable. This is often referred to as &quot;dereferencing&quot; the pointer.</p>
+<p>When we dereference a pointer, we are indirectly accessing the value stored at the memory location pointed to by the pointer. This is because we are <strong>not accessing</strong> the value directly through the pointer variable, but rather through the memory address it points to.</p>
+<p>For example, consider the following code:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token operator">&amp;</span>x<span class="token punctuation">;</span>
+
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Value of x: %d\n&quot;</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Value of *p: %d\n&quot;</span><span class="token punctuation">,</span> <span class="token operator">*</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>In this code, we declare an integer variable <code>x</code> and a pointer variable <code>p</code>. We use the address-of operator to assign the memory address of <code>x</code> to <code>p</code>. We then print out the values of <code>x</code> and <code>*p</code> using the <code>printf</code> function.<br>
+Note that <code>x</code> and <code>*p</code> both have the value of <code>10</code>. However, <code>x</code> is a regular variable, while <code>*p</code> is the value stored at the memory address pointed to by <code>p</code>. (Although in this case they are the same.) This demonstrates how the dereference operator is used to <strong>indirectly</strong> access the value stored in memory through a pointer variable.</p>
+<h4 class="mume-header" id="direct-addressing">Direct Addressing</h4>
+
+<p>In fact, when we use a regular variable in C, we are performing direct addressing.</p>
+<p>In direct addressing, we are accessing the value stored in a memory location directly, without the use of an intermediate pointer variable, or an address. This is in contrast to indirect addressing, where we access the value stored at a memory location indirectly, through a pointer variable, in another words, a address.</p>
+<h3 class="mume-header" id="typing">Typing</h3>
+
+<h4 class="mume-header" id="type-of-the-pointer-and-the-pointed-to">Type of The Pointer And The Pointed-To</h4>
+
+<p><strong>Pointers themselves do not store type information in C.</strong> Instead, the type information of a pointer is used to derived the data type of the variable it points to.<br>
+When you declare a pointer variable in C, you specify the data type of the variable it points to. For example, the following declaration creates a pointer variable that points to an integer:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+</pre><p>The data type of the pointer variable <code>ptr</code> is <code>int*</code>, which indicates that it <strong>should be</strong> pointed to, or <strong>assumes</strong> it will point to an integer variable. When you extract a memory address from a variable using the address-of operator (<code>&amp;</code>), the data type of the variable <strong>is actually lost</strong>.<br>
+For example, consider the following code:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-float">float</span> x <span class="token operator">=</span> <span class="token number">3.14</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-int">int</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>x<span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;The value %f reinterpreted as int is %d&quot;</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// The value 3.140000 reinterpreted as int is 1078523331</span>
+<span class="token comment">// (On an x86_64 Linux with little endian CPU)</span>
+</pre><p>In this code, we declare a <code>float</code> variable <code>x</code>, and a pointer variable <code>ptr</code> of type <code>int *</code>. We then assign the memory address of <code>x</code> to <code>ptr</code>. Though <strong>this code compiles without error</strong>, it should not appear in most occasions. (It is a trick in some special scenes.) It will result in (platfrom based) undefined behavior, and <strong>in 99.9% of time it may be a mistake</strong>.</p>
+<p>In fact, accessing the memory location pointed to by <code>ptr</code> with an <code>int</code> data type will interpret the bits in memory differently than if it were accessed with a <code>float</code> data type. This can result in unexpected behavior, such as the wrong value being read from memory, or even a crash.</p>
 <h3 class="mume-header" id="array-and-pointer-arithmetics">Array and Pointer Arithmetics</h3>
 
-<h4 class="mume-header" id="type-inconsistency">Type Inconsistency</h4>
+<h4 class="mume-header" id="array">Array</h4>
 
-<h4 class="mume-header" id="world-of-dangerous-freedom">World of Dangerous Freedom</h4>
+<p>In C programming language, an array is a collection of elements of the same data type, stored in contiguous memory locations. The elements in an array can be accessed using an index, which starts at 0 for the first element.</p>
+<p>The simplest form of an array is a one-dimensional array, which is an array with a single row of elements. Here is an example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> arr<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>This declares an integer array with 5 elements, and initializes it with the values 1, 2, 3, 4, and 5.</p>
+<p>To access an element of an array, we use the square bracket notation along with the index of the element we want to access. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> arr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   
+<span class="token comment">// Accesses the third element of the array (value 3)</span>
+</pre><p>In C, we can also create multi-dimensional arrays, which are arrays with multiple rows and columns. The most common form of a multi-dimensional array is a two-dimensional array, which can be thought of as a matrix.</p>
+<p>Here is an example of a two-dimensional array:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> matrix<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>This declares a 3x3 integer matrix, and initializes it with the values 1 through 9.</p>
+<p>To access an element of a multi-dimensional array, we use the square bracket notation along with the row and column indices of the element we want to access. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> matrix<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   
+<span class="token comment">// Accesses the element in the </span>
+<span class="token comment">//                    second row </span>
+<span class="token comment">//                    and third column</span>
+<span class="token comment">// (value 6)</span>
+</pre><p>We can also create multi-dimensional arrays with more than two dimensions, such as a three-dimensional array, which can be thought of as a cube.</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> cube<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token number">13</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token number">17</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token number">19</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token number">21</span><span class="token punctuation">,</span> <span class="token number">22</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>This declares a 2x3x4 integer cube, and initializes it with the values 1 through 24.</p>
+<p>To access an element of a three-dimensional array, we use the square bracket notation along with the indices of the row, column, and depth of the element we want to access. For example:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> cube<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   
+<span class="token comment">// Accesses the element in the </span>
+<span class="token comment">//                        second row, </span>
+<span class="token comment">//                        third column, </span>
+<span class="token comment">//                        and fourth depth </span>
+<span class="token comment">// (value 24)</span>
+</pre><p>And so on.</p>
+<h4 class="mume-header" id="pointer-arithmetics-with-array-name">Pointer Arithmetics With Array Name</h4>
 
+<p>In C, an array name is a pointer to the first element of the array. We can use pointer arithmetics to access other elements of the array.</p>
+<p>For example, consider the array declaration:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> arr<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>Here, <code>arr</code> is a pointer to the first element of the array, i.e., <code>arr[0]</code>. We can access other elements of the array using pointer arithmetics.</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d\n&quot;</span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token punctuation">(</span>arr<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// Output: 2, equivalent to arr[1]</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d\n&quot;</span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token punctuation">(</span>arr<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// Output: 3, equivalent to arr[2]</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%d\n&quot;</span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token punctuation">(</span>arr<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// Output: 4, equivalent to arr[3]</span>
+</pre><p>For string is actually an array (this will be discussed later), pointer arithmetics can also be used to traverse a string:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-char">char</span> str<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">&quot;Hello, World!&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-char">char</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> str<span class="token punctuation">;</span>   <span class="token comment">// Assigns the address of the first character to ptr</span>
+<span class="token keyword keyword-while">while</span> <span class="token punctuation">(</span><span class="token operator">*</span>ptr <span class="token operator">!=</span> <span class="token string">&apos;\0&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%c&quot;</span><span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ptr<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h4 class="mume-header" id="operator-">Operator <code>[]</code></h4>
+
+<p>In C programming language, the <code>[]</code> operator is used to access elements of an array using an index, when we use the <code>[]</code> operator to access an element of an array, <strong>it is equivalent to</strong> dereferencing a pointer at a specific offset from the base address of the array. For example, consider the following array declaration:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> arr<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre><p>To access the third element of the array, we can use the <code>[]</code> operator with an index of 2:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> arr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   
+<span class="token comment">// Accesses the third element of the array (value 3)</span>
+</pre><p>This is equivalent to dereferencing a pointer to the third element of the array:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span>arr<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+<span class="token comment">// Accesses the third element of the array (value 3)</span>
+</pre><p>Here, we are using pointer arithmetics to compute the memory address of the third element of the array, and then dereferencing it to obtain the value.</p>
+<p>The equivalency also reveals that, the <code>[]</code> operator is commutative, which means the order of the operands does not matter, that <code>arr[1]</code> is equivalent to <code>1[arr]</code>.</p>
+<p>To understand why this is the case, it&apos;s important to remember that the <code>[]</code> operator is implemented using pointer arithmetics. Specifically, <code>arr[1]</code> is equivalent to <code>*(arr + 1)</code>, which means &quot;dereference the memory location that is one element after the address of the first element of the array&quot;. Similarly, <code>1[arr]</code> is equivalent to <code>*(1 + arr)</code>, which means &quot;dereference the memory location that is one element after the address of the memory location pointed to by the variable <code>arr</code>&quot;.</p>
+<p>Since addition is commutative, the expressions <code>arr + 1</code> and <code>1 + arr</code> are equivalent, and so <code>arr[1]</code> and <code>1[arr]</code> both refer to the same memory location and will yield the same result.</p>
+<p>While using <code>1[arr]</code> is technically valid and will produce the same result as <code>arr[1]</code>, it is generally considered poor coding style and <strong>should be avoided</strong> in favor of the more common <code>arr[1]</code> notation.</p>
 <h3 class="mume-header" id="c-string">C-String</h3>
+
+<h3 class="mume-header" id="pointer-as-function-parameters">Pointer as Function Parameters</h3>
 
 <h3 class="mume-header" id="dynamic-memory-allocation">Dynamic Memory Allocation</h3>
 

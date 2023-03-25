@@ -53,12 +53,16 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
     - [Memory Order](#smemory-orders)
   - [Pointers: Variables Supposed to Store Addresses](#pointers-variables-supposed-to-store-addresses)
     - [Addressing and Indirect Addressing](#addressing-and-indirect-addressing)
-      - [Pointer as Function Parameters](#pointer-as-function-parameters)
-    - [The True Mechanism behind scenes](#the-true-mechanism-behind-scenes)
+      - [Pointer Declaration](#pointer-declaration)
+      - [Indirect Addressing](#indirect-addressing)
+      - [Direct Addressing](#direct-addressing)
+    - [Typing](#typing)
+      - [Type of The Pointer And The Pointed-To](#type-of-the-pointer-and-the-pointed-to)
     - [Array and Pointer Arithmetics](#array-and-pointer-arithmetics)
-      - [Type Inconsistency](#type-inconsistency)
-      - [World of Dangerous Freedom](#world-of-dangerous-freedom)
+      - [Array](#array)
+      - [Pointer Arithmetics With Array Name](#pointer-arithmetics-with-array-name)
     - [C-String](#c-string)
+    - [Pointer as Function Parameters](#pointer-as-function-parameters)
     - [Dynamic Memory Allocation](#dynamic-memory-allocation)
       - [Allocation](#allocation)
       - [Memory Leak](#memory-leak)
@@ -384,19 +388,234 @@ Memory order is an important concept in parallel programming because it allows p
 
 ## Pointers: Variables Supposed to Store Addresses
 
+In C programming language, a pointer is a variable that stores the memory address of another variable. The pointer is used to access the value of the variable at the memory address it points to.
+
 ### Addressing and Indirect Addressing
 
-#### Pointer as Function Parameters
+#### Pointer Declaration
 
-### The True Mechanism behind scenes
+A pointer is declared by using the asterisk (*) symbol before the variable name. For example:
+
+```c
+int *ptr;
+```
+
+This declares a pointer named `ptr` that can store the memory address of an integer variable.
+
+To assign a memory address to a pointer, we use the address-of operator (&) with the variable whose address we want to store. For example:
+
+```c
+int num = 10;
+int *ptr = &num;
+```
+
+This assigns the memory address of the integer variable `num` to the pointer `ptr`.
+To access the value of the variable at the memory address pointed to by the pointer, we use the **dereference operator (*)** with the pointer variable. For example:
+
+```c
+int num = 10;
+int *ptr = &num;
+
+printf("The value of num is %d\n", *ptr);
+```
+
+This prints the value of the integer variable `num`, which is 10.
+Pointers are useful in C programming because they allow us to manipulate memory directly. We can use pointers to pass arguments to functions, to allocate memory dynamically, and to work with arrays and structures. However, pointers can also be a source of errors if not used carefully, such as when attempting to access memory that has not been properly allocated or has already been deallocated.
+
+> The use of the `*` and `&` symbols for pointer operations in C can be traced back to the language's origins in the early 1970s.
+>
+> C was developed by Dennis Ritchie at Bell Labs as a language for systems programming. It was intended to be a simpler, more efficient alternative to the more complex languages of the time, such as Fortran and Algol. One of the key design principles of C was to provide direct access to the underlying hardware, including memory and other system resources.
+>
+> To achieve this goal, C included a powerful feature called pointers, which allowed programmers to manipulate memory addresses directly. To distinguish pointers from regular variables, Ritchie decided to use the `*` symbol to indicate that a variable was a pointer. This symbol was chosen because it was not used for any other purpose in C or in other languages at the time.
+>
+> The `&` symbol was chosen to represent the address-of operator, which is used to obtain the memory address of a variable. This symbol was also not used for any other purpose in C or in other languages at the time.
+>
+> Together, the `*` and `&` symbols form a simple, yet powerful syntax for working with pointers in C. Despite the fact that C has been around for over 50 years, this syntax has remained largely unchanged, and is still widely used today in many programming languages that have been influenced by C, including C++, Java, and Python.
+
+#### Indirect Addressing
+
+We just mentioned **Dereferencing** of a pointer. In C, if a pointer variable stores the memory address of another variable. The dereference operator (`*`) can be used to access the value stored at the memory address pointed to by the pointer variable. This is often referred to as "dereferencing" the pointer.
+
+When we dereference a pointer, we are indirectly accessing the value stored at the memory location pointed to by the pointer. This is because we are **not accessing** the value directly through the pointer variable, but rather through the memory address it points to.
+
+For example, consider the following code:
+
+```c
+int x = 10;
+int *p = &x;
+
+printf("Value of x: %d\n", x);
+printf("Value of *p: %d\n", *p);
+```
+
+In this code, we declare an integer variable `x` and a pointer variable `p`. We use the address-of operator to assign the memory address of `x` to `p`. We then print out the values of `x` and `*p` using the `printf` function.
+Note that `x` and `*p` both have the value of `10`. However, `x` is a regular variable, while `*p` is the value stored at the memory address pointed to by `p`. (Although in this case they are the same.) This demonstrates how the dereference operator is used to **indirectly** access the value stored in memory through a pointer variable.
+
+#### Direct Addressing
+
+In fact, when we use a regular variable in C, we are performing direct addressing.
+
+In direct addressing, we are accessing the value stored in a memory location directly, without the use of an intermediate pointer variable, or an address. This is in contrast to indirect addressing, where we access the value stored at a memory location indirectly, through a pointer variable, in another words, a address.
+
+### Typing
+
+#### Type of The Pointer And The Pointed-To
+
+**Pointers themselves do not store type information in C.** Instead, the type information of a pointer is used to derived the data type of the variable it points to.
+When you declare a pointer variable in C, you specify the data type of the variable it points to. For example, the following declaration creates a pointer variable that points to an integer:
+
+```c
+int *ptr;
+```
+
+The data type of the pointer variable `ptr` is `int*`, which indicates that it **should be** pointed to, or **assumes** it will point to an integer variable. When you extract a memory address from a variable using the address-of operator (`&`), the data type of the variable **is actually lost**.
+For example, consider the following code:
+
+```c
+float x = 3.14;
+int *ptr = &x;
+printf("The value %f reinterpreted as int is %d", x, *ptr);
+// The value 3.140000 reinterpreted as int is 1078523331
+// (On an x86_64 Linux with little endian CPU)
+```
+
+In this code, we declare a `float` variable `x`, and a pointer variable `ptr` of type `int *`. We then assign the memory address of `x` to `ptr`. Though **this code compiles without error**, it should not appear in most occasions. (It is a trick in some special scenes.) It will result in (platfrom based) undefined behavior, and **in 99.9% of time it may be a mistake**.
+
+In fact, accessing the memory location pointed to by `ptr` with an `int` data type will interpret the bits in memory differently than if it were accessed with a `float` data type. This can result in unexpected behavior, such as the wrong value being read from memory, or even a crash.
 
 ### Array and Pointer Arithmetics
 
-#### Type Inconsistency
+#### Array
 
-#### World of Dangerous Freedom
+In C programming language, an array is a collection of elements of the same data type, stored in contiguous memory locations. The elements in an array can be accessed using an index, which starts at 0 for the first element.
+
+The simplest form of an array is a one-dimensional array, which is an array with a single row of elements. Here is an example:
+
+```c
+int arr[5] = {1, 2, 3, 4, 5};
+```
+
+This declares an integer array with 5 elements, and initializes it with the values 1, 2, 3, 4, and 5.
+
+To access an element of an array, we use the square bracket notation along with the index of the element we want to access. For example:
+
+```c
+int num = arr[2];   
+// Accesses the third element of the array (value 3)
+```
+
+In C, we can also create multi-dimensional arrays, which are arrays with multiple rows and columns. The most common form of a multi-dimensional array is a two-dimensional array, which can be thought of as a matrix.
+
+Here is an example of a two-dimensional array:
+
+```c
+int matrix[3][3] = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+```
+
+This declares a 3x3 integer matrix, and initializes it with the values 1 through 9.
+
+To access an element of a multi-dimensional array, we use the square bracket notation along with the row and column indices of the element we want to access. For example:
+
+```c
+int num = matrix[1][2];   
+// Accesses the element in the 
+//                    second row 
+//                    and third column
+// (value 6)
+```
+
+We can also create multi-dimensional arrays with more than two dimensions, such as a three-dimensional array, which can be thought of as a cube.
+
+```c
+int cube[2][3][4] = {
+    {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}},
+    {{13, 14, 15, 16}, {17, 18, 19, 20}, {21, 22, 23, 24}}
+};
+```
+
+This declares a 2x3x4 integer cube, and initializes it with the values 1 through 24.
+
+To access an element of a three-dimensional array, we use the square bracket notation along with the indices of the row, column, and depth of the element we want to access. For example:
+
+```c
+int num = cube[1][2][3];   
+// Accesses the element in the 
+//                        second row, 
+//                        third column, 
+//                        and fourth depth 
+// (value 24)
+```
+
+And so on.
+
+#### Pointer Arithmetics With Array Name
+
+In C, an array name is a pointer to the first element of the array. We can use pointer arithmetics to access other elements of the array.
+
+For example, consider the array declaration:
+
+```c
+int arr[5] = {1, 2, 3, 4, 5};
+```
+
+Here, `arr` is a pointer to the first element of the array, i.e., `arr[0]`. We can access other elements of the array using pointer arithmetics.
+
+```c
+printf("%d\n", *(arr+1));   // Output: 2, equivalent to arr[1]
+printf("%d\n", *(arr+2));   // Output: 3, equivalent to arr[2]
+printf("%d\n", *(arr+3));   // Output: 4, equivalent to arr[3]
+```
+
+For string is actually an array (this will be discussed later), pointer arithmetics can also be used to traverse a string:
+
+```c
+char str[] = "Hello, World!";
+char *ptr = str;   // Assigns the address of the first character to ptr
+while (*ptr != '\0') {
+    printf("%c", *ptr);
+    ptr++;
+}
+```
+
+#### Operator `[]`
+
+In C programming language, the `[]` operator is used to access elements of an array using an index, when we use the `[]` operator to access an element of an array, **it is equivalent to** dereferencing a pointer at a specific offset from the base address of the array. For example, consider the following array declaration:
+
+```c
+int arr[5] = {1, 2, 3, 4, 5};
+```
+
+To access the third element of the array, we can use the `[]` operator with an index of 2:
+
+```c
+int num = arr[2];   
+// Accesses the third element of the array (value 3)
+```
+
+This is equivalent to dereferencing a pointer to the third element of the array:
+
+```c
+int num = *(arr+2);   
+// Accesses the third element of the array (value 3)
+```
+
+Here, we are using pointer arithmetics to compute the memory address of the third element of the array, and then dereferencing it to obtain the value.
+
+The equivalency also reveals that, the `[]` operator is commutative, which means the order of the operands does not matter, that `arr[1]` is equivalent to `1[arr]`.
+
+To understand why this is the case, it's important to remember that the `[]` operator is implemented using pointer arithmetics. Specifically, `arr[1]` is equivalent to `*(arr + 1)`, which means "dereference the memory location that is one element after the address of the first element of the array". Similarly, `1[arr]` is equivalent to `*(1 + arr)`, which means "dereference the memory location that is one element after the address of the memory location pointed to by the variable `arr`". 
+
+Since addition is commutative, the expressions `arr + 1` and `1 + arr` are equivalent, and so `arr[1]` and `1[arr]` both refer to the same memory location and will yield the same result.
+
+While using `1[arr]` is technically valid and will produce the same result as `arr[1]`, it is generally considered poor coding style and **should be avoided** in favor of the more common `arr[1]` notation.
 
 ### C-String
+
+### Pointer as Function Parameters
 
 ### Dynamic Memory Allocation
 
