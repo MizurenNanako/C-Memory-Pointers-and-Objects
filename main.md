@@ -25,7 +25,7 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
 - [C: Memory, Pointers, and Objects](#c-memory-pointers-and-objects)
   - [Contents](#contents)
   - [Prologue: Before the Introduction](#prologue-before-the-introduction)
-    - [Preprocessing, Compile-time, Linking and Runtime](#preprocessing-compile-time-linking-and-runtime)
+    - [Preprocessing, Compile-time, Linking and Runtime Errors](#preprocessing-compile-time-linking-and-runtime-errors)
       - [Pre-processing:](#pre-processing)
         - [1. Missing include files:](#1-missing-include-files)
         - [2. Incorrect macro usage:](#2-incorrect-macro-usage)
@@ -45,12 +45,10 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
   - [The Static Memory Model of C](#the-static-memory-model-of-c)
     - [Bytes and Static Memory Model](#bytes-and-static-memory-model)
     - [Memory Location](#memory-location)
-      - [Memory Types](#memory-types)
-      - [The Stack](#the-stack)
-      - [The Heap](#the-heap)
+      - [Memory Segments](#memory-segments)
     - [Memory Addresses](#memory-addresses)
       - [Address Types](#address-types)
-    - [Memory Order](#memory-order)
+    - [Memory Order](#smemory-orders)
   - [Pointers: Variables Supposed to Store Addresses](#pointers-variables-supposed-to-store-addresses)
     - [Addressing and Indirect Addressing](#addressing-and-indirect-addressing)
       - [Pointer Declaration](#pointer-declaration)
@@ -61,7 +59,7 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
     - [Array and Pointer Arithmetics](#array-and-pointer-arithmetics)
       - [Array](#array)
       - [Pointer Arithmetics With Array Name](#pointer-arithmetics-with-array-name)
-      - [Operator `[]`](#operator [])
+      - [Operator `[]`](#operator)
     - [Pointer as Function Parameters](#pointer-as-function-parameters)
     - [Dynamic Memory Allocation](#dynamic-memory-allocation)
       - [Allocation](#allocation)
@@ -81,49 +79,47 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
       - [5. Substring search (`strstr()` and `strnstr()`)](#5-substring-search-strstr-and-strnstr)
       - [6. The Most Important: IO](#6-the-most-important-io)
         - [(1). Input using `scanf()`](#1-input-using-scanf)
-        - [(2). Input using `scanf_s()`](#2-input-using-scanf_s)
+        - [(2). Input using `scanf_s()`](#2-input-using-scanfs)
         - [(3). Output using `printf()`](#3-output-using-printf)
-        - [(4). Output using `printf_s()`](#4-output-using-printf_s)
-  - [Data Structures (Embedded and Generalized)](#data-structures-embedded-and-generalized)
-    - [Vector: Array with Dynamic Length](#vector-array-with-dynamic-length)
-    - [Linking List](#linking-list)
-      - [Forward List](#forward-list)
-      - [Bidirectional List](#bidirectional-list)
-      - [Cyclone List](#cyclone-list)
-      - [Non-Embedded Implantation](#non-embedded-implantation)
-      - [Linux List Implantation: The Wizard's Way](#linux-list-implantation-the-wizards-way)
-    - [Tree](#tree)
-      - [Segment Tree](#segment-tree)
-      - [Trie Tree and KMP Algorithm](#trie-tree-and-kmp-algorithm)
-    - [A glimpse into Graph](#a-glimpse-into-graph)
-      - [Graph](#graph)
-      - [Dijkstra Algorithm](#dijkstra-algorithm)
+        - [(4). Output using `printf_s()`](#4-output-using-printfs)
   - [Function Pointer and Higher-Order Function](#function-pointer-and-higher-order-function)
     - [Function Pointer](#function-pointer)
+      - [The Introduction](#the-introduction)
+      - [Syntax and Examples](#syntax-and-examples)
+      - [A More Terrifying Example](#a-more-terrifying-example)
+    - [Functional](#functional)
     - [Closure](#closure)
     - [Higher-Order Function](#higher-order-function)
-  - [Object-Oriented Programing in C](#object-oriented-programing-in-c)
+  - [Object-Oriented Programing in C: A Simple Glance](#object-oriented-programing-in-c-a-simple-glance)
     - [Definition for an Object](#definition-for-an-object)
+    - [Instance and Class](#instance-and-class)
     - [A Simple Object Implantation in C](#a-simple-object-implantation-in-c)
       - [Attributes: Member Variables and Methods](#attributes-member-variables-and-methods)
       - [`this` Parameter, or You Can Name It `Self`](#this-parameter-or-you-can-name-it-self)
-      - [Static or Dynamic? This is a Problem.](#static-or-dynamic-this-is-a-problem)
-    - [Essence: Polymorphism](#essence-polymorphism)
+  - [Data Structures: A Brief Introduction](#data-structures-a-brief-introduction)
+    - [Vector: Array with Dynamic Length](#vector-array-with-dynamic-length)
+      - [Implantation](#implantation)
+    - [Linking List](#linking-list)
+      - [Forward List](#forward-list)
+      - [Bidirectional-Cyclone List](#bidirectional-cyclone-list)
+  - [Object-Oriented Programing in C: Polymorphism](#object-oriented-programing-in-c-polymorphism)
+    - [Static Polymorphism](#static-polymorphism)
       - [Examples of Static Polymorphism in `math.h`](#examples-of-static-polymorphism-in-mathh)
-      - [The `_Generic` Macro](#the-_generic-macro)
-    - [Dynamic Polymorphism](#dynamic-polymorphism)
+      - [The `_Generic` Macro](#the-generic-macro)
+    - [Dynamic Polymorphism: Not Enough!](#dynamic-polymorphism-not-enough)
       - [Dynamic Polymorphism Implantation with Silly Type Checking](#dynamic-polymorphism-implantation-with-silly-type-checking)
       - [Implantation: The `Variant`](#implantation-the-variant)
       - [Composition: A Trick of Memory](#composition-a-trick-of-memory)
       - [Inheritance: The `vtable` and Method Overriding](#inheritance-the-vtable-and-method-overriding)
       - [Virtual Inheritance: `vtable` of Base Classes](#virtual-inheritance-vtable-of-base-classes)
+    - [CPython](#cpython)
   - [Epilogue: The Story of CFront](#epilogue-the-story-of-cfront)
 
 ---
 
 ## Prologue: Before the Introduction
 
-### Preprocessing, Compile-time, Linking and Runtime
+### Preprocessing, Compile-time, Linking and Runtime Errors
 
 Obliviously, the translation progress consists a serial of different stages, each of which may generate error(s). Thus, a clarification of their functionality is acquired.
 
@@ -342,17 +338,20 @@ Memory in C is organized into individual bytes, and each byte is assigned a uniq
 
 ### Memory Location
 
-#### Memory Types
+#### Memory Segments
 
-Memory in C is divided into two types: **stack memory** and **heap memory**. Stack memory is used for storing variables declared inside functions, while heap memory is used for dynamically allocated memory.
+A typical C program has four main memory segments:
 
-#### The Stack
+1. **Text Segment (also known as Code Segment):** This segment contains the executable instructions of the program. **The code segment is read-only** and any attempt to modify it will result in a segmentation fault error.
 
-Stack memory is allocated automatically by the program at compile time and is managed by the program's runtime environment. It is a limited resource and is typically much smaller than heap memory. Stack memory is used for storing variables that have a limited scope and lifetime, such as function arguments and local variables.
+2. **Data Segment:** This segment is further divided into two parts:
 
-#### The Heap
+- **Initialized Data Segment:** This segment contains static and global variables that have an initial value set in the source code. This data is stored in a read-write area of memory.
+- **Uninitialized Data Segment** (also known as **BSS Segment**): This segment contains static and global variables that are uninitialized or initialized to zero. This data is also stored in a read-write area of memory.
 
-Heap memory, on the other hand, is dynamically allocated during program execution using functions like malloc() and calloc(). Heap memory is not automatically managed by the program's runtime environment and must be explicitly allocated and released by the programmer. Heap memory is used for storing data structures and variables with a larger scope and lifetime, such as arrays and structures.
+3. **Stack Segment:** This segment is used for storing **local variables and function parameters**. It is a dynamic memory segment and grows downwards.
+
+4. **Heap Segment:** This segment is used for **dynamic memory allocation** during program execution. Memory is allocated on demand from the heap segment, and deallocated when it is no longer needed. The heap segment grows upwards and is managed by the program's memory allocation functions **such as `malloc()` and `free()`**.
 
 ### Memory Addresses
 
@@ -633,7 +632,7 @@ While using `1[arr]` is technically valid and will produce the same result as `a
 
 ### Pointer as Function Parameters
 
-With pointers as function parameters, we can pass a memory address instead of passing the actual value of a variable. Thus we can access the variable itself and not the copy.
+With pointers as function parameters, we can pass a memory address instead of passing the actual value of a variable. Thus we can **access the variable itself and not the copy**.
 
 This can be especially useful when working with large data structures or when we want to modify the value of a variable inside a function and have those modifications reflected in the calling code.
 
@@ -656,7 +655,7 @@ Here, we're passing the memory address of `myInt` using the `&` (address-of) ope
 
 Inside the function, we can use the pointer to access and modify the value of the integer variable that it points to.
 
-For example, we could increment the value of the integer variable by one like this:
+For example, **we could increment** the value of the integer variable by one like this:
 
 ```c
 void myFunction(int* ptr) {
@@ -1060,57 +1059,192 @@ printf_s("%s\n", message);
 In this example, the length of the output buffer is determined automatically based on the length of the `message` string.
 These are just a few examples of the input and output functions that can be used with C-styled strings. By using the safer versions of these functions, you can help ensure that your code is free from potential security vulnerabilities.
 
-## Data Structures (Embedded and Generalized)
-
-### Vector: Array with Dynamic Length
-
-> Yet to be written.
-
-### Linking List
-
-#### Forward List
-
-> Yet to be written.
-
-#### Bidirectional List
-
-> Yet to be written.
-
-#### Cyclone List
-
-> Yet to be written.
-
-#### Non-Embedded Implantation
-
-> Yet to be written.
-
-#### Linux List Implantation: The Wizard's Way
-
-> Yet to be written.
-
-### Tree
-
-#### Segment Tree
-
-> Yet to be written.
-
-#### Trie Tree and KMP Algorithm
-
-> Yet to be written.
-
-### A glimpse into Graph
-
-#### Graph
-
-> Yet to be written.
-
-#### Dijkstra Algorithm
-
-> Yet to be written.
-
 ## Function Pointer and Higher-Order Function
 
 ### Function Pointer
+
+#### The Introduction
+
+> Since pointers can point to variables - that is, store the address of a variable on stack, heap, data segment - can they store function addresses as well?
+>
+> In fact, this is completely possible.
+
+When a binary executable is loaded into memory - or we said, **when we run a program** - the code segment contains the machine instructions that make up the program - including the functions.
+
+Along with these instructions, the binary also contains a **symbol table** that provides information about the program's functions and variables, which contains information about the memory location of each function in the program. When the program runs, it uses the symbol table to **resolve function names to their memory addresses**, which can then be used to call the functions.
+
+All of these mechanisms are pointing us towards the fact that there is a way to obtain the address of a function and call it again, and that the pointer used to store and use the function address is no different from a regular pointer - which is called a **function pointer**.
+
+#### Syntax and Examples
+
+To declare a function pointer in C, we use the following syntax:
+
+```c
+return_type (*pointer_name)(parameter_list);
+```
+
+Such as:
+
+```c
+int (*calculate_ptr)(int, int);
+```
+
+Here is an example of how to use a function pointer to obtain a function address at runtime and call the function:
+
+```c
+#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    int (*func_ptr1)(int, int);  
+    // declare a function pointer
+    int (*func_ptr2)(int, int);  
+    // declare a function pointer
+    
+    func_ptr1 = &add;  
+    // assign the address of add() to the function pointer
+    func_ptr2 = add;  
+    // the same
+    
+    int result1 = (*func_ptr1)(5, 3);  
+    // call the function using the function pointer
+    int result2 = func_ptr2(5, 3);  
+    // the same
+    
+    printf("Result: %d %d\n", result1, result2);  // print the result
+    
+    return 0;
+}
+```
+
+In this example, we first define a function called `add()` that takes two integers as arguments and returns their sum. We then declare a function pointer called `func_ptr1` using the syntax `int (*func_ptr1)(int, int)`. This declares a pointer to a function that takes two `int` arguments and returns an `int`.
+
+We then assign the address of the `add()` function to the `func_ptr1` pointer using the address-of operator `&`. Finally, we call the `add()` function using the function pointer by dereferencing it with the `*` operator and passing in the arguments `5` and `3`. The result of the function call is stored in the `result` variable and printed to the console.
+
+**Note that in C, the name of a function is actually a function pointer.** When you call a function in C, you are actually using a function pointer to execute the code in the function.
+
+Then, the example of array:
+
+```c
+#include <stdio.h>
+
+int add(int a, int b) { return a + b; }
+int subtract(int a, int b) { return a - b; }
+int multiply(int a, int b) { return a * b; }
+int divide(int a, int b) { return a / b; }
+
+int main() {
+    int (*func_ptr[4])(int, int);  
+    // declare a function pointer array with four elements
+    
+    func_ptr[0] = &add;       
+    // assign the address of add() to the first element
+    func_ptr[1] = &subtract;  
+    // assign the address of subtract() to the second element
+    func_ptr[2] = &multiply;  
+    // assign the address of multiply() to the third element
+    func_ptr[3] = &divide;    
+    // assign the address of divide() to the fourth element
+    
+    int nums[] = {10, 5};
+    
+    for (int i = 0; i < 4; i++) {
+        int result = (*func_ptr[i])(nums[0], nums[1]);  
+        // call the current function using 
+        //              the function pointer array
+        printf("Result %d: %d\n", i + 1, result);  
+        // print the result
+    }
+    
+    return 0;
+}
+```
+
+Nothing special except we declared a function pointer array called `func_ptr` with four elements using the syntax `int (*func_ptr[4])(int, int)`. This declares an array of function pointers that each point to a function that takes two `int` arguments and returns an `int`.
+
+Similarly, the addressing operator `&` and the dereferencing operator `*` is not necessary, but written for a better understanding. Here is the shorten version:
+
+```c
+#include <stdio.h>
+
+int add(int a, int b) { return a + b; }
+int subtract(int a, int b) { return a - b; }
+int multiply(int a, int b) { return a * b; }
+int divide(int a, int b) { return a / b; }
+
+int main() {
+    int (*func_ptr[4])(int, int) = {
+       add, subtract, multiply, divide
+    };
+    int nums[] = {10, 5};
+    for (int i = 0; i < 4; i++) {
+        int result = func_ptr[i](nums[0], nums[1]);  
+        printf("Result %d: %d\n", i + 1, result);  
+    }
+    return 0;
+}
+```
+
+#### A More Terrifying Example
+
+```c
+#include <stdio.h>
+
+int add_int(int a, int b) {
+    return a + b;
+}
+
+double add_double(double a, double b) {
+    return a + b;
+}
+
+int main() {
+    void *generic_func_ptr;  
+    // declare a void pointer
+    
+    // assign the address of add_double() to the void pointer
+    generic_func_ptr = (void *)add_double;
+    
+    // cast the void pointer to a function pointer 
+    //      that takes two doubles and returns a double
+    double (*double_func_ptr)(double, double) 
+         = (double (*)(double, double))generic_func_ptr;
+    
+    printf("Result 1: %lf\n", double_func_ptr(1.5, 2.5));  
+    // call the function using the new function pointer
+    // Result 1: 4.000000
+    
+    // cast the void pointer back to a function pointer
+    //      that takes two integers and returns an integer
+    int (*int_func_ptr)(int, int) 
+         = (int (*)(int, int))generic_func_ptr;
+    
+    printf("Result 2: %d\n", int_func_ptr(5, 3));  
+    // call the function using the new function pointer
+    // Result 2: 0
+    
+    // assign the address of add_int() to the void pointer
+    generic_func_ptr = (void *)add_int;
+    
+    // cast the void pointer to a function pointer 
+    //      that takes two integers and returns an integer
+    int (*int_func_ptr2)(int, int) 
+         = (int (*)(int, int))generic_func_ptr;
+    
+    printf("Result 3: %d\n", int_func_ptr2(5, 3));  
+    // call the function using the new function pointer
+    // Result 3: 8
+    
+    return 0;
+}
+```
+
+Now you know the syntax for type casting.
+
+### Functional
 
 > Yet to be written.
 
@@ -1122,11 +1256,33 @@ These are just a few examples of the input and output functions that can be used
 
 > Yet to be written.
 
-## Object-Oriented Programing in C
+## Object-Oriented Programing in C: A Simple Glance
 
 ### Definition for an Object
 
-> Yet to be written.
+In Object-Oriented Programming (OOP), an object is an instance of a class that encapsulates data and behavior. A class is a blueprint or a template for creating objects, and each object created from that class will have its own unique set of data and behavior.
+
+Objects in OOP are characterized by three main properties:
+
+1. **State**: This refers to the current values of an object's attributes or properties. For example, if you have a class representing a *Maho Shoujo*, The state of a *Maho Shoujo* object might include attributes such as her name, age, magical powers, and any other relevant information that defines her character.
+
+2. **Behavior**: This refers to the actions that an object can perform. For example, the behavior of a *Maho Shoujo* object might include actions such as casting spells, using magical powers to fight enemies, transforming into her magical girl form, and interacting with other characters in the story.
+
+3. **Identity**: This refers to the unique identity of an object, which distinguishes it from all other objects. In most programming languages, an object's identity is represented by a memory address or a reference. It is easy to understand that the identity of a *Maho Shoujo* object is unique, and distinguishes her from all other characters in the story. This identity might be represented by her name or other characteristics that make her stand out from the rest of the characters.
+
+Just like any other object in OOP, a *Maho Shoujo* object encapsulates data and behavior, and can be used to create modular, reusable, and maintainable code in programs and applications that involve magical girl characters.
+
+### Instance and Class
+
+When $x\in \mathbb X$, it can be read as "$x$ belongs to $\mathbb X$" or **"$x$ is an instance from the class $\mathbb X$"**. For example, $1$ is instance from $\N$ Natural while $\dfrac{2}{3}$ is instance from $\mathbb Q$ Rational.
+
+If we have a class or prototype called "Person", we can use the notation $p \in \text{Person}$ to indicate that $p$ is an instance of the Person class. **This means that $p$ has the properties and methods defined by the Person class, and can be used in the same way as any other instance of that class.**
+
+Take *Maho Shoujo* as an example, a *Maho Shoujo* class or prototype is a template or blueprint for creating instances of that object. An instance of the *Maho Shoujo* class is a specific realization of that object.
+
+For example, the *Maho Shoujo* class might have properties such as name, age, and magical powers, and methods such as "cast spell", "transform", and "interact with other characters". An instance of this class might be a specific *Maho Shoujo* character, such as *Madoka*, with her own unique data for the name, age, and magical powers properties, as well as her own behavior for the "cast spell", "transform", and "interact with other characters" methods.
+
+Another way to think about this is that the Maho Shoujo class or prototype is like a template that defines the basic attributes and behaviors of a Maho Shoujo character. Each instance, or Maho Shoujo character, you create with that template will have the same basic attributes and behaviors, but will also have their own unique characteristics.
 
 ### A Simple Object Implantation in C
 
@@ -1138,11 +1294,35 @@ These are just a few examples of the input and output functions that can be used
 
 > Yet to be written.
 
-#### Static or Dynamic? This is a Problem.
+## Data Structures: A Brief Introduction
+
+### Vector: Array with Dynamic Length
+
+> If you've just learned about C arrays and pointers, you may be familiar with the concept of storing a collection of elements of the same data type in a fixed-length array. This is a useful data structure for many applications, but it has one major limitation: **once the array is created, its size cannot be changed**. This means that if you need to add or remove elements from the array later on, you'll need to create a new array with a larger or smaller size and copy the old elements into the new array.
+
+**This is where vectors come in.** A vector is a **dynamic array** data structure that can grow or shrink in size as needed during program execution. It is similar to a fixed-length array in that it stores a collection of elements of the same data type, but it has several key differences that make it more flexible and convenient to use.
+
+One of the main advantages of vectors is that they allow you to add or remove elements from the array at runtime. This can be especially useful in situations where you don't know the size of the array in advance or when the size of the array may change over time.
+
+Another advantage of vectors is that they come with a set of built-in functions that make it easy to manipulate and access the elements of the array. These functions include functions to add or remove elements from the array, get the size of the array, and access specific elements of the array by index.
+
+#### Implantation
+
+> To use vectors in your C programs, you'll need to allocate and deallocate memory dynamically using pointers. This can be a bit more complex than working with fixed-length arrays, but it offers greater flexibility and control over memory usage. If you're just getting started with C programming, learning how to use vectors can be a valuable addition to your skills.
+
+### Linking List
+
+#### Forward List
 
 > Yet to be written.
 
-### Essence: Polymorphism
+#### Bidirectional-Cyclone List
+
+> Yet to be written.
+
+## Object-Oriented Programing in C: Polymorphism
+
+### Static Polymorphism
 
 #### Examples of Static Polymorphism in `math.h`
 
@@ -1152,7 +1332,7 @@ These are just a few examples of the input and output functions that can be used
 
 > Yet to be written.
 
-### Dynamic Polymorphism
+### Dynamic Polymorphism: Not Enough!
 
 #### Dynamic Polymorphism Implantation with Silly Type Checking
 
@@ -1173,6 +1353,8 @@ These are just a few examples of the input and output functions that can be used
 #### Virtual Inheritance: `vtable` of Base Classes
 
 > Yet to be written.
+
+### CPython
 
 ## Epilogue: The Story of CFront
 
