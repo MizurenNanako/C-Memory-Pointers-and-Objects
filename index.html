@@ -293,7 +293,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#contents">Contents</a></li>
 <li><a href="#prologue-before-the-introduction">Prologue: Before the Introduction</a>
 <ul>
-<li><a href="#preprocessing-compile-time-linking-and-runtime">Preprocessing, Compile-time, Linking and Runtime</a>
+<li><a href="#preprocessing-compile-time-linking-and-runtime-errors">Preprocessing, Compile-time, Linking and Runtime Errors</a>
 <ul>
 <li><a href="#pre-processing">Pre-processing:</a>
 <ul>
@@ -332,9 +332,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#bytes-and-static-memory-model">Bytes and Static Memory Model</a></li>
 <li><a href="#memory-location">Memory Location</a>
 <ul>
-<li><a href="#memory-types">Memory Types</a></li>
-<li><a href="#the-stack">The Stack</a></li>
-<li><a href="#the-heap">The Heap</a></li>
+<li><a href="#memory-segments">Memory Segments</a></li>
 </ul>
 </li>
 <li><a href="#memory-addresses">Memory Addresses</a>
@@ -342,7 +340,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#address-types">Address Types</a></li>
 </ul>
 </li>
-<li><a href="#memory-order">Memory Order</a></li>
+<li><a href="#smemory-orders">Memory Order</a></li>
 </ul>
 </li>
 <li><a href="#pointers-variables-supposed-to-store-addresses">Pointers: Variables Supposed to Store Addresses</a>
@@ -363,7 +361,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <ul>
 <li><a href="#array">Array</a></li>
 <li><a href="#pointer-arithmetics-with-array-name">Pointer Arithmetics With Array Name</a></li>
-<li><a href="#operator-">operator <code>[]</code></li>
+<li><a href="#operator">Operator <code>[]</code></a></li>
 </ul>
 </li>
 <li><a href="#pointer-as-function-parameters">Pointer as Function Parameters</a></li>
@@ -396,65 +394,65 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#6-the-most-important-io">6. The Most Important: IO</a>
 <ul>
 <li><a href="#1-input-using-scanf">(1). Input using <code>scanf()</code></a></li>
-<li><a href="#2-input-using-scanf_s">(2). Input using <code>scanf_s()</code></a></li>
+<li><a href="#2-input-using-scanfs">(2). Input using <code>scanf_s()</code></a></li>
 <li><a href="#3-output-using-printf">(3). Output using <code>printf()</code></a></li>
-<li><a href="#4-output-using-printf_s">(4). Output using <code>printf_s()</code></a></li>
+<li><a href="#4-output-using-printfs">(4). Output using <code>printf_s()</code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#data-structures-embedded-and-generalized">Data Structures (Embedded and Generalized)</a>
-<ul>
-<li><a href="#vector-array-with-dynamic-length">Vector: Array with Dynamic Length</a></li>
-<li><a href="#linking-list">Linking List</a>
-<ul>
-<li><a href="#forward-list">Forward List</a></li>
-<li><a href="#bidirectional-list">Bidirectional List</a></li>
-<li><a href="#cyclone-list">Cyclone List</a></li>
-<li><a href="#non-embedded-implantation">Non-Embedded Implantation</a></li>
-<li><a href="#linux-list-implantation-the-wizards-way">Linux List Implantation: The Wizard&apos;s Way</a></li>
-</ul>
-</li>
-<li><a href="#tree">Tree</a>
-<ul>
-<li><a href="#segment-tree">Segment Tree</a></li>
-<li><a href="#trie-tree-and-kmp-algorithm">Trie Tree and KMP Algorithm</a></li>
-</ul>
-</li>
-<li><a href="#a-glimpse-into-graph">A glimpse into Graph</a>
-<ul>
-<li><a href="#graph">Graph</a></li>
-<li><a href="#dijkstra-algorithm">Dijkstra Algorithm</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#function-pointer-and-higher-order-function">Function Pointer and Higher-Order Function</a>
 <ul>
-<li><a href="#function-pointer">Function Pointer</a></li>
+<li><a href="#function-pointer">Function Pointer</a>
+<ul>
+<li><a href="#the-introduction">The Introduction</a></li>
+<li><a href="#syntax-and-examples">Syntax and Examples</a></li>
+<li><a href="#a-more-terrifying-example">A More Terrifying Example</a></li>
+</ul>
+</li>
+<li><a href="#functional">Functional</a></li>
 <li><a href="#closure">Closure</a></li>
 <li><a href="#higher-order-function">Higher-Order Function</a></li>
 </ul>
 </li>
-<li><a href="#object-oriented-programing-in-c">Object-Oriented Programing in C</a>
+<li><a href="#object-oriented-programing-in-c-a-simple-glance">Object-Oriented Programing in C: A Simple Glance</a>
 <ul>
 <li><a href="#definition-for-an-object">Definition for an Object</a></li>
+<li><a href="#instance-and-class">Instance and Class</a></li>
 <li><a href="#a-simple-object-implantation-in-c">A Simple Object Implantation in C</a>
 <ul>
 <li><a href="#attributes-member-variables-and-methods">Attributes: Member Variables and Methods</a></li>
 <li><a href="#this-parameter-or-you-can-name-it-self"><code>this</code> Parameter, or You Can Name It <code>Self</code></a></li>
-<li><a href="#static-or-dynamic-this-is-a-problem">Static or Dynamic? This is a Problem.</a></li>
 </ul>
 </li>
-<li><a href="#essence-polymorphism">Essence: Polymorphism</a>
+</ul>
+</li>
+<li><a href="#data-structures-a-brief-introduction">Data Structures: A Brief Introduction</a>
+<ul>
+<li><a href="#vector-array-with-dynamic-length">Vector: Array with Dynamic Length</a>
+<ul>
+<li><a href="#implantation">Implantation</a></li>
+</ul>
+</li>
+<li><a href="#linking-list">Linking List</a>
+<ul>
+<li><a href="#forward-list">Forward List</a></li>
+<li><a href="#bidirectional-cyclone-list">Bidirectional-Cyclone List</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#object-oriented-programing-in-c-polymorphism">Object-Oriented Programing in C: Polymorphism</a>
+<ul>
+<li><a href="#static-polymorphism">Static Polymorphism</a>
 <ul>
 <li><a href="#examples-of-static-polymorphism-in-mathh">Examples of Static Polymorphism in <code>math.h</code></a></li>
-<li><a href="#the-_generic-macro">The <code>_Generic</code> Macro</a></li>
+<li><a href="#the-generic-macro">The <code>_Generic</code> Macro</a></li>
 </ul>
 </li>
-<li><a href="#dynamic-polymorphism">Dynamic Polymorphism</a>
+<li><a href="#dynamic-polymorphism-not-enough">Dynamic Polymorphism: Not Enough!</a>
 <ul>
 <li><a href="#dynamic-polymorphism-implantation-with-silly-type-checking">Dynamic Polymorphism Implantation with Silly Type Checking</a></li>
 <li><a href="#implantation-the-variant">Implantation: The <code>Variant</code></a></li>
@@ -463,6 +461,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#virtual-inheritance-vtable-of-base-classes">Virtual Inheritance: <code>vtable</code> of Base Classes</a></li>
 </ul>
 </li>
+<li><a href="#cpython">CPython</a></li>
 </ul>
 </li>
 <li><a href="#epilogue-the-story-of-cfront">Epilogue: The Story of CFront</a></li>
@@ -472,7 +471,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <hr>
 <h2 class="mume-header" id="prologue-before-the-introduction">Prologue: Before the Introduction</h2>
 
-<h3 class="mume-header" id="preprocessing-compile-time-linking-and-runtime">Preprocessing, Compile-time, Linking and Runtime</h3>
+<h3 class="mume-header" id="preprocessing-compile-time-linking-and-runtime-errors">Preprocessing, Compile-time, Linking and Runtime Errors</h3>
 
 <p>Obliviously, the translation progress consists a serial of different stages, each of which may generate error(s). Thus, a clarification of their functionality is acquired.</p>
 <h4 class="mume-header" id="pre-processing">Pre-processing:</h4>
@@ -632,15 +631,29 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 <h3 class="mume-header" id="memory-location">Memory Location</h3>
 
-<h4 class="mume-header" id="memory-types">Memory Types</h4>
+<h4 class="mume-header" id="memory-segments">Memory Segments</h4>
 
-<p>Memory in C is divided into two types: <strong>stack memory</strong> and <strong>heap memory</strong>. Stack memory is used for storing variables declared inside functions, while heap memory is used for dynamically allocated memory.</p>
-<h4 class="mume-header" id="the-stack">The Stack</h4>
-
-<p>Stack memory is allocated automatically by the program at compile time and is managed by the program&apos;s runtime environment. It is a limited resource and is typically much smaller than heap memory. Stack memory is used for storing variables that have a limited scope and lifetime, such as function arguments and local variables.</p>
-<h4 class="mume-header" id="the-heap">The Heap</h4>
-
-<p>Heap memory, on the other hand, is dynamically allocated during program execution using functions like malloc() and calloc(). Heap memory is not automatically managed by the program&apos;s runtime environment and must be explicitly allocated and released by the programmer. Heap memory is used for storing data structures and variables with a larger scope and lifetime, such as arrays and structures.</p>
+<p>A typical C program has four main memory segments:</p>
+<ol>
+<li>
+<p><strong>Text Segment (also known as Code Segment):</strong> This segment contains the executable instructions of the program. <strong>The code segment is read-only</strong> and any attempt to modify it will result in a segmentation fault error.</p>
+</li>
+<li>
+<p><strong>Data Segment:</strong> This segment is further divided into two parts:</p>
+</li>
+</ol>
+<ul>
+<li><strong>Initialized Data Segment:</strong> This segment contains static and global variables that have an initial value set in the source code. This data is stored in a read-write area of memory.</li>
+<li><strong>Uninitialized Data Segment</strong> (also known as <strong>BSS Segment</strong>): This segment contains static and global variables that are uninitialized or initialized to zero. This data is also stored in a read-write area of memory.</li>
+</ul>
+<ol start="3">
+<li>
+<p><strong>Stack Segment:</strong> This segment is used for storing <strong>local variables and function parameters</strong>. It is a dynamic memory segment and grows downwards.</p>
+</li>
+<li>
+<p><strong>Heap Segment:</strong> This segment is used for <strong>dynamic memory allocation</strong> during program execution. Memory is allocated on demand from the heap segment, and deallocated when it is no longer needed. The heap segment grows upwards and is managed by the program&apos;s memory allocation functions <strong>such as <code>malloc()</code> and <code>free()</code></strong>.</p>
+</li>
+</ol>
 <h3 class="mume-header" id="memory-addresses">Memory Addresses</h3>
 
 <h4 class="mume-header" id="address-types">Address Types</h4>
@@ -812,7 +825,7 @@ For example, consider the following code:</p>
 <p>While using <code>1[arr]</code> is technically valid and will produce the same result as <code>arr[1]</code>, it is generally considered poor coding style and <strong>should be avoided</strong> in favor of the more common <code>arr[1]</code> notation.</p>
 <h3 class="mume-header" id="pointer-as-function-parameters">Pointer as Function Parameters</h3>
 
-<p>With pointers as function parameters, we can pass a memory address instead of passing the actual value of a variable. Thus we can access the variable itself and not the copy.</p>
+<p>With pointers as function parameters, we can pass a memory address instead of passing the actual value of a variable. Thus we can <strong>access the variable itself and not the copy</strong>.</p>
 <p>This can be especially useful when working with large data structures or when we want to modify the value of a variable inside a function and have those modifications reflected in the calling code.</p>
 <p>For example, if we want to pass a pointer to an integer to a function, we can declare the function like this:</p>
 <pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span> ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -822,7 +835,7 @@ For example, consider the following code:</p>
 <span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>myInt<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </pre><p>Here, we&apos;re passing the memory address of <code>myInt</code> using the <code>&amp;</code> (address-of) operator.</p>
 <p>Inside the function, we can use the pointer to access and modify the value of the integer variable that it points to.</p>
-<p>For example, we could increment the value of the integer variable by one like this:</p>
+<p>For example, <strong>we could increment</strong> the value of the integer variable by one like this:</p>
 <pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-void">void</span> <span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span> ptr<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token punctuation">(</span><span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token operator">++</span><span class="token punctuation">;</span>  
     <span class="token comment">// increment the value that the pointer points to</span>
@@ -1108,67 +1121,161 @@ Array <span class="token operator">*</span><span class="token function">create_a
 <span class="token function">printf_s</span><span class="token punctuation">(</span><span class="token string">&quot;%s\n&quot;</span><span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </pre><p>In this example, the length of the output buffer is determined automatically based on the length of the <code>message</code> string.<br>
 These are just a few examples of the input and output functions that can be used with C-styled strings. By using the safer versions of these functions, you can help ensure that your code is free from potential security vulnerabilities.</p>
-<h2 class="mume-header" id="data-structures-embedded-and-generalized">Data Structures (Embedded and Generalized)</h2>
-
-<h3 class="mume-header" id="vector-array-with-dynamic-length">Vector: Array with Dynamic Length</h3>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h3 class="mume-header" id="linking-list">Linking List</h3>
-
-<h4 class="mume-header" id="forward-list">Forward List</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h4 class="mume-header" id="bidirectional-list">Bidirectional List</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h4 class="mume-header" id="cyclone-list">Cyclone List</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h4 class="mume-header" id="non-embedded-implantation">Non-Embedded Implantation</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h4 class="mume-header" id="linux-list-implantation-the-wizards-way">Linux List Implantation: The Wizard&apos;s Way</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h3 class="mume-header" id="tree">Tree</h3>
-
-<h4 class="mume-header" id="segment-tree">Segment Tree</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h4 class="mume-header" id="trie-tree-and-kmp-algorithm">Trie Tree and KMP Algorithm</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h3 class="mume-header" id="a-glimpse-into-graph">A glimpse into Graph</h3>
-
-<h4 class="mume-header" id="graph">Graph</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
-<h4 class="mume-header" id="dijkstra-algorithm">Dijkstra Algorithm</h4>
-
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
 <h2 class="mume-header" id="function-pointer-and-higher-order-function">Function Pointer and Higher-Order Function</h2>
 
 <h3 class="mume-header" id="function-pointer">Function Pointer</h3>
+
+<h4 class="mume-header" id="the-introduction">The Introduction</h4>
+
+<blockquote>
+<p>Since pointers can point to variables - that is, store the address of a variable on stack, heap, data segment - can they store function addresses as well?</p>
+<p>In fact, this is completely possible.</p>
+</blockquote>
+<p>When a binary executable is loaded into memory - or we said, <strong>when we run a program</strong> - the code segment contains the machine instructions that make up the program - including the functions.</p>
+<p>Along with these instructions, the binary also contains a <strong>symbol table</strong> that provides information about the program&apos;s functions and variables, which contains information about the memory location of each function in the program. When the program runs, it uses the symbol table to <strong>resolve function names to their memory addresses</strong>, which can then be used to call the functions.</p>
+<p>All of these mechanisms are pointing us towards the fact that there is a way to obtain the address of a function and call it again, and that the pointer used to store and use the function address is no different from a regular pointer - which is called a <strong>function pointer</strong>.</p>
+<h4 class="mume-header" id="syntax-and-examples">Syntax and Examples</h4>
+
+<p>To declare a function pointer in C, we use the following syntax:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token function">return_type</span> <span class="token punctuation">(</span><span class="token operator">*</span>pointer_name<span class="token punctuation">)</span><span class="token punctuation">(</span>parameter_list<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>Such as:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>calculate_ptr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>Here is an example of how to use a function pointer to obtain a function address at runtime and call the function:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>func_ptr1<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// declare a function pointer</span>
+    <span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>func_ptr2<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// declare a function pointer</span>
+    
+    func_ptr1 <span class="token operator">=</span> <span class="token operator">&amp;</span>add<span class="token punctuation">;</span>  
+    <span class="token comment">// assign the address of add() to the function pointer</span>
+    func_ptr2 <span class="token operator">=</span> add<span class="token punctuation">;</span>  
+    <span class="token comment">// the same</span>
+    
+    <span class="token keyword keyword-int">int</span> result1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">*</span>func_ptr1<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// call the function using the function pointer</span>
+    <span class="token keyword keyword-int">int</span> result2 <span class="token operator">=</span> <span class="token function">func_ptr2</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// the same</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Result: %d %d\n&quot;</span><span class="token punctuation">,</span> result1<span class="token punctuation">,</span> result2<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// print the result</span>
+    
+    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>In this example, we first define a function called <code>add()</code> that takes two integers as arguments and returns their sum. We then declare a function pointer called <code>func_ptr1</code> using the syntax <code>int (*func_ptr1)(int, int)</code>. This declares a pointer to a function that takes two <code>int</code> arguments and returns an <code>int</code>.</p>
+<p>We then assign the address of the <code>add()</code> function to the <code>func_ptr1</code> pointer using the address-of operator <code>&amp;</code>. Finally, we call the <code>add()</code> function using the function pointer by dereferencing it with the <code>*</code> operator and passing in the arguments <code>5</code> and <code>3</code>. The result of the function call is stored in the <code>result</code> variable and printed to the console.</p>
+<p><strong>Note that in C, the name of a function is actually a function pointer.</strong> When you call a function in C, you are actually using a function pointer to execute the code in the function.</p>
+<p>Then, the example of array:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword keyword-int">int</span> <span class="token function">subtract</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">-</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword keyword-int">int</span> <span class="token function">multiply</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword keyword-int">int</span> <span class="token function">divide</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">/</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>func_ptr<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// declare a function pointer array with four elements</span>
+    
+    func_ptr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>add<span class="token punctuation">;</span>       
+    <span class="token comment">// assign the address of add() to the first element</span>
+    func_ptr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>subtract<span class="token punctuation">;</span>  
+    <span class="token comment">// assign the address of subtract() to the second element</span>
+    func_ptr<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>multiply<span class="token punctuation">;</span>  
+    <span class="token comment">// assign the address of multiply() to the third element</span>
+    func_ptr<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>divide<span class="token punctuation">;</span>    
+    <span class="token comment">// assign the address of divide() to the fourth element</span>
+    
+    <span class="token keyword keyword-int">int</span> nums<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> result <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">*</span>func_ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token comment">// call the current function using </span>
+        <span class="token comment">//              the function pointer array</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Result %d: %d\n&quot;</span><span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token comment">// print the result</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>Nothing special except we declared a function pointer array called <code>func_ptr</code> with four elements using the syntax <code>int (*func_ptr[4])(int, int)</code>. This declares an array of function pointers that each point to a function that takes two <code>int</code> arguments and returns an <code>int</code>.</p>
+<p>Similarly, the addressing operator <code>&amp;</code> and the dereferencing operator <code>*</code> is not necessary, but written for a better understanding. Here is the shorten version:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword keyword-int">int</span> <span class="token function">subtract</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">-</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword keyword-int">int</span> <span class="token function">multiply</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword keyword-int">int</span> <span class="token function">divide</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword keyword-return">return</span> a <span class="token operator">/</span> b<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>func_ptr<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+       add<span class="token punctuation">,</span> subtract<span class="token punctuation">,</span> multiply<span class="token punctuation">,</span> divide
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-int">int</span> nums<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-for">for</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-int">int</span> result <span class="token operator">=</span> func_ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Result %d: %d\n&quot;</span><span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h4 class="mume-header" id="a-more-terrifying-example">A More Terrifying Example</h4>
+
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">add_int</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-double">double</span> <span class="token function">add_double</span><span class="token punctuation">(</span><span class="token keyword keyword-double">double</span> a<span class="token punctuation">,</span> <span class="token keyword keyword-double">double</span> b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-return">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-int">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-void">void</span> <span class="token operator">*</span>generic_func_ptr<span class="token punctuation">;</span>  
+    <span class="token comment">// declare a void pointer</span>
+    
+    <span class="token comment">// assign the address of add_double() to the void pointer</span>
+    generic_func_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-void">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>add_double<span class="token punctuation">;</span>
+    
+    <span class="token comment">// cast the void pointer to a function pointer </span>
+    <span class="token comment">//      that takes two doubles and returns a double</span>
+    <span class="token keyword keyword-double">double</span> <span class="token punctuation">(</span><span class="token operator">*</span>double_func_ptr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-double">double</span><span class="token punctuation">,</span> <span class="token keyword keyword-double">double</span><span class="token punctuation">)</span> 
+         <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-double">double</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-double">double</span><span class="token punctuation">,</span> <span class="token keyword keyword-double">double</span><span class="token punctuation">)</span><span class="token punctuation">)</span>generic_func_ptr<span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Result 1: %lf\n&quot;</span><span class="token punctuation">,</span> <span class="token function">double_func_ptr</span><span class="token punctuation">(</span><span class="token number">1.5</span><span class="token punctuation">,</span> <span class="token number">2.5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// call the function using the new function pointer</span>
+    <span class="token comment">// Result 1: 4.000000</span>
+    
+    <span class="token comment">// cast the void pointer back to a function pointer</span>
+    <span class="token comment">//      that takes two integers and returns an integer</span>
+    <span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>int_func_ptr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span> 
+         <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span>generic_func_ptr<span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Result 2: %d\n&quot;</span><span class="token punctuation">,</span> <span class="token function">int_func_ptr</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// call the function using the new function pointer</span>
+    <span class="token comment">// Result 2: 0</span>
+    
+    <span class="token comment">// assign the address of add_int() to the void pointer</span>
+    generic_func_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-void">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>add_int<span class="token punctuation">;</span>
+    
+    <span class="token comment">// cast the void pointer to a function pointer </span>
+    <span class="token comment">//      that takes two integers and returns an integer</span>
+    <span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>int_func_ptr2<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span> 
+         <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span>generic_func_ptr<span class="token punctuation">;</span>
+    
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Result 3: %d\n&quot;</span><span class="token punctuation">,</span> <span class="token function">int_func_ptr2</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token comment">// call the function using the new function pointer</span>
+    <span class="token comment">// Result 3: 8</span>
+    
+    <span class="token keyword keyword-return">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>Now you know the syntax for type casting.</p>
+<h3 class="mume-header" id="functional">Functional</h3>
 
 <blockquote>
 <p>Yet to be written.</p>
@@ -1183,13 +1290,31 @@ These are just a few examples of the input and output functions that can be used
 <blockquote>
 <p>Yet to be written.</p>
 </blockquote>
-<h2 class="mume-header" id="object-oriented-programing-in-c">Object-Oriented Programing in C</h2>
+<h2 class="mume-header" id="object-oriented-programing-in-c-a-simple-glance">Object-Oriented Programing in C: A Simple Glance</h2>
 
 <h3 class="mume-header" id="definition-for-an-object">Definition for an Object</h3>
 
-<blockquote>
-<p>Yet to be written.</p>
-</blockquote>
+<p>In Object-Oriented Programming (OOP), an object is an instance of a class that encapsulates data and behavior. A class is a blueprint or a template for creating objects, and each object created from that class will have its own unique set of data and behavior.</p>
+<p>Objects in OOP are characterized by three main properties:</p>
+<ol>
+<li>
+<p><strong>State</strong>: This refers to the current values of an object&apos;s attributes or properties. For example, if you have a class representing a <em>Maho Shoujo</em>, The state of a <em>Maho Shoujo</em> object might include attributes such as her name, age, magical powers, and any other relevant information that defines her character.</p>
+</li>
+<li>
+<p><strong>Behavior</strong>: This refers to the actions that an object can perform. For example, the behavior of a <em>Maho Shoujo</em> object might include actions such as casting spells, using magical powers to fight enemies, transforming into her magical girl form, and interacting with other characters in the story.</p>
+</li>
+<li>
+<p><strong>Identity</strong>: This refers to the unique identity of an object, which distinguishes it from all other objects. In most programming languages, an object&apos;s identity is represented by a memory address or a reference. It is easy to understand that the identity of a <em>Maho Shoujo</em> object is unique, and distinguishes her from all other characters in the story. This identity might be represented by her name or other characteristics that make her stand out from the rest of the characters.</p>
+</li>
+</ol>
+<p>Just like any other object in OOP, a <em>Maho Shoujo</em> object encapsulates data and behavior, and can be used to create modular, reusable, and maintainable code in programs and applications that involve magical girl characters.</p>
+<h3 class="mume-header" id="instance-and-class">Instance and Class</h3>
+
+<p>When <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>&#x2208;</mo><mi mathvariant="double-struck">X</mi></mrow><annotation encoding="application/x-tex">x\in \mathbb X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&#x2208;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord mathbb">X</span></span></span></span>, it can be read as &quot;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> belongs to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="double-struck">X</mi></mrow><annotation encoding="application/x-tex">\mathbb X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord mathbb">X</span></span></span></span>&quot; or <strong>&quot;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> is an instance from the class <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="double-struck">X</mi></mrow><annotation encoding="application/x-tex">\mathbb X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord mathbb">X</span></span></span></span>&quot;</strong>. For example, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> is instance from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="double-struck">N</mi></mrow><annotation encoding="application/x-tex">\N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord mathbb">N</span></span></span></span> Natural while <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle displaystyle="true" scriptlevel="0"><mfrac><mn>2</mn><mn>3</mn></mfrac></mstyle></mrow><annotation encoding="application/x-tex">\dfrac{2}{3}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span></span><span class="vlist-s">&#x200B;</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> is instance from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="double-struck">Q</mi></mrow><annotation encoding="application/x-tex">\mathbb Q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8556em;vertical-align:-0.1667em;"></span><span class="mord mathbb">Q</span></span></span></span> Rational.</p>
+<p>If we have a class or prototype called &quot;Person&quot;, we can use the notation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>&#x2208;</mo><mtext>Person</mtext></mrow><annotation encoding="application/x-tex">p \in \text{Person}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&#x2208;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">Person</span></span></span></span></span> to indicate that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> is an instance of the Person class. <strong>This means that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span> has the properties and methods defined by the Person class, and can be used in the same way as any other instance of that class.</strong></p>
+<p>Take <em>Maho Shoujo</em> as an example, a <em>Maho Shoujo</em> class or prototype is a template or blueprint for creating instances of that object. An instance of the <em>Maho Shoujo</em> class is a specific realization of that object.</p>
+<p>For example, the <em>Maho Shoujo</em> class might have properties such as name, age, and magical powers, and methods such as &quot;cast spell&quot;, &quot;transform&quot;, and &quot;interact with other characters&quot;. An instance of this class might be a specific <em>Maho Shoujo</em> character, such as <em>Madoka</em>, with her own unique data for the name, age, and magical powers properties, as well as her own behavior for the &quot;cast spell&quot;, &quot;transform&quot;, and &quot;interact with other characters&quot; methods.</p>
+<p>Another way to think about this is that the Maho Shoujo class or prototype is like a template that defines the basic attributes and behaviors of a Maho Shoujo character. Each instance, or Maho Shoujo character, you create with that template will have the same basic attributes and behaviors, but will also have their own unique characteristics.</p>
 <h3 class="mume-header" id="a-simple-object-implantation-in-c">A Simple Object Implantation in C</h3>
 
 <h4 class="mume-header" id="attributes-member-variables-and-methods">Attributes: Member Variables and Methods</h4>
@@ -1202,12 +1327,36 @@ These are just a few examples of the input and output functions that can be used
 <blockquote>
 <p>Yet to be written.</p>
 </blockquote>
-<h4 class="mume-header" id="static-or-dynamic-this-is-a-problem">Static or Dynamic? This is a Problem.</h4>
+<h2 class="mume-header" id="data-structures-a-brief-introduction">Data Structures: A Brief Introduction</h2>
+
+<h3 class="mume-header" id="vector-array-with-dynamic-length">Vector: Array with Dynamic Length</h3>
+
+<blockquote>
+<p>If you&apos;ve just learned about C arrays and pointers, you may be familiar with the concept of storing a collection of elements of the same data type in a fixed-length array. This is a useful data structure for many applications, but it has one major limitation: <strong>once the array is created, its size cannot be changed</strong>. This means that if you need to add or remove elements from the array later on, you&apos;ll need to create a new array with a larger or smaller size and copy the old elements into the new array.</p>
+</blockquote>
+<p><strong>This is where vectors come in.</strong> A vector is a <strong>dynamic array</strong> data structure that can grow or shrink in size as needed during program execution. It is similar to a fixed-length array in that it stores a collection of elements of the same data type, but it has several key differences that make it more flexible and convenient to use.</p>
+<p>One of the main advantages of vectors is that they allow you to add or remove elements from the array at runtime. This can be especially useful in situations where you don&apos;t know the size of the array in advance or when the size of the array may change over time.</p>
+<p>Another advantage of vectors is that they come with a set of built-in functions that make it easy to manipulate and access the elements of the array. These functions include functions to add or remove elements from the array, get the size of the array, and access specific elements of the array by index.</p>
+<h4 class="mume-header" id="implantation">Implantation</h4>
+
+<blockquote>
+<p>To use vectors in your C programs, you&apos;ll need to allocate and deallocate memory dynamically using pointers. This can be a bit more complex than working with fixed-length arrays, but it offers greater flexibility and control over memory usage. If you&apos;re just getting started with C programming, learning how to use vectors can be a valuable addition to your skills.</p>
+</blockquote>
+<h3 class="mume-header" id="linking-list">Linking List</h3>
+
+<h4 class="mume-header" id="forward-list">Forward List</h4>
 
 <blockquote>
 <p>Yet to be written.</p>
 </blockquote>
-<h3 class="mume-header" id="essence-polymorphism">Essence: Polymorphism</h3>
+<h4 class="mume-header" id="bidirectional-cyclone-list">Bidirectional-Cyclone List</h4>
+
+<blockquote>
+<p>Yet to be written.</p>
+</blockquote>
+<h2 class="mume-header" id="object-oriented-programing-in-c-polymorphism">Object-Oriented Programing in C: Polymorphism</h2>
+
+<h3 class="mume-header" id="static-polymorphism">Static Polymorphism</h3>
 
 <h4 class="mume-header" id="examples-of-static-polymorphism-in-mathh">Examples of Static Polymorphism in <code>math.h</code></h4>
 
@@ -1219,7 +1368,7 @@ These are just a few examples of the input and output functions that can be used
 <blockquote>
 <p>Yet to be written.</p>
 </blockquote>
-<h3 class="mume-header" id="dynamic-polymorphism">Dynamic Polymorphism</h3>
+<h3 class="mume-header" id="dynamic-polymorphism-not-enough">Dynamic Polymorphism: Not Enough!</h3>
 
 <h4 class="mume-header" id="dynamic-polymorphism-implantation-with-silly-type-checking">Dynamic Polymorphism Implantation with Silly Type Checking</h4>
 
@@ -1246,6 +1395,8 @@ These are just a few examples of the input and output functions that can be used
 <blockquote>
 <p>Yet to be written.</p>
 </blockquote>
+<h3 class="mume-header" id="cpython">CPython</h3>
+
 <h2 class="mume-header" id="epilogue-the-story-of-cfront">Epilogue: The Story of CFront</h2>
 
 <blockquote>
