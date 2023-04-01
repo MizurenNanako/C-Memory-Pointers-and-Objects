@@ -17,9 +17,7 @@ void forward_list_node_delete(ForwardListNode *node) {
 
 ForwardList *forward_list_new() {
     ForwardList *list = malloc(sizeof(ForwardList));
-    if (list) {
-        list->head = NULL;
-    }
+    if (list) list->head = NULL;
     return list;
 }
 
@@ -96,9 +94,8 @@ size_t forward_list_size(ForwardList *list) {
 }
 
 void forward_list_merge(ForwardList *list1, ForwardList *list2) {
-    if (list1->head == NULL) {
-        list1->head = list2->head;
-    } else if (list2->head != NULL) {
+    if (list1->head == NULL) list1->head = list2->head; 
+    else if (list2->head != NULL) {
         ForwardListNode **pp_curr = &list1->head;
         while (*pp_curr) {
             if (list2->head->data < (*pp_curr)->data) {

@@ -1,5 +1,3 @@
-<style>.p{text-indent:2em;}@media print{.pagebreak{page-break-before:always;}}</style>
-
 # C: Memory, Pointers, and Objects
 
 <div style="display: flex; justify-content: flex-end;">
@@ -88,20 +86,20 @@ This is an attempt to deliver a brief introduction of a few memory-related conce
       - [Syntax and Examples](#syntax-and-examples)
       - [A More Terrifying Example](#a-more-terrifying-example)
     - [Functional](#functional)
+      - [Definition](#definition)
+      - [Callback](#callback)
+      - [The sorting algorithms](#the-sorting-algorithms)
     - [Closure](#closure)
-    - [Higher-Order Function](#higher-order-function)
   - [Object-Oriented Programing in C: A Simple Glance](#object-oriented-programing-in-c-a-simple-glance)
     - [Definition for an Object](#definition-for-an-object)
     - [Instance and Class](#instance-and-class)
     - [A Simple Object Implantation in C](#a-simple-object-implantation-in-c)
-      - [Attributes: Member Variables and Methods](#attributes-member-variables-and-methods)
-      - [`this` Parameter, or You Can Name It `Self`](#this-parameter-or-you-can-name-it-self)
+      - [`Vector2d`](#vector2d)
   - [Data Structures: A Brief Introduction](#data-structures-a-brief-introduction)
     - [Vector: Array with Dynamic Length](#vector-array-with-dynamic-length)
       - [Implantation](#implantation)
-    - [Linking List](#linking-list)
-      - [Forward List](#forward-list)
-      - [Bidirectional-Cyclone List](#bidirectional-cyclone-list)
+    - [Linking List: Forward List](#linking-list-forward-list)
+    - [Linking List: Bidirectional-Cyclone List](#linking-list-bidirectional-cyclone-list)
   - [Object-Oriented Programing in C: Polymorphism](#object-oriented-programing-in-c-polymorphism)
     - [Static Polymorphism](#static-polymorphism)
       - [Examples of Static Polymorphism in `math.h`](#examples-of-static-polymorphism-in-mathh)
@@ -1246,15 +1244,178 @@ Now you know the syntax for type casting.
 
 ### Functional
 
-> Yet to be written.
+In mathematics, a function is a relation between a set of inputs (domain) and a set of possible outputs (range), with the property that each input is related to exactly one output.
+
+#### Definition
+
+The definition of **functional** is: **a mapping that maps one or more functions to a scalar in a scalar field**, which can be a real or a complex number or something else. It is a function of functions that operates on the input functions and returns a scalar as a result. Functionals can be defined on various types of function spaces, such as continuous function spaces, integrable function spaces, bounded function spaces, and so on.
+
+In C programming, a functional refers to a function that can accept function pointers as parameters. This function can be thought of as a function of functions that takes one or more function pointers as input and operates on the functions pointed to by these pointers. Functionals in C are also known as higher-order functions or callback functions, and are commonly used for this purpose.
+
+```c
+#include <stdio.h>
+
+// a functional that accepts a function pointer as a parameter
+int apply(int (*func)(int), int n) {
+    return func(n);
+}
+
+// a function to be passed as a parameter
+int square(int n) {
+    return n * n;
+}
+
+int main() {
+    int result = apply(square, 5);
+    printf("%d\n", result); // Output: 25
+    return 0;
+}
+```
+
+In this example, the `apply` functional accepts a function pointer as its first parameter. The second parameter `n` is passed to the function pointed to by the function pointer. The `square` function is defined to square an integer value, and it is passed as a parameter to `apply`. The `apply` functional calls the `square` function with the value `5` and returns the result, which is `25`. Finally, the `main` function calls `apply` with `square` and `5` as arguments, and it prints the returned value to the console.
+
+The example is illustrative enough on the behaviors of a functional.
+
+#### Callback
+
+In C programming, a callback function is a function that is passed as a parameter to another function. The receiving function can then call the callback function at any time during its execution.
+
+Callback functions are useful in situations where you want to provide a function with the ability to execute a user-defined piece of code at a certain point in its execution. This allows for greater flexibility in program design, as the caller of the function can define the behavior of the function without having to modify its code.
+
+Here's an example of C code that demonstrates how to use a callback function:
+
+```c
+#include <stdio.h>
+
+// the function that takes a callback function as a parameter
+void process_numbers(int arr[], int size, void (*callback)(int)) {
+    for (int i = 0; i < size; i++) {
+        callback(arr[i]);
+    }
+}
+
+// the callback function that prints the square of the number passed to it
+void print_square(int n) {
+    printf("%d ", n * n);
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr) / sizeof(int);
+
+    // call the function with the callback function as the third parameter
+    process_numbers(arr, size, print_square);
+    
+    return 0;
+}
+```
+
+In this example, the `process_numbers` function takes an array of integers, the size of the array, and a callback function as parameters. The callback function is a function that will be called for each number in the array.
+
+The `print_square` function is defined to print the square of a given number to the console. It is passed as the callback function to `process_numbers`. The output of this program would be:
+
+```sh
+1 4 9 16 25
+```
+
+#### The sorting algorithms
+
+Since this introduction is for physics students who may not be interested in how sorting actually implanted, in this part, we will just introduce `qsort` in `stdlib.h`.
+
+The `qsort` function is the most commonly used sorting algorithm in C. It sorts an array of elements using the quicksort algorithm, which is a divide-and-conquer algorithm. The `qsort` function takes four parameters: a pointer to the array to be sorted, the number of elements in the array, the size of each element, and a comparison function that is used to compare the elements in the array. The comparison function is a callback function that is called by `qsort` to compare two elements in the array.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int compare(const void* a, const void* b) {
+    int num1 = *(int*)a;
+    int num2 = *(int*)b;
+    return num1 - num2;
+}
+
+int main() {
+    int arr[] = {5, 2, 8, 1, 3};
+    int size = sizeof(arr) / sizeof(int);
+
+    qsort(arr, size, sizeof(int), compare);
+
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+```
+
+In this example, the `compare` function is a callback function that is used to compare two integers in the array. The `qsort` function is called with the `arr` array, its size, the size of each integer element, and the `compare` function as a callback. The `qsort` function sorts the array using the quicksort algorithm, and the sorted array is printed to the console.
+
+> The `stdlib.h` library also provides `heapsort` and `mergesort` functions, which sort arrays using the heapsort and mergesort algorithms, respectively. These functions have similar syntax to `qsort`, with a pointer to the array to be sorted, the number of elements in the array, the size of each element, and a comparison function as parameters.
 
 ### Closure
 
-> Yet to be written.
+In programming, **a closure is a function that has access to variables in its lexical scope, even when the function is executed outside that scope**. This means that a closure can "close over" or capture variables from its surrounding environment, and use them when it is called later, even if those variables are no longer in scope.
 
-### Higher-Order Function
+Closures are often used in functional programming to create functions with behavior that depends on the values of variables at the time the closure was created. They can be used to create functions that generate other functions, or to create functions with private state that is hidden from the rest of the program.
 
-> Yet to be written.
+In C++, functors and lambda functions provide a more convenient and expressive way to create closures compared to C. In C, closures can be implemented using function pointers and structs. While this approach is more cumbersome than in C++, it still provides a way to create closures.
+
+Here's an example implementation of a closure using a struct:
+
+```c
+#include <stdio.h>
+
+// Define a struct to hold some data
+struct my_data_struct {
+    int x;
+    char y;
+};
+
+// Define the callback function 
+//      with a struct pointer argument
+void my_callback(int value, void *data) 
+{
+    struct my_data_struct *my_data = (struct my_data_struct *)data;
+    printf(
+              "Callback function called\n\t"
+              "with value: %d and data: {x: %d, y: %c}\n",
+              value,
+              my_data->x,
+              my_data->y
+          );
+}
+
+// Function that accepts a callback function 
+//      and a void pointer as arguments
+void do_something(int value, void (*callback)(int, void *), void *data) 
+{
+    // Do something here...
+    
+    // Call the callback function with value and data as arguments
+    callback(value, data);
+}
+
+int main() 
+{
+    // Create an instance of the data struct
+    struct my_data_struct my_data = { 42, 'A' };
+    
+    // Call the do_something function 
+    //      and pass the callback function 
+    //      and data struct as arguments
+    do_something(123, my_callback, &my_data);
+    
+    return 0;
+}
+```
+
+Wait, but where is the closure? Actually, in this example, the callback together with the data parameter act as a closure.
+
+A closure is a function object that has access to variables in its lexical scope, even when the function is called outside that scope. In C, we can simulate a closure by passing a function pointer and a data pointer together as a pair.
+
+In this example, the `do_something` function creates a closure by passing a function pointer (`my_callback`) and a data pointer (`&my_data`) to the caller. When the caller invokes the callback function, the callback function has access to the `my_data` variable, even though it was defined in a different scope. This technic is commonly used in callback functions in most libraries.
+
+There do have more complex implantations to implant closures, but we are not going any further now.
 
 ## Object-Oriented Programing in C: A Simple Glance
 
@@ -1274,9 +1435,9 @@ Just like any other object in OOP, a *Maho Shoujo* object encapsulates data and 
 
 ### Instance and Class
 
-When $x\in \mathbb X$, it can be read as "$x$ belongs to $\mathbb X$" or **"$x$ is an instance from the class $\mathbb X$"**. For example, $1$ is instance from $\N$ Natural while $\dfrac{2}{3}$ is instance from $\mathbb Q$ Rational.
+When $x\in X$, it can be read as "$x$ belongs to $X$" or "$x$ is an instance from the class $X$". For example, $1$ is instance from N Natural while $\dfrac32\in\mathbb{Q}$ is instance from $\mathbb Q$ Rational.
 
-If we have a class or prototype called "Person", we can use the notation $p \in \text{Person}$ to indicate that $p$ is an instance of the Person class. **This means that $p$ has the properties and methods defined by the Person class, and can be used in the same way as any other instance of that class.**
+If we have a class or prototype called "Person", we can use the notation $p\in\text{Person}$ to indicate that p is an instance of the Person class. This means that $p$ has the properties and methods defined by the $\text{Person}$ class, and can be used in the same way as any other instance of that class.
 
 Take *Maho Shoujo* as an example, a *Maho Shoujo* class or prototype is a template or blueprint for creating instances of that object. An instance of the *Maho Shoujo* class is a specific realization of that object.
 
@@ -1286,13 +1447,129 @@ Another way to think about this is that the Maho Shoujo class or prototype is li
 
 ### A Simple Object Implantation in C
 
-#### Attributes: Member Variables and Methods
+#### `Vector2d`
 
-> Yet to be written.
+In a `Vector2d` object, there are typically several properties (also known as data members) that represent its characteristics, and several methods (also known as member functions) that represent its behaviors.
 
-#### `this` Parameter, or You Can Name It `Self`
+Properties of a `Vector2d` object usually include its `x` and `y` components, which represent its position in a two-dimensional space. These values can be accessed and modified directly by other functions or objects that use the `Vector2d`.
 
-> Yet to be written.
+Methods of a `Vector2d` object typically include operations that can be performed on it, such as addition, subtraction, scaling, dot product, cross product, and magnitude calculation. These methods usually take one or more `Vector2d` objects as input, and return a new `Vector2d` object or a scalar value that represents the result of the operation.
+
+Class diagram hown below:
+
+```mermaid
+classDiagram
+    class Vector2d {
+        - double x
+        - double y
+        + Vector2d(double x, double y)
+        + add(Vector2d v) Vector2d
+        + subtract(Vector2d v) Vector2d
+        + scale(double scalar) Vector2d
+        + dotProduct(Vector2d v) double
+        + crossProduct(Vector2d v) double
+        + magnitude() double
+    }
+```
+
+It is clearly enough to define the Vector2d struct:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct {
+    double x;
+    double y;
+} Vector2d;
+
+Vector2d* vector2d_create(double x, double y) {
+    Vector2d* v = (Vector2d*) malloc(sizeof(Vector2d));
+    v->x = x;
+    v->y = y;
+    return v;
+}
+
+void vector2d_delete(Vector2d* v) {
+    free(v);
+}
+```
+
+Then the remaining methods:
+
+```c
+Vector2d* vector2d_add(Vector2d* v1, Vector2d* v2) {
+    return vector2d_create(v1->x + v2->x, v1->y + v2->y);
+}
+
+Vector2d* vector2d_subtract(Vector2d* v1, Vector2d* v2) {
+    return vector2d_create(v1->x - v2->x, v1->y - v2->y);
+}
+
+Vector2d* vector2d_scale(Vector2d* v, double scalar) {
+    return vector2d_create(v->x * scalar, v->y * scalar);
+}
+
+double vector2d_dotProduct(Vector2d* v1, Vector2d* v2) {
+    return v1->x * v2->x + v1->y * v2->y;
+}
+
+double vector2d_crossProduct(Vector2d* v1, Vector2d* v2) {
+    return v1->x * v2->y - v1->y * v2->x;
+}
+
+double vector2d_magnitude(Vector2d* v) {
+    return sqrt(v->x * v->x + v->y * v->y);
+}
+```
+
+And an example `main` function that uses all the methods of the `Vector2d` object:
+
+```c
+int main() {
+    // Create two Vector2d objects
+    Vector2d* v1 = vector2d_create(3.0, 4.0);
+    Vector2d* v2 = vector2d_create(5.0, 6.0);
+
+    // Print the x and y components of the Vector2d objects
+    printf("v1 x: %f, y: %f\n", v1->x, v1->y);
+    printf("v2 x: %f, y: %f\n", v2->x, v2->y);
+
+    // Calculate the magnitude of the Vector2d objects
+    printf("v1 magnitude: %f\n", vector2d_magnitude(v1));
+    printf("v2 magnitude: %f\n", vector2d_magnitude(v2));
+
+    // Add the Vector2d objects together
+    Vector2d* v3 = vector2d_add(v1, v2);
+    printf("v1 + v2 x: %f, y: %f\n", v3->x, v3->y);
+
+    // Subtract the Vector2d objects
+    Vector2d* v4 = vector2d_subtract(v1, v2);
+    printf("v1 - v2 x: %f, y: %f\n", v4->x, v4->y);
+
+    // Scale a Vector2d object
+    Vector2d* v5 = vector2d_scale(v1, 2.0);
+    printf("v1 scaled by 2.0 x: %f, y: %f\n", v5->x, v5->y);
+
+    // Calculate the dot product of the Vector2d objects
+    printf("v1 dot v2: %f\n", vector2d_dotProduct(v1, v2));
+
+    // Calculate the cross product of the Vector2d objects
+    printf("v1 cross v2: %f\n", vector2d_crossProduct(v1, v2));
+
+    // Delete the Vector2d objects
+    vector2d_delete(v1);
+    vector2d_delete(v2);
+    vector2d_delete(v3);
+    vector2d_delete(v4);
+    vector2d_delete(v5);
+
+    return 0;
+}
+```
+
+Remember that it's important to delete all the `Vector2d` objects created using `vector2d_create` using `vector2d_delete` to avoid memory leaks, including `vector2d_create` in other function calls.
 
 ## Data Structures: A Brief Introduction
 
@@ -1306,19 +1583,1079 @@ One of the main advantages of vectors is that they allow you to add or remove el
 
 Another advantage of vectors is that they come with a set of built-in functions that make it easy to manipulate and access the elements of the array. These functions include functions to add or remove elements from the array, get the size of the array, and access specific elements of the array by index.
 
-#### Implantation
-
 > To use vectors in your C programs, you'll need to allocate and deallocate memory dynamically using pointers. This can be a bit more complex than working with fixed-length arrays, but it offers greater flexibility and control over memory usage. If you're just getting started with C programming, learning how to use vectors can be a valuable addition to your skills.
 
-### Linking List
+Unlike most of the tutorials, this one will provide the whole implantation directly.
 
-#### Forward List
+#### Implantation: Vector
+
+---
+
+File: **vector.h**
+
+```c
+#pragma once
+#include <stdlib.h>
+
+typedef struct
+{
+    int *data;
+    size_t size;
+    size_t capacity;
+} Vector;
+
+Vector *vector_new();
+void vector_delete(Vector *v);
+void vector_push_back(Vector *v, int value);
+void vector_pop_back(Vector *v);
+size_t vector_size(Vector *v);
+int vector_empty(Vector *v);
+void vector_clear(Vector *v);
+int vector_at(Vector *v, size_t index);
+int *vector_front(Vector *v);
+int *vector_back(Vector *v);
+void vector_reserve(Vector *v, size_t new_capacity);
+void vector_resize(Vector *v, size_t new_size, int default_value);
+void vector_erase(Vector *v, size_t index);
+void vector_insert(Vector *v, size_t index, int value);
+int *vector_data(Vector *v);
+int vector_capacity(Vector *v);
+void vector_shrink_to_fit(Vector *v);
+```
+
+The vector is represented by a struct called `Vector`, which contains an array of integers (`data`), the number of elements currently in the array (`size`), and the maximum number of elements that can be stored in the array (`capacity`).
+
+- `vector_new()`: Allocate memory for a new vector and initialize its fields. Returns a pointer to the new vector, or NULL if allocation fails.
+- `vector_delete(Vector *v)`: Deallocate the memory used by a vector.
+- `vector_push_back(Vector *v, int value)`: Add an element to the end of a vector. If the vector is at capacity, its size is doubled before the new element is added.
+- `vector_pop_back(Vector *v)`: Remove the last element from a vector. If the vector is empty, this function does nothing.
+- `vector_size(Vector *v)`: Get the number of elements in a vector.
+- `vector_empty(Vector *v)`: Check whether a vector is empty.
+- `vector_clear(Vector *v)`: Remove all elements from a vector. This function does not deallocate any memory used by the vector.
+- `vector_at(Vector *v, size_t index)`: Get the value of an element in a vector by index. Returns the value of the element at the specified index, or -1 if the index is out of bounds.
+- `vector_front(Vector *v)`: Get a pointer to the first element in a vector. Returns a pointer to the first element in the vector, or NULL if the vector is empty.
+- `vector_back(Vector *v)`: Get a pointer to the last element in a vector. Returns a pointer to the last element in the vector, or NULL if the vector is empty.
+- `vector_reserve(Vector *v, size_t new_capacity)`: Allocate memory for a vector with a specified capacity. If the new capacity is less than the current size of the vector, the size is not changed.
+- `vector_resize(Vector *v, size_t new_size, int default_value)`: Change the size of a vector. If the new size is greater than the current size, new elements are added with the specified default value. If the new size is less than the current size, elements are removed from the end of the vector. If the new size is equal to the current size, this function does nothing.
+- `vector_erase(Vector *v, size_t index)`: Remove an element from a vector by index. If the index is out of bounds, this function does nothing.
+- `vector_insert(Vector *v, size_t index, int value)`: Insert an element into a vector at a specified index. If the index is out of bounds, this function does nothing. If the vector is at capacity, its size is doubled before the new element is inserted.
+- `vector_data(Vector *v)`: Get a pointer to the data array used by a vector. Returns a pointer to the data array used by the vector, or NULL if the vector is empty.
+- `vector_capacity(Vector *v)`: Get the capacity of a vector. Returns the current capacity of the vector.
+- `vector_shrink_to_fit(Vector *v)`: Reduce the capacity of a vector to match its size. If the size of the vector is less than its capacity, its capacity is reduced to match its size.
+
+---
+
+File: **vector.c**
+
+```c
+#include "vector.h"
+
+Vector *vector_new() {
+    Vector *v = (Vector *) malloc(sizeof(Vector));
+    if (!v) return NULL;
+    v->data = NULL;
+    v->size = 0;
+    v->capacity = 0;
+    return v;
+}
+
+void vector_delete(Vector *v) {
+    if (!v) return;
+    free(v->data);
+    free(v);
+}
+
+void vector_push_back(Vector *v, int value) {
+    if (!v) return;
+    if (v->size == v->capacity) {
+        size_t new_capacity = v->capacity == 0 ? 1 : v->capacity * 2;
+        int *new_data = (int *) realloc(v->data, new_capacity * sizeof(int));
+        if (!new_data)     return;
+        v->data = new_data;
+        v->capacity = new_capacity;
+    }
+    v->data[v->size] = value;
+    v->size++;
+}
+
+void vector_pop_back(Vector *v) {
+    if (!v || v->size == 0) return;
+    v->size--;
+}
+
+size_t vector_size(Vector *v) {
+    if (!v) return 0;
+    return v->size;
+}
+
+int vector_empty(Vector *v) {
+    if (!v || v->size == 0) return 1;
+    return 0;
+}
+
+void vector_clear(Vector *v) {
+    if (!v) return;
+    v->size = 0;
+}
+
+int vector_at(Vector *v, size_t index) {
+    if (!v || index >= v->size) return -1;
+    return v->data[index];
+}
+
+int *vector_front(Vector *v) {
+    if (!v || v->size == 0) return NULL;
+    return &v->data[0];
+}
+
+int *vector_back(Vector *v) {
+    if (!v || v->size == 0) return NULL;
+    return &v->data[v->size - 1];
+}
+
+void vector_reserve(Vector *v, size_t new_capacity) {
+    if (!v || new_capacity <= v->capacity) return;
+    int *new_data = (int *) realloc(v->data, new_capacity * sizeof(int));
+    if (!new_data) return;
+    v->data = new_data;
+    v->capacity = new_capacity;
+}
+
+void vector_resize(Vector *v, size_t new_size, int default_value) {
+    if (!v) return;
+    if (new_size > v->size) {
+        if (new_size > v->capacity) {
+            size_t new_capacity = new_size;
+            int *new_data = (int *) realloc(v->data, new_capacity * sizeof(int));
+            if (!new_data) return;
+            v->data = new_data;
+            v->capacity = new_capacity;
+        }
+        for (size_t i = v->size; i < new_size; i++) {
+            v->data[i] = default_value;
+        }
+    }
+    v->size = new_size;
+}
+
+void vector_erase(Vector *v, size_t index) {
+    if (!v || index >= v->size) return;
+    for (size_t i = index; i < v->size - 1; i++) {
+        v->data[i] = v->data[i+1];
+    }
+    v->size--;
+}
+
+void vector_insert(Vector *v, size_t index, int value) {
+    if (!v || index > v->size) return;
+    if (v->size == v->capacity) {
+        size_t new_capacity = v->capacity == 0 ? 1 : v->capacity * 2;
+        int *new_data = (int *) realloc(v->data, new_capacity * sizeof(int));
+        if (!new_data) return;
+        v->data = new_data;
+        v->capacity = new_capacity;
+    }
+    for (size_t i = v->size; i > index; i--) {
+        v->data[i] = v->data[i-1];
+    }
+    v->data[index] = value;
+    v->size++;
+}
+
+int *vector_data(Vector *v) {
+    if (!v) return NULL;
+    return v->data;
+}
+
+int vector_capacity(Vector *v) {
+    if (!v) return 0;
+    return v->capacity;
+}
+
+void vector_shrink_to_fit(Vector *v) {
+    if (!v) return;
+    if (v->size < v->capacity) {
+        int *new_data = (int *) realloc(v->data, v->size * sizeof(int));
+        if (!new_data) return;
+        v->data = new_data;
+        v->capacity = v->size;
+    }
+}
+```
+
+---
+
+File: **test_vector.c**
+
+```c
+#include <stdio.h>
+#include "vector.h"
+
+int main() {
+    Vector *v = vector_new();
+    if (!v) {
+        printf("Failed to create vector\n");
+        return -1;
+    }
+
+    // Add some elements to the vector
+    vector_push_back(v, 1);
+    vector_push_back(v, 2);
+    vector_push_back(v, 3);
+    vector_push_back(v, 4);
+    vector_push_back(v, 5);
+
+    // Print the size and capacity of the vector
+    printf("Vector size: %zu\n", vector_size(v));
+    printf("Vector capacity: %d\n", vector_capacity(v));
+
+    // Print the contents of the vector
+    printf("Vector contents: ");
+    for (size_t i = 0; i < vector_size(v); i++) {
+        printf("%d ", vector_at(v, i));
+    }
+    printf("\n");
+
+    // Remove the last element from the vector
+    vector_pop_back(v);
+
+    // Print the updated contents of the vector
+    printf("Vector contents after pop_back: ");
+    for (size_t i = 0; i < vector_size(v); i++) {
+        printf("%d ", vector_at(v, i));
+    }
+    printf("\n");
+
+    // Insert a new element at index 2
+    vector_insert(v, 2, 6);
+
+    // Print the updated contents of the vector
+    printf("Vector contents after insert: ");
+    for (size_t i = 0; i < vector_size(v); i++) {
+        printf("%d ", vector_at(v, i));
+    }
+    printf("\n");
+
+    // Resize the vector to a smaller size
+    vector_resize(v, 3, 0);
+
+    // Print the updated contents of the vector
+    printf("Vector contents after resize: ");
+    for (size_t i = 0; i < vector_size(v); i++) {
+        printf("%d ", vector_at(v, i));
+    }
+    printf("\n");
+
+    // Clear the vector
+    vector_clear(v);
+
+    // Print the size and capacity of the vector after clearing
+    printf("Vector size after clear: %zu\n", vector_size(v));
+    printf("Vector capacity after clear: %d\n", vector_capacity(v));
+
+    vector_delete(v);
+    return 0;
+}
+```
+
+---
+
+Compilation and Run:
+
+```sh
+gcc test_vector.c vector.c -o test_vector
+./test_vector
+```
+
+---
+
+Output:
+
+```text
+Vector size: 5
+Vector capacity: 8
+Vector contents: 1 2 3 4 5 
+Vector contents after pop_back: 1 2 3 4 
+Vector contents after insert: 1 2 6 3 4 
+Vector contents after resize: 1 2 6 
+Vector size after clear: 0
+Vector capacity after clear: 8
+```
+
+---
+
+### Linking List: Forward List
 
 > Yet to be written.
 
-#### Bidirectional-Cyclone List
+#### Implantation: ForwardList
+
+---
+
+File: **forward_list.h**
+
+```c
+#pragma once
+#include <stdlib.h>
+
+typedef struct ForwardListNode ForwardListNode;
+struct ForwardListNode {
+    int data;
+    ForwardListNode *next;
+};
+
+typedef struct {
+    ForwardListNode *head;
+} ForwardList;
+
+ForwardList *forward_list_new();
+void forward_list_delete(ForwardList *list);
+void forward_list_push_front(ForwardList *list, int value);
+void forward_list_pop_front(ForwardList *list);
+int *forward_list_front(ForwardList *list);
+int forward_list_empty(ForwardList *list);
+void forward_list_clear(ForwardList *list);
+void forward_list_insert_after(ForwardListNode *node, int value);
+void forward_list_erase_after(ForwardListNode *node);
+size_t forward_list_size(ForwardList *list);
+void forward_list_merge(ForwardList *list1, ForwardList *list2);
+void forward_list_remove(ForwardList *list, int value);
+void forward_list_reverse(ForwardList *list);
+```
+
+The forward list is represented by a struct called `ForwardList`, which contains a pointer to the first node in the list (`head`). Each node in the list is represented by a struct called `ForwardListNode`, which contains an integer value (`data`) and a pointer to the next node in the list (`next`).
+
+The header file defines several functions for working with the forward list:
+
+- `forward_list_new()`: Creates a new empty forward list. Returns a pointer to the newly created forward list.
+- `forward_list_delete(ForwardList *list)`: Deletes a forward list and frees the memory used by its nodes.
+- `forward_list_push_front(ForwardList *list, int value)`: Adds a new element to the front of a forward list.
+- `forward_list_pop_front(ForwardList *list)`: Removes the first element from a forward list.
+- `forward_list_front(ForwardList *list)`: Returns a pointer to the first element of a forward list. Returns a pointer to the first element of the forward list, or NULL if the list is empty.
+- `forward_list_empty(ForwardList *list)`: Checks if a forward list is empty. Returns 1 if the list is empty, 0 otherwise.
+- `forward_list_clear(ForwardList *list)`: Removes all elements from a forward list.
+- `forward_list_insert_after(ForwardListNode *node, int value)`: Inserts a new element after a given node in a forward list.
+- `forward_list_erase_after(ForwardListNode *node)`: Removes the element after a given node in a forward list.
+- `forward_list_size(ForwardList *list)`: Returns the number of elements in a forward list.
+- `forward_list_merge(ForwardList *list1, ForwardList *list2)`: Merges two sorted forward lists into a single sorted forward list.
+- `forward_list_remove(ForwardList *list, int value)`: Removes all elements with a given value from a forward list.
+- `forward_list_reverse(ForwardList *list)`: Reverses the order of the elements in a forward list.
+
+---
+
+File: **forward_list.c**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "forward_list.h"
+
+ForwardListNode *forward_list_node_new(int value) {
+    ForwardListNode *node = malloc(sizeof(ForwardListNode));
+    if (node) {
+        node->data = value;
+        node->next = NULL;
+    }
+    return node;
+}
+
+void forward_list_node_delete(ForwardListNode *node) {
+    free(node);
+}
+
+ForwardList *forward_list_new() {
+    ForwardList *list = malloc(sizeof(ForwardList));
+    if (list) list->head = NULL;
+    return list;
+}
+
+void forward_list_delete(ForwardList *list) {
+    if (list) {
+        ForwardListNode *curr = list->head;
+        while (curr) {
+            ForwardListNode *temp = curr;
+            curr = curr->next;
+            free(temp);
+        }
+        free(list);
+    }
+}
+
+void forward_list_push_front(ForwardList *list, int value) {
+    ForwardListNode *node = forward_list_node_new(value);
+    if (node) {
+        node->next = list->head;
+        list->head = node;
+    }
+}
+
+void forward_list_pop_front(ForwardList *list) {
+    if (list->head) {
+        ForwardListNode *temp = list->head;
+        list->head = list->head->next;
+        free(temp);
+    }
+}
+
+int *forward_list_front(ForwardList *list) {
+    return list->head ? &list->head->data : NULL;
+}
+
+int forward_list_empty(ForwardList *list) {
+    return list->head == NULL;
+}
+
+void forward_list_clear(ForwardList *list) {
+    ForwardListNode *curr = list->head;
+    while (curr) {
+        ForwardListNode *temp = curr;
+        curr = curr->next;
+        free(temp);
+    }
+    list->head = NULL;
+}
+
+void forward_list_insert_after(ForwardListNode *node, int value) {
+    ForwardListNode *new_node = forward_list_node_new(value);
+    if (new_node) {
+        new_node->next = node->next;
+        node->next = new_node;
+    }
+}
+
+void forward_list_erase_after(ForwardListNode *node) {
+    if (node->next) {
+        ForwardListNode *temp = node->next;
+        node->next = node->next->next;
+        free(temp);
+    }
+}
+
+size_t forward_list_size(ForwardList *list) {
+    size_t count = 0;
+    ForwardListNode *curr = list->head;
+    while (curr) {
+        count++;
+        curr = curr->next;
+    }
+    return count;
+}
+
+void forward_list_merge(ForwardList *list1, ForwardList *list2) {
+    if (list1->head == NULL) list1->head = list2->head; 
+    else if (list2->head != NULL) {
+        ForwardListNode **pp_curr = &list1->head;
+        while (*pp_curr) {
+            if (list2->head->data < (*pp_curr)->data) {
+                ForwardListNode *temp = list2->head;
+                list2->head = list2->head->next;
+                temp->next = *pp_curr;
+                *pp_curr = temp;
+            }
+            pp_curr = &(*pp_curr)->next;
+        }
+        *pp_curr = list2->head;
+    }
+    list2->head = NULL;
+}
+
+void forward_list_remove(ForwardList *list, int value) {
+    ForwardListNode **pp_curr = &list->head;
+    while (*pp_curr) {
+        if ((*pp_curr)->data == value) {
+            ForwardListNode *temp = *pp_curr;
+            *pp_curr = (*pp_curr)->next;
+            free(temp);
+        } else {
+            pp_curr = &(*pp_curr)->next;
+        }
+    }
+}
+
+void forward_list_reverse(ForwardList *list) {
+    ForwardListNode *prev = NULL;
+    ForwardListNode *curr = list->head;
+    while (curr) {
+        ForwardListNode *next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    list->head = prev;
+}
+```
+
+---
+
+File: **test_forward_list.c**
+
+```c
+#include <stdio.h>
+#include "forward_list.h"
+
+int cmp(int a, int b) {
+    return a < b;
+}
+
+int main() {
+    ForwardList *list = forward_list_new();
+
+    printf("Adding 3 elements to the front of the list...\n");
+    forward_list_push_front(list, 1);
+    forward_list_push_front(list, 2);
+    forward_list_push_front(list, 3);
+
+    printf("The size of the list is now %lu\n", forward_list_size(list));
+
+    printf("The first element of the list is %d\n", *forward_list_front(list));
+
+    printf("Removing the first element from the list...\n");
+    forward_list_pop_front(list);
+
+    printf("The size of the list is now %lu\n", forward_list_size(list));
+
+    printf("Clearing the list...\n");
+    forward_list_clear(list);
+
+    printf("The size of the list is now %lu\n", forward_list_size(list));
+    printf("The list is%s empty.\n", forward_list_empty(list) ? "" : " not");
+
+    printf("Adding 3 elements to the list...\n");
+    forward_list_push_front(list, 3);
+    forward_list_push_front(list, 1);
+    forward_list_push_front(list, 514);
+    forward_list_push_front(list, 2);
+    forward_list_push_front(list, 114);
+
+    printf("The current list is: ");
+    ForwardListNode *curr = list->head;
+    while (curr) {
+        printf("%d ", curr->data);
+        curr = curr->next;
+    }
+    printf("\n");
+
+    printf("Reversing the list...\n");
+    forward_list_reverse(list);
+
+    printf("The reversed list is: ");
+    curr = list->head;
+    while (curr) {
+        printf("%d ", curr->data);
+        curr = curr->next;
+    }
+    printf("\n");
+
+    printf("Deleting the list...\n");
+    forward_list_delete(list);
+
+    return 0;
+}
+```
+
+---
+
+Compilation and Run:
+
+```sh
+gcc test_forward_list.c forward_list.c -o test_forward_list
+./test_forward_list
+```
+
+---
+
+Output:
+
+```text
+Adding 3 elements to the front of the list...
+The size of the list is now 3
+The first element of the list is 3
+Removing the first element from the list...
+The size of the list is now 2
+Clearing the list...
+The size of the list is now 0
+The list is empty.
+Adding 3 elements to the list...
+The current list is: 114 2 514 1 3 
+Reversing the list...
+The reversed list is: 3 1 514 2 114 
+Deleting the list...
+```
+
+---
+
+### Linking List: Bidirectional-Cyclone List
 
 > Yet to be written.
+
+#### Implantation: List
+
+---
+
+File: **list.h**
+
+```c
+#pragma once
+
+#include <stdbool.h>
+
+typedef unsigned long long int ulli;
+
+struct ListNode
+{
+    struct ListNode *_next;
+    struct ListNode *_previous;
+    void *__data;
+};
+
+typedef struct
+{
+    struct ListNode *_sentinel;
+    struct ListNode *_visited;
+    ulli _size;
+    ulli _at_visit;
+} List;
+
+List *list_new();
+void *list_front(List *list);
+void *list_back(List *list);
+ulli list_size(List *list);
+bool list_empty(List *list);
+void list_push_back(List *list, void *value);
+void list_push_front(List *list, void *value);
+void *list_at(List *list, ulli index);
+void *list_remove(List *list, ulli index);
+void *list_pop_back(List *list);
+void *list_pop_front(List *list);
+void list_clear(List *list, void (*deleter)(void *));
+void list_delete(List *list, void (*deleter)(void *));
+```
+
+The header file defines several functions for working with the `List` data structure, which is a doubly linked cyclone list. The functions include:
+
+- `list_new()`: Creates a new, empty `List`.
+- `list_front()`: Returns the value of the first element in the list.
+- `list_back()`: Returns the value of the last element in the list.
+- `list_size()`: Returns the number of elements in the list.
+- `list_empty()`: Returns a boolean indicating whether the list is empty or not.
+- `list_push_back()`: Adds a new element with the given value to the back of the list.
+- `list_push_front()`: Adds a new element with the given value to the front of the list.
+- `list_at()`: Retrieves the value of the element at the specified index in the list.
+- `list_remove()`: Removes the element at the specified index from the list.
+- `list_pop_back()`: Removes and returns the last element of the list.
+- `list_pop_front()`: Removes and returns the first element of the list.
+- `list_clear()`: Removes all elements from the list.
+- `list_delete()`: Deletes the list itself.
+
+---
+
+File: **list.c**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "list.h"
+
+List *list_new()
+{
+    List *res = (List *)(malloc(sizeof(List)));
+    res->_sentinel = (struct ListNode *)malloc(sizeof(struct ListNode));
+    res->_size = 0;
+    res->_sentinel->_next = res->_sentinel;
+    res->_sentinel->_previous = res->_sentinel;
+    res->_visited = res->_sentinel->_next;
+    res->_at_visit = 0;
+    ;
+    return res;
+}
+
+void *list_front(List *list)
+{
+    if (!list->_size)
+    {
+        fputs("ERROR: on front() of empty List.", stderr);
+        exit(-1);
+    }
+    return list->_sentinel->_next->__data;
+}
+
+void *list_back(List *list)
+{
+    if (!list->_size)
+    {
+        fputs("ERROR: on back() of empty List.", stderr);
+        exit(-1);
+    }
+    return list->_sentinel->_previous->__data;
+}
+
+ulli list_size(List *list)
+{
+    return list->_size;
+}
+
+bool list_empty(List *list)
+{
+    return (list->_size == 0);
+}
+
+void list_push_back(List *to, void *with)
+{
+    struct ListNode *p = (struct ListNode *)malloc(sizeof(struct ListNode));
+    p->_previous = to->_sentinel->_previous;
+    p->_next = to->_sentinel;
+    p->__data = with;
+    to->_sentinel->_previous->_next = p;
+    to->_sentinel->_previous = p;
+    if (to->_at_visit || !to->_size)
+    {
+        to->_visited = to->_sentinel->_next;
+        to->_at_visit = 0;
+        ;
+    }
+    ++to->_size;
+    return;
+}
+
+void list_push_front(List *to, void *with)
+{
+    struct ListNode *p = (struct ListNode *)malloc(sizeof(struct ListNode));
+    p->_previous = to->_sentinel;
+    p->_next = to->_sentinel->_next;
+    p->__data = with;
+    to->_sentinel->_next->_previous = p;
+    to->_sentinel->_next = p;
+    if (to->_at_visit || !to->_size)
+    {
+        to->_visited = to->_sentinel->_next;
+        to->_at_visit = 0;
+        ;
+    }
+    ++to->_size;
+    return;
+}
+
+void *list_at(List *list, ulli index)
+{
+    if (!list->_size)
+    {
+        fputs("ERROR: on at() of empty List.", stderr);
+        exit(-1);
+    }
+    if (index >= list->_size)
+    {
+        fputs("ERROR: on at() with invaild index.\n", stderr);
+        exit(-1);
+    }
+    struct ListNode *needle = list->_visited;
+    struct ListNode *stop = list->_sentinel;
+    ulli at = list->_at_visit;
+    ulli half = (list->_size) >> 1;
+    if (((at > index) ? (at - index) : (index - at)) > half)
+    {
+        if (at > half)
+        {
+            needle = stop->_next;
+            at = 0;
+        }
+        else
+        {
+            needle = stop->_previous;
+            at = list->_size - 1;
+        }
+    }
+    while (at < index)
+    {
+        needle = needle->_next;
+        ++at;
+    }
+    while (at > index)
+    {
+        needle = needle->_previous;
+        --at;
+    }
+    list->_at_visit = at;
+    list->_visited = needle;
+    return needle->__data;
+}
+
+void *list_remove(List *list, ulli index)
+{
+    if (!list->_size)
+    {
+        fputs("ERROR: on remove() of empty List.", stderr);
+        exit(-1);
+    }
+    struct ListNode *needle = list->_visited;
+    struct ListNode *stop = list->_sentinel;
+    ulli at = list->_at_visit;
+    void *ret;
+    while (at < index)
+    {
+        if (needle == stop)
+        {
+            fputs("ERROR: on remove() with up-outbounded index.\n", stderr);
+            exit(-1);
+        }
+        needle = needle->_next;
+        ++at;
+    }
+    while (at > index)
+    {
+        if (needle == stop)
+        {
+            fputs("ERROR: on remove() with down-outbounded index.\n", stderr);
+            exit(-1);
+        }
+        needle = needle->_previous;
+        --at;
+    }
+    if (needle->_previous != stop)
+    {
+        list->_visited = needle->_previous;
+        list->_at_visit = at - 1;
+    }
+    else if (needle->_next != stop)
+    {
+        list->_visited = needle->_next;
+        list->_at_visit = at + 1;
+    }
+    else
+    {
+        list->_visited = list->_sentinel->_next;
+        list->_at_visit = 0;
+        ;
+    }
+    needle->_previous->_next = needle->_next;
+    needle->_next->_previous = needle->_previous;
+    ret = needle->__data;
+    free(needle);
+    --list->_size;
+    return ret;
+}
+
+void *list_pop_back(List *list)
+{
+    void *ret;
+    if (!list->_size)
+    {
+        fputs("ERROR: on pop() of empty List.", stderr);
+        exit(-1);
+    }
+    struct ListNode *res = list->_sentinel->_previous;
+    res->_previous->_next = list->_sentinel;
+    list->_sentinel->_previous = res->_previous;
+    --list->_size;
+    ret = res->__data;
+    free(res);
+    if (list->_at_visit)
+    {
+        list->_visited = list->_sentinel->_next;
+        list->_at_visit = 0;
+        ;
+    }
+    return ret;
+}
+
+void *list_pop_front(List *list)
+{
+    void *ret;
+    if (!list->_size)
+    {
+        fputs("ERROR: on pop() of empty List.", stderr);
+        exit(-1);
+    }
+    struct ListNode *res = list->_sentinel->_next;
+    res->_next->_previous = list->_sentinel;
+    list->_sentinel->_next = res->_next;
+    --list->_size;
+    ret = res->__data;
+    free(res);
+    if (list->_at_visit)
+    {
+        list->_visited = list->_sentinel->_next;
+        list->_at_visit = 0;
+        ;
+    }
+    return ret;
+}
+
+void list_clear(List *list, void (*deleter)(void *))
+{
+    if (!list->_size)
+    {
+        fputs("ERROR: on clear() of empty List.", stderr);
+        exit(-1);
+    }
+    struct ListNode *needle = list->_sentinel->_next;
+    struct ListNode *stop = list->_sentinel;
+    if (!deleter)
+        deleter = free;
+    while (needle != stop)
+    {
+        struct ListNode *tmp = needle;
+        needle = needle->_next;
+        deleter(tmp->__data);
+        free(tmp);
+    }
+    list->_size = 0;
+    list->_visited = list->_sentinel->_next = list->_sentinel->_previous = list->_sentinel;
+    list->_at_visit = 0;
+    ;
+}
+
+void list_delete(List *list, void (*deleter)(void *))
+{
+    if (list->_size)
+    {
+        struct ListNode *needle = list->_sentinel->_next;
+        struct ListNode *stop = list->_sentinel;
+        if (!deleter)
+            deleter = free;
+        while (needle != stop)
+        {
+            struct ListNode *tmp = needle;
+            needle = needle->_next;
+            deleter(tmp->__data);
+            free(tmp);
+        }
+    }
+    free(list->_sentinel);
+    free(list);
+}
+```
+
+The implantation is much more complicated than the previous two.
+
+---
+
+File: **test_list.c**
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "list.h"
+
+// Define a custom deleter function for the list_delete() function
+void custom_deleter(void *data)
+{
+    printf("Deleting data: %d\n", *(int *)data);
+}
+
+int main()
+{
+    List *list = list_new();
+    int data[] = {1, 1, 4, 5, 1, 4};
+
+    // Add elements to the list
+    for (int i = 0; i < sizeof(data) / sizeof(data[0]); ++i)
+    {
+        list_push_back(list, &data[i]);
+    }
+
+    // Print the list
+    printf("List elements: ");
+    for (int i = 0; i < list_size(list); ++i)
+    {
+        printf("%d ", *(int *)list_at(list, i));
+    }
+    printf("\n");
+
+    // Remove an element from the list
+    printf("Removed 2nd element.\n");
+    list_remove(list, 2);
+
+    // Print the updated list
+    printf("Updated list elements: ");
+    for (int i = 0; i < list_size(list); ++i)
+    {
+        printf("%d ", *(int *)list_at(list, i));
+    }
+    printf("\n");
+
+    // Delete the first and last elements from the list
+    int *first = (int *)list_pop_front(list);
+    int *last = (int *)list_pop_back(list);
+    printf("Deleted first element: %d\n", *first);
+    printf("Deleted last element: %d\n", *last);
+
+    // Print the updated list
+    printf("Updated list elements: ");
+    for (int i = 0; i < list_size(list); ++i)
+    {
+        printf("%d ", *(int *)list_at(list, i));
+    }
+    printf("\n");
+
+    // Clear the list
+    list_clear(list, custom_deleter);
+
+    // Print the updated list size
+    printf("List size: %llu\n", list_size(list));
+
+    // Add elements to the list
+    for (int i = 1; i < sizeof(data) / sizeof(data[0]); ++i)
+    {
+        list_push_back(list, &data[i - 1]);
+        list_push_back(list, &data[i]);
+    }
+
+    // Print the updated list size
+    printf("List size: %llu\n", list_size(list));
+
+    printf("List elements: ");
+    for (int i = 0; i < list_size(list); ++i)
+    {
+        printf("%d ", *(int *)list_at(list, i));
+    }
+    printf("\n");
+
+    // Delete the list
+    list_delete(list, custom_deleter);
+
+    return 0;
+}
+```
+
+---
+
+Compilation and Run:
+
+```sh
+gcc test_list.c list.c -o test_list
+./test_list
+```
+
+---
+
+Output:
+
+```text
+List elements: 1 1 4 5 1 4 
+Removed 2nd element.
+Updated list elements: 1 1 5 1 4 
+Deleted first element: 1
+Deleted last element: 4
+Updated list elements: 1 5 1 
+Deleting data: 1
+Deleting data: 5
+Deleting data: 1
+List size: 0
+List size: 10
+List elements: 1 1 1 4 4 5 5 1 1 4 
+Deleting data: 1
+Deleting data: 1
+Deleting data: 1
+Deleting data: 4
+Deleting data: 4
+Deleting data: 5
+Deleting data: 5
+Deleting data: 1
+Deleting data: 1
+Deleting data: 4
+```
+
+---
 
 ## Object-Oriented Programing in C: Polymorphism
 
